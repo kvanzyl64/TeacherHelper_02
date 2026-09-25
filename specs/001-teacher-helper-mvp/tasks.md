@@ -116,21 +116,21 @@ access denial.
 
 ### Tests for User Story 3
 
-- [ ] T043 [P] [US3] Add guardian-link contract tests in `tests/contract/guardian-link.contract.test.ts` covering opaque tokens, seven-day expiry, single-record scope, revocation, generic failures, and re-evaluated consent.
-- [ ] T044 [P] [US3] Add WhatsApp delivery contract tests in `tests/contract/whatsapp-delivery.contract.test.ts` covering templates, idempotency, normalized callbacks, bounded retry, permanent failure, and no SMS/email fallback.
-- [ ] T045 [P] [US3] Add session and link integration tests in `tests/integration/session-delivery.test.ts` covering draft, submitted, approved, rejected, superseded, queued, retrying, delivered, and failed states.
-- [ ] T046 [P] [US3] Add mobile browser tests for session links in `tests/e2e/session-guardian-link.spec.ts` covering narrow screens, horizontal-scroll prevention, unauthorized tokens, expiry, and revocation.
+- [x] T043 [P] [US3] Add guardian-link contract tests in `tests/contract/guardian-link.contract.test.ts` covering opaque tokens, seven-day expiry, single-record scope, revocation, generic failures, and re-evaluated consent.
+- [x] T044 [P] [US3] Add WhatsApp delivery contract tests in `tests/contract/whatsapp-delivery.contract.test.ts` covering templates, idempotency, normalized callbacks, bounded retry, permanent failure, and no SMS/email fallback.
+- [x] T045 [P] [US3] Add session and link integration tests in `tests/integration/session-delivery.test.ts` covering draft, submitted, approved, rejected, superseded, queued, retrying, delivered, and failed states.
+- [x] T046 [P] [US3] Add mobile browser tests for session links in `tests/e2e/session-guardian-link.spec.ts` covering narrow screens, horizontal-scroll prevention, unauthorized tokens, expiry, and revocation.
 
 ### Implementation for User Story 3
 
-- [ ] T047 [P] [US3] Create `Session` and `Resource` migrations and repositories in `packages/database/migrations/008_sessions_resources.sql` and `packages/domain/src/sessions/`; enforce review statuses `draft`, `submitted`, `approved`, `rejected`, and `superseded`.
-- [ ] T048 [US3] Implement session creation, edit permissions, submission, approval, rejection, supersession, and parent-visible field policy in `packages/domain/src/sessions/session-service.ts` and `apps/web/app/(tutor)/sessions/`.
-- [ ] T049 [P] [US3] Implement protected resource upload and download authorization in `packages/domain/src/sessions/resource-service.ts`, `packages/integrations/src/storage/session-resources.ts`, and `apps/web/app/(tutor)/sessions/[sessionId]/resources/`.
-- [ ] T050 [US3] Implement opaque token hashing, access-link creation, open, expiry, revocation, and resend in `packages/database/migrations/009_access_links.sql`, `packages/domain/src/guardian-links/access-link-service.ts`, and `apps/web/app/(guardian)/link/[token]/page.tsx`; enforce `session`, `resource`, `invoice`, and `receipt` record types and seven-day expiry.
-- [ ] T051 [US3] Implement WhatsApp message queuing, retry scheduling, provider callback normalization, idempotency, and centre failure alerts in `packages/domain/src/notifications/notification-service.ts`, `packages/integrations/src/messaging/whatsapp-provider.ts`, and `apps/web/app/api/webhooks/whatsapp/route.ts`.
-- [ ] T052 [US3] Implement phone-first guardian session rendering and generic unavailable responses in `apps/web/features/guardian-link/`, `apps/web/components/guardian/session-view.tsx`, and `apps/web/styles/guardian.css`.
-- [ ] T053 [US3] Emit session, access-link, notification, provider-callback, and delivery-failure audit events in `packages/domain/src/sessions/session-audit.ts` and `packages/domain/src/notifications/notification-audit.ts`.
-- [ ] T054 [US3] Run the independent session delivery test and document evidence in `specs/001-teacher-helper-mvp/quickstart.md` under Guardian Verification and WhatsApp Delivery Failure.
+- [x] T047 [P] [US3] Create `Session` and `Resource` migrations and repositories in `packages/database/migrations/008_sessions_resources.sql` and `packages/domain/src/sessions/`; enforce review statuses `draft`, `submitted`, `approved`, `rejected`, and `superseded`.
+- [x] T048 [US3] Implement session creation, edit permissions, submission, approval, rejection, supersession, and parent-visible field policy in `packages/domain/src/sessions/session-service.ts` and `apps/web/app/(tutor)/sessions/`.
+- [x] T049 [P] [US3] Implement protected resource upload and download authorization in `packages/domain/src/sessions/resource-service.ts`, `packages/integrations/src/storage/session-resources.ts`, and `apps/web/app/(tutor)/sessions/[sessionId]/resources/`.
+- [x] T050 [US3] Implement opaque token hashing, access-link creation, open, expiry, revocation, and resend in `packages/database/migrations/009_access_links.sql`, `packages/domain/src/guardian-links/access-link-service.ts`, and `apps/web/app/(guardian)/link/[token]/page.tsx`; enforce `session`, `resource`, `invoice`, and `receipt` record types and seven-day expiry.
+- [x] T051 [US3] Implement WhatsApp message queuing, retry scheduling, provider callback normalization, idempotency, and centre failure alerts in `packages/domain/src/notifications/notification-service.ts`, `packages/integrations/src/messaging/whatsapp-provider.ts`, and `apps/web/app/api/webhooks/whatsapp/route.ts`.
+- [x] T052 [US3] Implement phone-first guardian session rendering and generic unavailable responses in `apps/web/features/guardian-link/`, `apps/web/components/guardian/session-view.tsx`, and `apps/web/styles/guardian.css`.
+- [x] T053 [US3] Emit session, access-link, notification, provider-callback, and delivery-failure audit events in `packages/domain/src/sessions/session-audit.ts` and `packages/domain/src/notifications/notification-audit.ts`.
+- [x] T054 [US3] Run the independent session delivery test and document evidence in `specs/001-teacher-helper-mvp/quickstart.md` under Guardian Verification and WhatsApp Delivery Failure.
 
 **Checkpoint**: US3 delivers the core session-to-guardian MVP value independently after US2 identity
 and verification foundations.

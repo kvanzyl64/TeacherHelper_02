@@ -115,6 +115,14 @@ or out-of-scope links return a generic unavailable response and create appropria
 
 ## Scenario 3: WhatsApp Delivery Failure
 
+Implementation evidence (2026-09-25):
+
+- Added protected session and access-link domain services for approved session visibility, opaque token hashing, and seven-day expiry handling.
+- Added WhatsApp delivery notification services that normalize provider callbacks, enforce bounded retry decisions, and retain idempotent delivery metadata.
+- Added session-link and delivery regression tests covering approved visibility, provider failure handling, and revocation behavior.
+
+Validation evidence: `npx vitest run tests/contract/guardian-link.contract.test.ts tests/contract/whatsapp-delivery.contract.test.ts tests/integration/session-delivery.test.ts` passed.
+
 1. Submit an approved session update with an eligible guardian.
 2. Simulate a transient provider failure and confirm bounded retry behavior.
 3. Simulate a permanent failure and confirm the centre dashboard shows an actionable follow-up.
