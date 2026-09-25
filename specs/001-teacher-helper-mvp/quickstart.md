@@ -153,6 +153,14 @@ attributed to an authorised actor.
 
 ## Scenario 5: Retention, Export, and Recovery
 
+Implementation evidence (2026-09-25):
+
+- Added dashboard, export request, retention evaluation, and recovery alert services in `packages/domain/src/oversight/`.
+- Added database migrations for audit events, export requests, retention policies, and retention jobs.
+- Added integration tests for dashboard summaries, export processing/expiry, and retention deletion flows.
+
+Validation evidence: `npx vitest run tests/integration/oversight-dashboard.test.ts tests/integration/export-retention.test.ts tests/contract/invoice-notification.contract.test.ts tests/integration/invoicing-payments.test.ts` passed, and `npx playwright test tests/e2e/oversight.spec.ts --project=chromium` passed.
+
 1. Request a tenant export and verify scope, expiry, download, and deletion audit events.
 2. Seed records in student/session, billing, and audit retention classes.
 3. Run the policy evaluation in a staging copy and confirm each class uses its centrally defined rule.

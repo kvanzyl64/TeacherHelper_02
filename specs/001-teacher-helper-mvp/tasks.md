@@ -171,18 +171,18 @@ centre dashboard totals, alerts, export scope, retention classes, and recovery f
 
 ### Tests for User Story 5
 
-- [ ] T064 [P] [US5] Add dashboard aggregation and alert integration tests in `tests/integration/oversight-dashboard.test.ts` covering active students, weekly sessions, outstanding invoices, and unresolved events.
-- [ ] T065 [P] [US5] Add export and retention integration tests in `tests/integration/export-retention.test.ts` covering centre scope, expiry, deletion, `student_session`, `billing`, and `audit` retention classes.
-- [ ] T066 [P] [US5] Add oversight browser tests in `tests/e2e/oversight.spec.ts` covering owner-only access, actionable failures, export confirmation, and tenant isolation.
+- [x] T064 [P] [US5] Add dashboard aggregation and alert integration tests in `tests/integration/oversight-dashboard.test.ts` covering active students, weekly sessions, outstanding invoices, and unresolved events.
+- [x] T065 [P] [US5] Add export and retention integration tests in `tests/integration/export-retention.test.ts` covering centre scope, expiry, deletion, `student_session`, `billing`, and `audit` retention classes.
+- [x] T066 [P] [US5] Add oversight browser tests in `tests/e2e/oversight.spec.ts` covering owner-only access, actionable failures, export confirmation, and tenant isolation.
 
 ### Implementation for User Story 5
 
-- [ ] T067 [P] [US5] Create `AuditEvent`, `ExportRequest`, and `RetentionPolicy` migrations and repositories in `packages/database/migrations/011_oversight_retention.sql` and `packages/domain/src/oversight/`; enforce export statuses `requested`, `processing`, `ready`, `failed`, `expired`, `deleted` and retention classes `student_session`, `billing`, `audit`.
-- [ ] T068 [US5] Implement centre dashboard aggregation and unresolved-event queries in `packages/domain/src/oversight/dashboard-service.ts` and `apps/web/app/(centre)/dashboard/page.tsx`.
-- [ ] T069 [US5] Implement scoped export creation, processing, expiry, deletion, protected download, and audit events in `packages/domain/src/oversight/export-service.ts`, `apps/web/app/(centre)/exports/`, and `packages/integrations/src/storage/exports.ts`.
-- [ ] T070 [US5] Implement centrally defined retention-policy evaluation and soft-deletion workflow in `packages/domain/src/oversight/retention-service.ts` and `packages/database/migrations/012_retention_jobs.sql`.
-- [ ] T071 [US5] Implement backup/recovery failure alerts and last-known-success tracking in `packages/domain/src/oversight/recovery-monitor.ts` and `apps/web/app/(centre)/operations/alerts/`.
-- [ ] T072 [US5] Run the independent oversight and recovery test and document evidence in `specs/001-teacher-helper-mvp/quickstart.md` under Retention, Export, and Recovery.
+- [x] T067 [P] [US5] Create `AuditEvent`, `ExportRequest`, and `RetentionPolicy` migrations and repositories in `packages/database/migrations/011_oversight_retention.sql` and `packages/domain/src/oversight/`; enforce export statuses `requested`, `processing`, `ready`, `failed`, `expired`, `deleted` and retention classes `student_session`, `billing`, `audit`.
+- [x] T068 [US5] Implement centre dashboard aggregation and unresolved-event queries in `packages/domain/src/oversight/dashboard-service.ts` and `apps/web/app/(centre)/dashboard/page.tsx`.
+- [x] T069 [US5] Implement scoped export creation, processing, expiry, deletion, protected download, and audit events in `packages/domain/src/oversight/export-service.ts`, `apps/web/app/(centre)/exports/`, and `packages/integrations/src/storage/exports.ts`.
+- [x] T070 [US5] Implement centrally defined retention-policy evaluation and soft-deletion workflow in `packages/domain/src/oversight/retention-service.ts` and `packages/database/migrations/012_retention_jobs.sql`.
+- [x] T071 [US5] Implement backup/recovery failure alerts and last-known-success tracking in `packages/domain/src/oversight/recovery-monitor.ts` and `apps/web/app/(centre)/operations/alerts/`.
+- [x] T072 [US5] Run the independent oversight and recovery test and document evidence in `specs/001-teacher-helper-mvp/quickstart.md` under Retention, Export, and Recovery.
 
 **Checkpoint**: US5 provides the P2 operations layer without weakening any P1 tenant, privacy, or
 payment controls.

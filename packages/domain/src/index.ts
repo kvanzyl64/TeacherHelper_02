@@ -26,3 +26,7 @@ export * from "./billing/invoice-service";
 export * from "./billing/payment-service";
 export * from "./billing/invoice-notification-service";
 export * from "./billing/billing-audit";
+export * from "./oversight/dashboard-service";
+export * from "./oversight/export-service";
+export * from "./oversight/retention-service";
+export * from "./oversight/recovery-monitor";
