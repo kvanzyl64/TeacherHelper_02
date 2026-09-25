@@ -18,7 +18,7 @@ provider-contract, browser, migration, backup, and staging validation.
 
 **Purpose**: Initialize the TypeScript web application and repository structure defined in plan.md.
 
-- [ ] T000 [P] Define the SaaS mission, customer value proposition, and public landing-page messaging in `specs/001-teacher-helper-mvp/spec.md` and the root application home page so the product explains what it does before sign-in.
+- [x] T000 [P] Define the SaaS mission, customer value proposition, and public landing-page messaging in `specs/001-teacher-helper-mvp/spec.md` and the root application home page; implement the page according to `specs/001-teacher-helper-mvp/Web Design pricipals.md` in `apps/web/app/page.tsx` and `apps/web/app/page.module.css` so the product explains what it does before sign-in.
 - [x] T001 Install and secure local PostgreSQL for development and document the local service workflow in `infra/postgres/local/README.md`, `infra/postgres/local/init.sql`, and `infra/postgres/README.md`; development MUST use PostgreSQL, not SQLite.
 - [x] T002 Create the local `teacher_helper_dev` database and least-privilege development roles in `infra/postgres/local/001_databases.sql` and `infra/postgres/local/002_roles.sql`; seed synthetic data only and keep deployment credentials out of local development.
 - [x] T003 [P] Create the pnpm workspace and TypeScript configuration in `package.json`, `pnpm-workspace.yaml`, `tsconfig.json`, and `apps/web/tsconfig.json`.

@@ -1,0 +1,10 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #f7f6f2;
+  color: #171717;
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+}

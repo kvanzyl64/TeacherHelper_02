@@ -21,6 +21,6 @@ export default [
     files: ["**/*.ts", "**/*.tsx"],
     languageOptions: { parser: tsParser, globals: { process: "readonly" } },
     plugins: { "@typescript-eslint": tsPlugin },
-    rules: tsPlugin.configs.recommended.rules,
+    rules: { ...tsPlugin.configs.recommended.rules, "no-undef": "off" },
   },
 ];

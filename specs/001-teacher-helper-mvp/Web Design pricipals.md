@@ -22,6 +22,35 @@ precision.
 Aim for modern software craft, developer-grade precision, and high-end SaaS elegance. Draw
 inspiration from products such as Linear, Notion, Raycast, and Figma.
 
+### Landing Page Direction
+
+The public landing page should borrow the useful parts of Notion's product storytelling without
+imitating its brand: a compact navigation bar, a memorable single-sentence promise, short proof
+points, practical use-case sections, and a clear closing action. The page should feel like a
+product people can begin using, not a generic marketing template.
+
+- Lead with the product name and a human outcome before listing features. Use one strong headline,
+  one short supporting paragraph, and one primary action above the fold.
+- Use an editorial, workspace-like composition: asymmetrical but aligned columns, visible section
+  dividers, compact metadata, and a product preview that demonstrates the real workflow.
+- Let the next section enter the first viewport. The hero should not consume the entire screen or
+  hide the product story behind a single oversized card.
+- Use a restrained paper, ink, and accent palette. Coral, cyan, green, soft violet, amber, and
+  blush may signal meaning, but accents must not become a full-page gradient or decoration.
+- Prefer crisp 1px rules, small radii, and minimal ambient shadows. Do not use a generic centered
+  white card, large rounded container, or decorative gradient as the primary composition.
+- Use existing Teacher Helper artwork or the icon sprite when it clarifies a role or workflow. A
+  visual must explain a product state or make the page feel human; it must not replace the copy.
+- Use one confident primary CTA and one quieter secondary path. Keep navigation sparse and make
+  sign-in available without competing with the product introduction.
+- Design the landing page as a responsive reading and scanning experience: preserve the editorial
+  hierarchy on mobile, stack the preview below the promise, and keep every action reachable without
+  horizontal scrolling.
+
+The current reference for these principles is the public Notion homepage at
+`https://www.notion.com/`, reviewed on 2026-09-25. Teacher Helper's safeguarding, accessibility,
+and centre-specific content take precedence over any visual inspiration.
+
 ## 2. Color Palette and Surface Hierarchy
 
 ### Base Palette: Dark and Light Mode
