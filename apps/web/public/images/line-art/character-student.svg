@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 220" role="img" aria-labelledby="title desc">
+  <title id="title">Student character</title>
+  <desc id="desc">A round, animated line art student with a star notebook.</desc>
+  <style>
+    .ink { fill: none; stroke: #111111; stroke-linecap: round; stroke-linejoin: round; stroke-width: 6; }
+    .float { animation: float 3.4s ease-in-out infinite .3s; transform-box: fill-box; transform-origin: center; }
+    .wiggle { animation: wiggle 2.8s ease-in-out infinite; transform-box: fill-box; transform-origin: bottom center; }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+    @keyframes wiggle { 0%, 70%, 100% { transform: rotate(0); } 80% { transform: rotate(-4deg); } 90% { transform: rotate(4deg); } }
+    @media (prefers-reduced-motion: reduce) { .float, .wiggle { animation: none; } }
+  </style>
+  <circle cx="76" cy="111" r="57" fill="#b86cff"/>
+  <circle cx="207" cy="105" r="59" fill="#64d8cb"/>
+  <g class="float">
+    <circle cx="140" cy="105" r="74" fill="#ffffff" stroke="#111111" stroke-width="6"/>
+    <path class="ink" d="M116 92q9-8 18 0M156 92q9-8 18 0M126 121q14 9 28 0"/>
+    <circle cx="125" cy="106" r="4" fill="#111111"/><circle cx="166" cy="106" r="4" fill="#111111"/>
+    <path d="M94 58q13-20 35-23" fill="none" stroke="#111111" stroke-linecap="round" stroke-width="7"/>
+    <path d="M93 57 80 47" fill="none" stroke="#ff8a35" stroke-linecap="round" stroke-width="9"/>
+    <g class="wiggle">
+      <path class="ink" d="M58 164h57v39H58z"/>
+      <path d="M72 184l12 11 21-24" fill="none" stroke="#f45d48" stroke-linecap="round" stroke-width="7"/>
+    </g>
+    <path class="ink" d="m194 160 24 28M218 160l-24 28"/>
+    <path d="M200 159h12" fill="none" stroke="#f45d48" stroke-linecap="round" stroke-width="8"/>
+  </g>
+</svg>

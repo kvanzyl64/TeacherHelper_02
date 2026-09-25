@@ -87,21 +87,21 @@ WhatsApp number; verify administrator, tutor, and guardian-scoped views and bloc
 
 ### Tests for User Story 2
 
-- [ ] T031 [P] [US2] Add people and relationship contract tests in `tests/contract/people.contract.test.ts` covering required fields, relationship status, consent decisions, and centre-scoped uniqueness.
-- [ ] T032 [P] [US2] Add guardian verification integration tests in `tests/integration/guardian-verification.test.ts` covering centre confirmation, one-time code expiry, bounded attempts, successful confirmation, and revocation.
-- [ ] T033 [P] [US2] Add role and mobile guardian-view browser tests in `tests/e2e/people-and-verification.spec.ts` covering administrator, tutor, and passwordless phone access.
+- [X] T031 [P] [US2] Add people and relationship contract tests in `tests/contract/people.contract.test.ts` covering required fields, relationship status, consent decisions, and centre-scoped uniqueness.
+- [X] T032 [P] [US2] Add guardian verification integration tests in `tests/integration/guardian-verification.test.ts` covering centre confirmation, one-time code expiry, bounded attempts, successful confirmation, and revocation.
+- [X] T033 [P] [US2] Add role and mobile guardian-view browser tests in `tests/e2e/people-and-verification.spec.ts` covering administrator, tutor, and passwordless phone access.
 
 ### Implementation for User Story 2
 
-- [ ] T034 [P] [US2] Create migrations and repositories for `Student`, `Guardian`, and `GuardianStudent` in `packages/database/migrations/005_people.sql` and `packages/domain/src/people/people-repository.ts`; enforce student references unique within a centre, active guardian numbers unique within a centre, and guardian relationship statuses `pending`, `active`, `revoked`.
-- [ ] T035 [P] [US2] Create consent and verification-challenge migrations and services in `packages/database/migrations/006_consent_verification.sql` and `packages/domain/src/people/consent-service.ts`; enforce consent decisions `granted`, `restricted`, `withdrawn`, digest-only codes, expiry, bounded attempts, and single use.
-- [ ] T036 [P] [US2] Create tutor assignment persistence and state validation in `packages/database/migrations/007_tutor_assignments.sql` and `packages/domain/src/people/tutor-assignment-service.ts` using statuses `pending`, `active`, `paused`, and `ended`.
-- [ ] T037 [US2] Implement student, guardian, consent, and assignment screens and actions in `apps/web/app/(centre)/people/`, `apps/web/features/people/`, and `apps/web/components/people/`.
-- [ ] T038 [US2] Implement centre-confirmed relationship and one-time WhatsApp code flows in `packages/domain/src/people/verification-service.ts`, `apps/web/app/(centre)/people/verification/`, and `packages/integrations/src/messaging/verification-messages.ts`.
-- [ ] T039 [US2] Implement tutor-assignment visibility filters in `packages/domain/src/people/visibility-policy.ts`, `apps/web/lib/auth/role-scope.ts`, and `apps/web/app/(tutor)/students/page.tsx`.
-- [ ] T040 [US2] Implement mobile-first guardian verification and unavailable states in `apps/web/app/(guardian)/verify/[challenge]/page.tsx`, `apps/web/components/guardian/`, and `apps/web/styles/guardian.css`.
-- [ ] T041 [US2] Emit audit events for relationship confirmation, verification attempts, consent changes, and assignment changes in `packages/domain/src/people/people-audit.ts`.
-- [ ] T042 [US2] Run the independent people and verification test and document evidence in `specs/001-teacher-helper-mvp/quickstart.md` under Guardian Verification and Link Scope.
+- [X] T034 [P] [US2] Create migrations and repositories for `Student`, `Guardian`, and `GuardianStudent` in `packages/database/migrations/005_people.sql` and `packages/domain/src/people/people-repository.ts`; enforce student references unique within a centre, active guardian numbers unique within a centre, and guardian relationship statuses `pending`, `active`, `revoked`.
+- [X] T035 [P] [US2] Create consent and verification-challenge migrations and services in `packages/database/migrations/006_consent_verification.sql` and `packages/domain/src/people/consent-service.ts`; enforce consent decisions `granted`, `restricted`, `withdrawn`, digest-only codes, expiry, bounded attempts, and single use.
+- [X] T036 [P] [US2] Create tutor assignment persistence and state validation in `packages/database/migrations/007_tutor_assignments.sql` and `packages/domain/src/people/tutor-assignment-service.ts` using statuses `pending`, `active`, `paused`, and `ended`.
+- [X] T037 [US2] Implement student, guardian, consent, and assignment screens and actions in `apps/web/app/(centre)/people/`, `apps/web/features/people/`, and `apps/web/components/people/`.
+- [X] T038 [US2] Implement centre-confirmed relationship and one-time WhatsApp code flows in `packages/domain/src/people/verification-service.ts`, `apps/web/app/(centre)/people/verification/`, and `packages/integrations/src/messaging/verification-messages.ts`.
+- [X] T039 [US2] Implement tutor-assignment visibility filters in `packages/domain/src/people/visibility-policy.ts`, `apps/web/lib/auth/role-scope.ts`, and `apps/web/app/(tutor)/students/page.tsx`.
+- [X] T040 [US2] Implement mobile-first guardian verification and unavailable states in `apps/web/app/(guardian)/verify/[challenge]/page.tsx`, `apps/web/components/guardian/`, and `apps/web/styles/guardian.css`.
+- [X] T041 [US2] Emit audit events for relationship confirmation, verification attempts, consent changes, and assignment changes in `packages/domain/src/people/people-audit.ts`.
+- [X] T042 [US2] Run the independent people and verification test and document evidence in `specs/001-teacher-helper-mvp/quickstart.md` under Guardian Verification and Link Scope.
 
 **Checkpoint**: US2 can be used independently after US1 authentication and tenant foundation.
 

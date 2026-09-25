@@ -1,0 +1,18 @@
+.guardian-page {
+  box-sizing: border-box;
+  max-width: 32rem;
+  margin: 0 auto;
+  padding: 1.5rem;
+  overflow-wrap: anywhere;
+}
+
+.guardian-page form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.guardian-page input,
+.guardian-page button {
+  min-height: 2.75rem;
+  font: inherit;
+}

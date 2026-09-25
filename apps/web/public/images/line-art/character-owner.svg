@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 220" role="img" aria-labelledby="title desc">
+  <title id="title">Centre owner character</title>
+  <desc id="desc">A round, animated line art centre owner with a clipboard and keys.</desc>
+  <style>
+    .ink { fill: none; stroke: #111111; stroke-linecap: round; stroke-linejoin: round; stroke-width: 6; }
+    .float { animation: float 3.6s ease-in-out infinite .9s; transform-box: fill-box; transform-origin: center; }
+    .keys { animation: keys 2.2s ease-in-out infinite; transform-box: fill-box; transform-origin: top center; }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+    @keyframes keys { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(9deg); } }
+    @media (prefers-reduced-motion: reduce) { .float, .keys { animation: none; } }
+  </style>
+  <circle cx="77" cy="111" r="57" fill="#64d8cb"/>
+  <circle cx="207" cy="106" r="58" fill="#ff8a35"/>
+  <g class="float">
+    <circle cx="140" cy="105" r="74" fill="#ffffff" stroke="#111111" stroke-width="6"/>
+    <path class="ink" d="M116 91q9-8 18 0M157 91q9-8 18 0M126 121q14 9 28 0"/>
+    <circle cx="125" cy="105" r="4" fill="#111111"/><circle cx="166" cy="105" r="4" fill="#111111"/>
+    <path d="M104 61q36-39 73 0" fill="none" stroke="#111111" stroke-linecap="round" stroke-width="7"/>
+    <path class="ink" d="M52 158h54v47H52zM61 171h35M61 183h27M61 195h32"/>
+    <g class="keys">
+      <circle cx="220" cy="164" r="13" fill="#fcd34d" stroke="#111111" stroke-width="6"/>
+      <path class="ink" d="M220 177v27M220 194h12M220 201h8"/>
+    </g>
+    <path d="M188 157q12-9 24 0" fill="none" stroke="#06b6d4" stroke-linecap="round" stroke-width="7"/>
+  </g>
+</svg>

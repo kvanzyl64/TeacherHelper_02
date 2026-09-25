@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 220" role="img" aria-labelledby="title desc">
+  <title id="title">Tutor character</title>
+  <desc id="desc">A round, animated line art tutor with a pencil and notebook.</desc>
+  <style>
+    .ink { fill: none; stroke: #111111; stroke-linecap: round; stroke-linejoin: round; stroke-width: 6; }
+    .float { animation: float 3.8s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+    .blink { animation: blink 4.5s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+    @keyframes blink { 0%, 43%, 47%, 100% { transform: scaleY(1); } 45% { transform: scaleY(0.12); } }
+    @media (prefers-reduced-motion: reduce) { .float, .blink { animation: none; } }
+  </style>
+  <circle cx="78" cy="112" r="55" fill="#b86cff"/>
+  <circle cx="205" cy="108" r="58" fill="#ff8a35"/>
+  <g class="float">
+    <circle cx="140" cy="105" r="74" fill="#ffffff" stroke="#111111" stroke-width="6"/>
+    <path class="ink" d="M119 88q8-8 17 0M158 88q8-8 17 0M127 119q13 10 27 0M143 119l18-28"/>
+    <g class="blink" fill="#111111"><circle cx="128" cy="103" r="4"/><circle cx="171" cy="103" r="4"/></g>
+    <path d="M183 45q-4-16 8-25" fill="none" stroke="#111111" stroke-linecap="round" stroke-width="6"/>
+    <path d="M191 20q9 10 20 2" fill="none" stroke="#f45d48" stroke-linecap="round" stroke-width="13"/>
+    <path class="ink" d="M63 157h52v36H63zM72 167l12 12 22-27"/>
+    <path d="m205 158 28-30" fill="none" stroke="#f45d48" stroke-linecap="round" stroke-width="8"/>
+    <path d="m229 128 8-8" fill="none" stroke="#111111" stroke-linecap="round" stroke-width="5"/>
+  </g>
+</svg>

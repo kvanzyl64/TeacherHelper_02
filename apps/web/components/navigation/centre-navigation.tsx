@@ -3,6 +3,7 @@ const links = [
   { href: "/onboarding", label: "Onboarding" },
   { href: "/settings/centre", label: "Centre settings" },
   { href: "/team/invite", label: "Invite team" },
+  { href: "/people", label: "People" },
 ] as const;
 
 export function CentreNavigation() {

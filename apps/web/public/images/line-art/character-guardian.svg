@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 220" role="img" aria-labelledby="title desc">
+  <title id="title">Guardian character</title>
+  <desc id="desc">A round, animated line art guardian holding a secure phone.</desc>
+  <style>
+    .ink { fill: none; stroke: #111111; stroke-linecap: round; stroke-linejoin: round; stroke-width: 6; }
+    .float { animation: float 4s ease-in-out infinite .6s; transform-box: fill-box; transform-origin: center; }
+    .pulse { animation: pulse 2.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+    @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.12); opacity: .7; } }
+    @media (prefers-reduced-motion: reduce) { .float, .pulse { animation: none; } }
+  </style>
+  <circle cx="77" cy="108" r="56" fill="#ff8a35"/>
+  <circle cx="207" cy="112" r="55" fill="#b86cff"/>
+  <g class="float">
+    <circle cx="140" cy="105" r="74" fill="#ffffff" stroke="#111111" stroke-width="6"/>
+    <path class="ink" d="M116 90q9-8 18 0M157 90q9-8 18 0M126 121q14 9 28 0"/>
+    <circle cx="125" cy="104" r="4" fill="#111111"/><circle cx="166" cy="104" r="4" fill="#111111"/>
+    <path class="ink" d="M95 55q45-31 90 0M103 53q-9-12-19-13M177 53q9-12 19-13"/>
+    <rect x="185" y="143" width="39" height="61" rx="7" fill="#ffffff" stroke="#111111" stroke-width="6"/>
+    <path class="ink" d="M195 154h19M195 190h19"/>
+    <g class="pulse"><path d="m204 168 7 8 13-15" fill="none" stroke="#10b981" stroke-linecap="round" stroke-width="6"/></g>
+    <path class="ink" d="M62 178q19-17 38 0M68 180v22M94 180v22"/>
+  </g>
+</svg>

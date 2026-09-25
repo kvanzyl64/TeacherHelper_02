@@ -93,6 +93,15 @@ Implementation evidence (2026-09-25):
 
 ## Scenario 2: Guardian Verification and Link Scope
 
+Implementation evidence (2026-09-25):
+
+- Added centre-scoped student, guardian, relationship, consent, verification-challenge, and tutor-assignment migrations with row-level policies.
+- Added contract coverage for required people fields, centre-scoped uniqueness, relationship status, and consent decisions.
+- Added verification coverage for successful confirmation, expiry, bounded attempts, single use, and revocation.
+- Added centre, tutor, and mobile guardian verification routes with shared accessible form components and WhatsApp template construction.
+
+Validation evidence: `npx tsc --build --pretty false` and `npx vitest run` passed; the phase 4 Playwright run is recorded with the implementation validation results.
+
 1. Create a guardian-to-student relationship and have centre staff confirm it.
 2. Request a one-time WhatsApp code and complete confirmation for the guardian number.
 3. Approve one session and issue one invoice.

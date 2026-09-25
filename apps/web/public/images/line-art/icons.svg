@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .icon { fill: none; stroke: #18181b; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.8; }
+      .coral { fill: none; stroke: #f97316; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.8; }
+      .cyan { fill: none; stroke: #06b6d4; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.8; }
+      .green { fill: none; stroke: #10b981; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.8; }
+    </style>
+  </defs>
+  <symbol id="dashboard" viewBox="0 0 24 24"><rect class="icon" x="3" y="3" width="7" height="7" rx="1"/><rect class="icon" x="14" y="3" width="7" height="7" rx="1"/><rect class="icon" x="3" y="14" width="7" height="7" rx="1"/><rect class="cyan" x="14" y="14" width="7" height="7" rx="1"/></symbol>
+  <symbol id="people" viewBox="0 0 24 24"><circle class="icon" cx="9" cy="8" r="3"/><circle class="icon" cx="17" cy="9" r="2.5"/><path class="icon" d="M3.5 20c.6-3.3 2.4-5 5.5-5s4.9 1.7 5.5 5M14 15c3.4-.8 5.5.8 6.5 4.5"/></symbol>
+  <symbol id="student" viewBox="0 0 24 24"><path class="icon" d="m3 9 9-5 9 5-9 5zM6 11v5c2.8 2.2 9.2 2.2 12 0v-5M21 9v6"/><circle class="coral" cx="21" cy="18" r="2"/></symbol>
+  <symbol id="guardian" viewBox="0 0 24 24"><circle class="icon" cx="12" cy="8" r="3"/><path class="icon" d="M5 21c.8-4 3.1-6 7-6s6.2 2 7 6M17 4l3 3M20 4v3h-3"/></symbol>
+  <symbol id="tutor" viewBox="0 0 24 24"><circle class="icon" cx="8" cy="8" r="3"/><path class="icon" d="M2.5 20c.7-4 2.5-6 5.5-6s4.8 2 5.5 6M15 5h6M15 9h6M15 13h4"/></symbol>
+  <symbol id="sessions" viewBox="0 0 24 24"><rect class="icon" x="3" y="4" width="18" height="17" rx="2"/><path class="icon" d="M7 2v4M17 2v4M3 9h18M7 13h3M7 17h6"/><path class="cyan" d="m16 15 2 2 3-4"/></symbol>
+  <symbol id="calendar" viewBox="0 0 24 24"><rect class="icon" x="3" y="4" width="18" height="17" rx="2"/><path class="icon" d="M7 2v4M17 2v4M3 9h18M7 13h.01M12 13h.01M17 13h.01M7 17h.01M12 17h.01"/></symbol>
+  <symbol id="message" viewBox="0 0 24 24"><path class="icon" d="M20 11.5a8 8 0 0 1-9 8 9 9 0 0 1-4-.9L3 20l1.4-3.7A8 8 0 1 1 20 11.5Z"/><path class="green" d="M8 12h.01M12 12h.01M16 12h.01"/></symbol>
+  <symbol id="whatsapp" viewBox="0 0 24 24"><path class="green" d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4A8 8 0 1 1 20 11.5Z"/><path class="icon" d="M9 8.5c.4 2.6 2 4.2 4.5 5l1.5-1.3"/></symbol>
+  <symbol id="invoice" viewBox="0 0 24 24"><path class="icon" d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6M9 16h3"/><path class="coral" d="M16 8h.01"/></symbol>
+  <symbol id="payment" viewBox="0 0 24 24"><rect class="icon" x="3" y="5" width="18" height="14" rx="2"/><path class="icon" d="M3 10h18M7 15h4"/><circle class="green" cx="17" cy="15" r="1"/></symbol>
+  <symbol id="receipt" viewBox="0 0 24 24"><path class="icon" d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6M9 16h4"/><path class="green" d="m16 15 1 1 2-3"/></symbol>
+  <symbol id="export" viewBox="0 0 24 24"><path class="icon" d="M12 3v12M8 7l4-4 4 4M5 13v7h14v-7"/><path class="cyan" d="M8 17h8"/></symbol>
+  <symbol id="settings" viewBox="0 0 24 24"><circle class="icon" cx="12" cy="12" r="3"/><path class="icon" d="m19 15 2 1-2 3-2-1a8 8 0 0 1-2 1v2h-4v-2a8 8 0 0 1-2-1l-2 1-2-3 2-1a8 8 0 0 1 0-3l-2-1 2-3 2 1a8 8 0 0 1 2-1V5h4v2a8 8 0 0 1 2 1l2-1 2 3-2 1a8 8 0 0 1 0 4z"/></symbol>
+  <symbol id="team" viewBox="0 0 24 24"><circle class="icon" cx="8" cy="8" r="3"/><circle class="icon" cx="17" cy="9" r="2.5"/><path class="icon" d="M2.5 20c.7-4 2.5-6 5.5-6s4.8 2 5.5 6M14 16c3.4-.5 5.7.8 6.5 4"/><path class="coral" d="M18 3v4M16 5h4"/></symbol>
+  <symbol id="search" viewBox="0 0 24 24"><circle class="icon" cx="10.5" cy="10.5" r="6.5"/><path class="icon" d="m16 16 5 5"/></symbol>
+  <symbol id="plus" viewBox="0 0 24 24"><circle class="icon" cx="12" cy="12" r="9"/><path class="coral" d="M12 8v8M8 12h8"/></symbol>
+  <symbol id="edit" viewBox="0 0 24 24"><path class="icon" d="m4 16-1 5 5-1L20 8l-4-4zM14 6l4 4"/></symbol>
+  <symbol id="check" viewBox="0 0 24 24"><circle class="green" cx="12" cy="12" r="9"/><path class="green" d="m8 12 3 3 5-6"/></symbol>
+  <symbol id="alert" viewBox="0 0 24 24"><path class="coral" d="M12 3 22 20H2z"/><path class="coral" d="M12 9v5M12 17h.01"/></symbol>
+  <symbol id="lock" viewBox="0 0 24 24"><rect class="icon" x="5" y="10" width="14" height="11" rx="2"/><path class="icon" d="M8 10V7a4 4 0 0 1 8 0v3"/><circle class="cyan" cx="12" cy="15" r="1"/></symbol>
+  <symbol id="eye" viewBox="0 0 24 24"><path class="icon" d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle class="cyan" cx="12" cy="12" r="2.5"/></symbol>
+  <symbol id="link" viewBox="0 0 24 24"><path class="icon" d="m10 13 4-4M8 16l-2 2a3 3 0 0 1-4-4l3-3a3 3 0 0 1 4 0M16 8l2-2a3 3 0 0 1 4 4l-3 3a3 3 0 0 1-4 0"/></symbol>
+  <symbol id="upload" viewBox="0 0 24 24"><path class="icon" d="M12 16V4M8 8l4-4 4 4M5 14v6h14v-6"/></symbol>
+  <symbol id="download" viewBox="0 0 24 24"><path class="icon" d="M12 4v12M8 12l4 4 4-4M5 20h14"/></symbol>
+  <symbol id="arrow-left" viewBox="0 0 24 24"><path class="icon" d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+  <symbol id="arrow-right" viewBox="0 0 24 24"><path class="icon" d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="chevron-down" viewBox="0 0 24 24"><path class="icon" d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="close" viewBox="0 0 24 24"><path class="icon" d="m6 6 12 12M18 6 6 18"/></symbol>
+  <symbol id="menu" viewBox="0 0 24 24"><path class="icon" d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="more" viewBox="0 0 24 24"><circle class="icon" cx="5" cy="12" r="1"/><circle class="icon" cx="12" cy="12" r="1"/><circle class="icon" cx="19" cy="12" r="1"/></symbol>
+</svg>
