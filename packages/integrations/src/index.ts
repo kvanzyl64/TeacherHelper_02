@@ -1,0 +1,1 @@
+export const integrationsPackage = "@teacher-helper/integrations";

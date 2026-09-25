@@ -1,0 +1,1 @@
+export const databasePackage = "@teacher-helper/database";

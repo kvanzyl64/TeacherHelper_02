@@ -1,0 +1,1 @@
+export const testSupportPackage = "@teacher-helper/test-support";

@@ -18,13 +18,13 @@ provider-contract, browser, migration, backup, and staging validation.
 
 **Purpose**: Initialize the TypeScript web application and repository structure defined in plan.md.
 
-- [ ] T001 Install and secure local PostgreSQL for development and document the local service workflow in `infra/postgres/local/README.md`, `infra/postgres/local/init.sql`, and `infra/postgres/README.md`; development MUST use PostgreSQL, not SQLite.
-- [ ] T002 Create the local `teacher_helper_dev` database and least-privilege development roles in `infra/postgres/local/001_databases.sql` and `infra/postgres/local/002_roles.sql`; seed synthetic data only and keep deployment credentials out of local development.
-- [ ] T003 [P] Create the pnpm workspace and TypeScript configuration in `package.json`, `pnpm-workspace.yaml`, `tsconfig.json`, and `apps/web/tsconfig.json`.
-- [ ] T004 [P] Initialize the Next.js App Router application in `apps/web/app/` with route groups for centre, tutor, guardian links, and authentication.
-- [ ] T005 [P] Configure shared linting, formatting, typechecking, and test scripts in `eslint.config.mjs`, `prettier.config.mjs`, and `package.json`.
-- [ ] T006 [P] Create the package boundaries in `packages/domain/`, `packages/database/`, `packages/integrations/`, and `packages/test-support/` with package manifests and TypeScript entrypoints.
-- [ ] T007 [P] Create test roots in `apps/web/tests/`, `tests/contract/`, `tests/integration/`, and `tests/e2e/` with Vitest and Playwright configuration in `vitest.config.ts` and `playwright.config.ts`; document local database configuration in `.env.example`, `.env.development.example`, `apps/web/lib/config.ts`, and `packages/integrations/src/config.ts`, and add the CI workflow in `.github/workflows/ci.yml`.
+- [x] T001 Install and secure local PostgreSQL for development and document the local service workflow in `infra/postgres/local/README.md`, `infra/postgres/local/init.sql`, and `infra/postgres/README.md`; development MUST use PostgreSQL, not SQLite.
+- [x] T002 Create the local `teacher_helper_dev` database and least-privilege development roles in `infra/postgres/local/001_databases.sql` and `infra/postgres/local/002_roles.sql`; seed synthetic data only and keep deployment credentials out of local development.
+- [x] T003 [P] Create the pnpm workspace and TypeScript configuration in `package.json`, `pnpm-workspace.yaml`, `tsconfig.json`, and `apps/web/tsconfig.json`.
+- [x] T004 [P] Initialize the Next.js App Router application in `apps/web/app/` with route groups for centre, tutor, guardian links, and authentication.
+- [x] T005 [P] Configure shared linting, formatting, typechecking, and test scripts in `eslint.config.mjs`, `prettier.config.mjs`, and `package.json`.
+- [x] T006 [P] Create the package boundaries in `packages/domain/`, `packages/database/`, `packages/integrations/`, and `packages/test-support/` with package manifests and TypeScript entrypoints.
+- [x] T007 [P] Create test roots in `apps/web/tests/`, `tests/contract/`, `tests/integration/`, and `tests/e2e/` with Vitest and Playwright configuration in `vitest.config.ts` and `playwright.config.ts`; document local database configuration in `.env.example`, `.env.development.example`, `apps/web/lib/config.ts`, and `packages/integrations/src/config.ts`, and add the CI workflow in `.github/workflows/ci.yml`.
 
 ## Phase 2: Foundational (Blocking Prerequisites)
 

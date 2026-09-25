@@ -1,0 +1,29 @@
+{
+  "name": "teacher-helper",
+  "private": true,
+  "packageManager": "pnpm@10.15.0",
+  "scripts": {
+    "dev": "pnpm --filter @teacher-helper/web dev",
+    "build": "pnpm --filter @teacher-helper/web build",
+    "lint": "eslint .",
+    "format": "prettier --check .",
+    "typecheck": "tsc --build",
+    "test": "vitest run",
+    "test:contract": "vitest run tests/contract",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.35.0",
+    "@playwright/test": "^1.55.0",
+    "@types/node": "^22.15.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.44.0",
+    "@typescript-eslint/parser": "^8.44.0",
+    "eslint": "^9.35.0",
+    "eslint-config-next": "^15.5.0",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}
