@@ -134,6 +134,14 @@ centre-visible follow-up are consistent and idempotent.
 
 ## Scenario 4: Invoice and Manual Payment
 
+Implementation evidence (2026-09-25):
+
+- Added invoice and payment domain services for ZAR invoice creation, issue-state freeze, and payment reconciliation.
+- Added guardian invoice access-link and invoice notification helpers for single-record WhatsApp delivery.
+- Added contract and integration tests covering invoice totals, issued immutability, payment state changes, and guardian family isolation.
+
+Validation evidence: `npx vitest run tests/contract/invoice-notification.contract.test.ts tests/integration/invoicing-payments.test.ts` passed, and `npx tsc --build --pretty false` completed successfully.
+
 1. Generate a term invoice in ZAR with line items and configured tax treatment.
 2. Issue it and open the guardian invoice link on a phone.
 3. Record EFT and cash payments as an authorised centre user.

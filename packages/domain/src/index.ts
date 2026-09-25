@@ -22,3 +22,7 @@ export * from "./sessions/session-audit";
 export * from "./guardian-links/access-link-service";
 export * from "./notifications/notification-service";
 export * from "./notifications/notification-audit";
+export * from "./billing/invoice-service";
+export * from "./billing/payment-service";
+export * from "./billing/invoice-notification-service";
+export * from "./billing/billing-audit";

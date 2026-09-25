@@ -145,18 +145,18 @@ and cash payments, verify status transitions and receipts, and confirm family is
 
 ### Tests for User Story 4
 
-- [ ] T055 [P] [US4] Add invoice and receipt contract tests in `tests/contract/invoice-notification.contract.test.ts` covering ZAR totals, tax treatment, issued-value immutability, single-record links, delivery states, and approved templates.
-- [ ] T056 [P] [US4] Add payment-state integration tests in `tests/integration/invoicing-payments.test.ts` covering `draft`, `issued`, `partially_paid`, `paid`, `disputed`, `failed`, and `cancelled` invoice states plus EFT, cash, and other methods.
-- [ ] T057 [P] [US4] Add mobile browser tests for invoice and receipt links in `tests/e2e/invoice-guardian-link.spec.ts` covering phone rendering, family scope, expired links, and receipt visibility.
+- [x] T055 [P] [US4] Add invoice and receipt contract tests in `tests/contract/invoice-notification.contract.test.ts` covering ZAR totals, tax treatment, issued-value immutability, single-record links, delivery states, and approved templates.
+- [x] T056 [P] [US4] Add payment-state integration tests in `tests/integration/invoicing-payments.test.ts` covering `draft`, `issued`, `partially_paid`, `paid`, `disputed`, `failed`, and `cancelled` invoice states plus EFT, cash, and other methods.
+- [x] T057 [P] [US4] Add mobile browser tests for invoice and receipt links in `tests/e2e/invoice-guardian-link.spec.ts` covering phone rendering, family scope, expired links, and receipt visibility.
 
 ### Implementation for User Story 4
 
-- [ ] T058 [P] [US4] Create `Invoice` and `Payment` migrations and repositories in `packages/database/migrations/010_billing.sql` and `packages/domain/src/billing/`; enforce `currency` as `ZAR`, decimal-safe amounts, payment methods `eft`, `cash`, `other`, and invoice statuses from `data-model.md`.
-- [ ] T059 [US4] Implement term invoice calculation, line-item validation, tax display, issue/correction/cancellation rules, and document generation in `packages/domain/src/billing/invoice-service.ts`, `packages/integrations/src/documents/invoice-document.ts`, and `apps/web/app/(centre)/billing/invoices/`.
-- [ ] T060 [US4] Implement manual payment recording, reconciliation, receipt state, and audited status transitions in `packages/domain/src/billing/payment-service.ts`, `apps/web/app/(centre)/billing/payments/`, and `apps/web/app/(centre)/billing/receipts/`.
-- [ ] T061 [US4] Integrate invoice and receipt access-link creation with WhatsApp delivery in `packages/domain/src/billing/invoice-notification-service.ts` and `apps/web/app/(centre)/billing/invoices/[invoiceId]/send.ts`.
-- [ ] T062 [US4] Emit invoice, payment, receipt, document, and billing-notification audit events in `packages/domain/src/billing/billing-audit.ts`.
-- [ ] T063 [US4] Run the independent invoice and payment test and document evidence in `specs/001-teacher-helper-mvp/quickstart.md` under Invoice and Manual Payment.
+- [x] T058 [P] [US4] Create `Invoice` and `Payment` migrations and repositories in `packages/database/migrations/010_billing.sql` and `packages/domain/src/billing/`; enforce `currency` as `ZAR`, decimal-safe amounts, payment methods `eft`, `cash`, `other`, and invoice statuses from `data-model.md`.
+- [x] T059 [US4] Implement term invoice calculation, line-item validation, tax display, issue/correction/cancellation rules, and document generation in `packages/domain/src/billing/invoice-service.ts`, `packages/integrations/src/documents/invoice-document.ts`, and `apps/web/app/(centre)/billing/invoices/`.
+- [x] T060 [US4] Implement manual payment recording, reconciliation, receipt state, and audited status transitions in `packages/domain/src/billing/payment-service.ts`, `apps/web/app/(centre)/billing/payments/`, and `apps/web/app/(centre)/billing/receipts/`.
+- [x] T061 [US4] Integrate invoice and receipt access-link creation with WhatsApp delivery in `packages/domain/src/billing/invoice-notification-service.ts` and `apps/web/app/(centre)/billing/invoices/[invoiceId]/send.ts`.
+- [x] T062 [US4] Emit invoice, payment, receipt, document, and billing-notification audit events in `packages/domain/src/billing/billing-audit.ts`.
+- [x] T063 [US4] Run the independent invoice and payment test and document evidence in `specs/001-teacher-helper-mvp/quickstart.md` under Invoice and Manual Payment.
 
 **Checkpoint**: US4 completes the P1 payment-visibility workflow without requiring automated online
 payment reconciliation.

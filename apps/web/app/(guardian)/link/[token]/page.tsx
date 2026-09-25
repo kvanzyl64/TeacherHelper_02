@@ -1,4 +1,4 @@
-import { GuardianSessionView } from "../../../features/guardian-link/session-view";
+import { GuardianSessionView } from "../../../../features/guardian-link/session-view";
 
 export default function GuardianLinkPage() {
   const session = {
