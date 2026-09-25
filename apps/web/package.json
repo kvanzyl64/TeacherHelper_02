@@ -3,6 +3,8 @@
   "private": true,
   "scripts": { "dev": "next dev", "build": "next build", "start": "next start" },
   "dependencies": {
+    "@teacher-helper/domain": "workspace:*",
+    "@teacher-helper/integrations": "workspace:*",
     "next": "^15.5.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"

@@ -26,6 +26,17 @@ The PostgreSQL installer normally adds `C:\Program Files\PostgreSQL\18\bin` to P
 PowerShell session cannot resolve `psql`, add that directory to the user PATH and open a new
 terminal.
 
+For non-interactive local development commands, configure the Windows libpq password file once at
+`%APPDATA%\postgresql\pgpass.conf` with this shape:
+
+```text
+127.0.0.1:5432:*:postgres:<local-password>
+```
+
+Keep the file readable only by the Windows user that runs development commands. It is outside the
+repository and must never be committed. PostgreSQL tools automatically use this file, so migrations
+can run without placing a password in scripts or command history.
+
 Run the local bootstrap from an administrator psql session after PostgreSQL is running:
 
 ```text

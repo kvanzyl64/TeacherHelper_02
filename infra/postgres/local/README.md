@@ -13,6 +13,11 @@ psql -h localhost -U postgres -d postgres -c "SHOW listen_addresses; SHOW passwo
 If `psql` is not found, add `C:\Program Files\PostgreSQL\18\bin` to the user PATH, open a new
 PowerShell session, and retry.
 
+To avoid repeated password prompts, use the Windows libpq password file at
+`%APPDATA%\postgresql\pgpass.conf` with `127.0.0.1:5432:*:postgres:<local-password>`. Restrict the
+file ACL to the development Windows user. Do not store this file in the repository or put its
+contents in migration scripts.
+
 The expected listener is `localhost` (or `127.0.0.1`) and password encryption is `scram-sha-256`.
 Do not add a public firewall rule for port 5432. The scripts in this directory are safe to rerun only
 when the named database and roles do not already exist; review them before applying to an existing

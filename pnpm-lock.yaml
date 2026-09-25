@@ -47,6 +47,12 @@ importers:
 
   apps/web:
     dependencies:
+      '@teacher-helper/domain':
+        specifier: workspace:*
+        version: link:../../packages/domain
+      '@teacher-helper/integrations':
+        specifier: workspace:*
+        version: link:../../packages/integrations
       next:
         specifier: ^15.5.0
         version: 15.5.26(@playwright/test@1.63.0)(@types/node@22.20.4)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
