@@ -18,6 +18,12 @@ provisioned locally before application development. Development runs against a l
 database until deployment, when PostgreSQL is installed on the Oracle Cloud compute server and the
 application is deployed and tested there.
 
+The web experience follows the project design guide in [Web Design pricipals.md](Web%20Design%20pricipals.md).
+It uses the existing accessible line-art characters and shared SVG icon sprite in
+`apps/web/public/images/line-art/` for role-oriented guidance, empty and success states, navigation,
+actions, and status cues. Character animation remains subtle and respects reduced-motion preferences;
+icons retain the shared stroke and restrained accent system.
+
 ## Technical Context
 
 <!--
@@ -55,6 +61,15 @@ credentials.
 **Project Type**: Multi-tenant web application with server-rendered and browser-interactive workflows
 and provider-backed background delivery.
 
+**Design System**: The implementation MUST follow [Web Design pricipals.md](Web%20Design%20pricipals.md)
+for typography, colour, spacing, surfaces, borders, responsive layouts, interaction states, motion,
+and focus treatment. Shared icons MUST use the SVG sprite at
+`apps/web/public/images/line-art/icons.svg` with accessible names for icon-only controls. Existing
+role-oriented character assets MUST be used selectively for onboarding, empty, success, and guidance
+states, retain their accessible metadata, and preserve `prefers-reduced-motion` behaviour. Artwork
+MUST remain secondary to task content and MUST NOT obscure safeguarding, permission, billing, or
+recovery information.
+
 **Performance Goals**: 95% of approved session messages produce an openable WhatsApp link within five
 minutes; guardian pages and centre dashboard interactions target p95 response under 500 ms at pilot
 load; invoice generation for a pilot centre completes within 30 minutes of operator effort.
@@ -89,6 +104,8 @@ full white-label customization, and native apps.
   browser, migration, audit, backup, and staging checks are included in the design.
 - **Accessible and reliable workflows**: PASS. Guardian pages are phone-first; failed delivery,
   expired links, provider outages, backups, recovery, and rollback are represented in workflows.
+  The design guide, accessible icon sprite, character metadata, and reduced-motion behaviour provide
+  consistent visual cues without making motion or artwork necessary to complete a task.
 - **Security and operational constraints**: PASS. Managed authentication, self-hosted PostgreSQL
   row-level policy, protected storage, secrets, monitoring, backups, rate limits, and incident
   escalation are included. Local PostgreSQL access during development and the server firewall,
@@ -110,6 +127,7 @@ specs/001-teacher-helper-mvp/
 ├── data-model.md        # Phase 1 output (/speckit-plan command)
 ├── quickstart.md        # Phase 1 output (/speckit-plan command)
 ├── contracts/           # Phase 1 output (/speckit-plan command)
+├── Web Design pricipals.md # Shared visual, icon, and character guidance
 └── tasks.md             # Phase 2 output (/speckit-tasks command - NOT created by /speckit-plan)
 ```
 
@@ -122,6 +140,7 @@ apps/
   ├── components/          # Shared accessible UI and phone-first page components
   ├── features/            # Domain slices: onboarding, people, sessions, billing, oversight
   ├── lib/                 # Auth, tenant context, validation, provider clients, observability
+  ├── public/images/line-art/ # Shared SVG icon sprite and animated role characters
   └── tests/               # Browser and route-level tests
 
 packages/

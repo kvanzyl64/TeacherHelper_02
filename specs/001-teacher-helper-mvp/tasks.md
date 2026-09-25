@@ -18,6 +18,7 @@ provider-contract, browser, migration, backup, and staging validation.
 
 **Purpose**: Initialize the TypeScript web application and repository structure defined in plan.md.
 
+- [ ] T000 [P] Define the SaaS mission, customer value proposition, and public landing-page messaging in `specs/001-teacher-helper-mvp/spec.md` and the root application home page so the product explains what it does before sign-in.
 - [x] T001 Install and secure local PostgreSQL for development and document the local service workflow in `infra/postgres/local/README.md`, `infra/postgres/local/init.sql`, and `infra/postgres/README.md`; development MUST use PostgreSQL, not SQLite.
 - [x] T002 Create the local `teacher_helper_dev` database and least-privilege development roles in `infra/postgres/local/001_databases.sql` and `infra/postgres/local/002_roles.sql`; seed synthetic data only and keep deployment credentials out of local development.
 - [x] T003 [P] Create the pnpm workspace and TypeScript configuration in `package.json`, `pnpm-workspace.yaml`, `tsconfig.json`, and `apps/web/tsconfig.json`.
@@ -202,6 +203,7 @@ payment controls.
 - [ ] T081 [P] Run the WhatsApp delivery performance test for SC-003, proving at least 95% of approved session updates produce an openable link within five minutes under pilot load, in `tests/performance/whatsapp-delivery.perf.test.ts` and `docs/release-readiness/whatsapp-performance.md`.
 - [ ] T082 Run the deployed-server portion of `specs/001-teacher-helper-mvp/quickstart.md`, including storage/backup validation, and record pass/fail evidence in `docs/release-readiness/teacher-helper-mvp-server.md`.
 - [ ] T083 Review tenant, child-data, retention, audit, accessibility, provider, storage, backup, and rollback controls against `.specify/memory/constitution.md` and record release approval in `docs/release-readiness/constitution-review.md`; document operator recovery, provider outage, link revocation, export deletion, and incident escalation procedures in `docs/runbooks/teacher-helper-mvp.md`.
+- [ ] T084 [P] Integrate the shared SVG icon sprite and role-oriented animated character assets from `apps/web/public/images/line-art/` into applicable navigation, onboarding, empty, success, and guidance states in `apps/web/components/`, `apps/web/app/`, and `apps/web/styles/`; preserve accessible SVG metadata, accessible names for icon-only controls, restrained accent colours, and `prefers-reduced-motion` behaviour from `specs/001-teacher-helper-mvp/Web Design pricipals.md`.
 
 ## Dependencies & Execution Order
 
@@ -210,7 +212,7 @@ payment controls.
 - **Setup (Phase 1)**: T001 and T002 are sequential database prerequisites. T003-T007 can run in parallel only after T002 confirms the local PostgreSQL database and roles are ready.
 - **Foundational (Phase 2)**: Depends on Setup; T011-T019 can run in parallel where they touch different packages, but T014 and T018 require the database layout from T008-T009.
 - **User Stories (Phases 3-7)**: Depend on all foundational tasks. US1 is the first vertical slice; US2 depends on US1 authentication and membership; US3 depends on US2 guardian verification; US4 depends on US3 link and messaging services; US5 consumes all prior domain events and records.
-- **Polish (Phase 8)**: T077 validates locally first. T078 deploys the server environment; T079-T081 can then proceed in parallel where their deployment prerequisites are ready. T082-T083 complete release review and runbook documentation.
+- **Polish (Phase 8)**: T077 validates locally first. T078 deploys the server environment; T079-T081 can then proceed in parallel where their deployment prerequisites are ready. T082-T083 complete release review and runbook documentation. T084 can proceed in parallel after the web page and component surfaces are available and must be complete before final design review.
 
 ### User Story Dependencies
 
@@ -229,7 +231,7 @@ payment controls.
 - Within US3: T043-T046; T047 and T049 in separate migration/service files; T051 and T052 after T050's contract boundary.
 - Within US4: T055-T057; T058 and T062 in separate files; T059 and T060 can proceed after T058.
 - Within US5: T064-T066; T067 and T071 in separate concerns; T068-T070 can proceed after T067.
-- Polish: T073-T076 after story completion; T079-T081 can run in parallel after T078 where their files and environments are independent.
+- Polish: T073-T076 and T084 after story completion; T079-T081 can run in parallel after T078 where their files and environments are independent.
 
 ## Parallel Example: User Story 1
 
@@ -274,6 +276,9 @@ Task: T049 protected resource service in packages/domain/src/sessions/resource-s
 5. US4 -> payment-visibility launch MVP.
 6. US5 -> operational oversight and recovery hardening.
 7. Polish -> staging, accessibility, observability, and production approval.
+
+The shared icon and animated-character asset integration in T084 is part of the Polish design pass and
+must be validated alongside responsive and reduced-motion checks.
 
 ### Parallel Team Strategy
 

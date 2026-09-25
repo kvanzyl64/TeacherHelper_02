@@ -93,8 +93,42 @@ Sans.
 - **Use conversational, step-by-step UI:** For long workflows or forms, present content sequentially
   or in a single-focus layout with clear progress indicators.
 
+## 6. Teacher Helper Artwork and Icons
+
+Use the existing line-art asset library in `apps/web/public/images/line-art/` across generated web
+pages when a visual cue improves orientation or makes a workflow feel more human.
+
+### Animated Characters
+
+- Use the role-relevant character artwork for onboarding, empty states, success states, and friendly
+  guidance: tutor, student, guardian, centre owner, or learning helper.
+- Keep characters secondary to the task content. Do not use them to replace labels, instructions,
+  status text, or required actions.
+- Preserve the existing accessible SVG `title` and `desc` elements when embedding character assets.
+- Preserve the built-in subtle animation and its `prefers-reduced-motion: reduce` behaviour. New
+  character motion must be calm, short, purposeful, and never required to understand or complete a
+  workflow.
+- Do not use animated characters on sensitive error, safeguarding, access-denied, or payment-failure
+  states unless the illustration clearly supports the recovery action and does not trivialize the
+  problem.
+
+### Icon System
+
+- Use the shared sprite at `/images/line-art/icons.svg` through SVG `<use>` references for product
+  navigation, actions, statuses, and metadata before creating new icons.
+- Use the existing symbols for consistent meaning, stroke weight, and accent treatment. Add a new
+  symbol only when no existing symbol expresses the action or object clearly.
+- Icon-only controls MUST have an accessible name and a tooltip when the meaning is not obvious.
+  Decorative icons MUST use `aria-hidden="true"`.
+- Keep icons visually subordinate to labels and content. Do not use icons as the only signal for
+  success, warning, failure, permission, or payment status; pair them with text or another
+  accessible status cue.
+- Preserve the asset library's restrained accent colours: coral, cyan, green, soft violet, amber,
+  and blush. Avoid adding unrelated icon styles or mixed stroke weights.
+
 ## Instructions for the AI Web Generator
 
 Apply this style guide across all generated screens, components, layout grids, and CSS or Tailwind
-definitions. Ensure strict adherence to the typography hierarchy, sub-pixel border details,
-optimistic motion, and minimalist layout structures.
+definitions. Use the existing character and icon assets described above where appropriate. Ensure
+strict adherence to the typography hierarchy, sub-pixel border details, optimistic motion,
+reduced-motion behaviour, accessible naming, and minimalist layout structures.

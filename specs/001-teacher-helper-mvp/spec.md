@@ -8,6 +8,24 @@
 
 **Input**: User description: "Create the specification for this project, based on TeacherHelperSpec.md"
 
+## Mission & Product Positioning
+
+Teacher Helper is a SaaS operations platform for small tutoring centres that need a calmer way to
+manage students, guardian communication, invoicing, and admin tasks without juggling WhatsApp,
+spreadsheets, and disconnected systems.
+
+The product mission is to help centre owners and tutors keep families informed, reduce manual
+follow-up, and provide a secure, mobile-first communication layer for approved session updates and
+term invoices. The public SaaS experience must make the value clear immediately: a centre can sign
+up, create a workspace, invite staff, and begin communicating with guardians within the same system.
+
+A typical landing-page value proposition is:
+
+- Keep parent communication in one secure, role-aware place.
+- Send approved session and invoice updates to verified guardians without new parent logins.
+- Give centre owners a clear operational dashboard for students, billing, and unresolved issues.
+- Keep sensitive student information isolated per centre and protected by role-based access.
+
 ## Clarifications
 
 ### Session 2026-09-25
@@ -205,8 +223,24 @@ then verify that the dashboard totals, alerts, and export contain only that cent
 
 ## Requirements *(mandatory)*
 
+### Web Design Requirements
+
+All web pages, screens, shared components, layout grids, and CSS or Tailwind definitions created
+for this feature MUST follow the project design guide in [Web Design pricipals.md](Web%20Design%20pricipals.md).
+The guide is part of this specification and governs visual direction, typography, colour and
+surface hierarchy, spacing, borders, component states, motion, keyboard focus, information density,
+and responsive layout. Where this specification is more specific, the requirement in this
+specification takes precedence.
+
 ### Functional Requirements
 
+- **FR-000**: The public SaaS landing page MUST explain the product mission, describe the value to
+  tutoring centres, and provide clear actions to log in or create an account.
+- **FR-000a**: Every web page and shared web component delivered for the MVP MUST apply the
+  requirements in [Web Design pricipals.md](Web%20Design%20pricipals.md), including its visual
+  system, responsive behaviour, interaction states, motion guidance, and accessibility-related
+  focus treatment. Any intentional deviation MUST be documented in the relevant implementation
+  plan or design decision.
 - **FR-001**: The system MUST create an isolated centre workspace for each approved onboarding
   request and MUST prevent duplicate centre names according to the centre’s configured identity.
 - **FR-002**: The system MUST authenticate centre owners, administrators, and tutors and MUST
