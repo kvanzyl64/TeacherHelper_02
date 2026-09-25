@@ -82,6 +82,15 @@ observable, and a restore preserves both relational records and protected files.
 **Expected**: No cross-centre record or file is visible or mutable; authorization tests pass at both
 application and database-policy boundaries.
 
+Implementation evidence (2026-09-25):
+
+- Added onboarding contract coverage in `tests/contract/onboarding.contract.test.ts` for valid
+  creation, duplicate active-name rejection, and trial/subscription selection.
+- Added invitation and scope integration coverage in `tests/integration/onboarding-access.test.ts`
+  for acceptance, expiry, revocation, and denied Centre B access.
+- Added browser coverage in `tests/e2e/onboarding.spec.ts` for onboarding and invite acceptance on
+  the desktop/mobile Playwright projects.
+
 ## Scenario 2: Guardian Verification and Link Scope
 
 1. Create a guardian-to-student relationship and have centre staff confirm it.

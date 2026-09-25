@@ -59,20 +59,20 @@ both, and verify that users cannot view or change the other centre's records or 
 
 ### Tests for User Story 1
 
-- [ ] T020 [P] [US1] Add onboarding and duplicate-centre contract tests in `tests/contract/onboarding.contract.test.ts` covering valid creation, duplicate active name rejection, and trial/subscription selection.
-- [ ] T021 [P] [US1] Add cross-centre invitation and role-scope integration tests in `tests/integration/onboarding-access.test.ts` covering invitation expiry, revocation, acceptance, and denied Centre B access.
-- [ ] T022 [P] [US1] Add browser tests for owner onboarding and invitation acceptance in `tests/e2e/onboarding.spec.ts` at desktop and mobile viewport sizes.
+- [x] T020 [P] [US1] Add onboarding and duplicate-centre contract tests in `tests/contract/onboarding.contract.test.ts` covering valid creation, duplicate active name rejection, and trial/subscription selection.
+- [x] T021 [P] [US1] Add cross-centre invitation and role-scope integration tests in `tests/integration/onboarding-access.test.ts` covering invitation expiry, revocation, acceptance, and denied Centre B access.
+- [x] T022 [P] [US1] Add browser tests for owner onboarding and invitation acceptance in `tests/e2e/onboarding.spec.ts` at desktop and mobile viewport sizes.
 
 ### Implementation for User Story 1
 
-- [ ] T023 [P] [US1] Create centre onboarding schemas and `Centre` state validation in `packages/domain/src/centre/centre-schema.ts` using statuses `onboarding`, `trial`, `active`, `suspended`, and `archived`.
-- [ ] T024 [US1] Implement centre creation, duplicate-name validation, trial/subscription selection, and setup progression in `packages/domain/src/centre/onboarding-service.ts` and `apps/web/app/(centre)/onboarding/actions.ts`.
-- [ ] T025 [US1] Implement centre profile and operational settings persistence in `packages/domain/src/centre/centre-settings-service.ts` and `apps/web/app/(centre)/settings/centre/page.tsx`.
-- [ ] T026 [P] [US1] Implement administrator and tutor invitation screens and actions in `apps/web/app/(centre)/team/invite/page.tsx`, `apps/web/app/(centre)/team/invite/actions.ts`, and `apps/web/app/auth/invite/[token]/page.tsx`.
-- [ ] T027 [US1] Implement invitation state transitions and membership persistence in `packages/domain/src/auth/invitation-service.ts` and `packages/database/migrations/004_membership_invites.sql` using membership statuses `invited`, `active`, `revoked`, and `expired`.
-- [ ] T028 [US1] Add centre-scoped navigation, role guards, and generic denied responses in `apps/web/components/navigation/`, `apps/web/lib/auth/route-guards.ts`, and `apps/web/app/(centre)/layout.tsx`.
-- [ ] T029 [US1] Add onboarding audit events and actionable setup errors in `packages/domain/src/centre/onboarding-audit.ts` and `apps/web/app/(centre)/onboarding/error.tsx`.
-- [ ] T030 [US1] Run the independent onboarding test and document its evidence in `specs/001-teacher-helper-mvp/quickstart.md` under the Tenant Isolation scenario.
+- [x] T023 [P] [US1] Create centre onboarding schemas and `Centre` state validation in `packages/domain/src/centre/centre-schema.ts` using statuses `onboarding`, `trial`, `active`, `suspended`, and `archived`.
+- [x] T024 [US1] Implement centre creation, duplicate-name validation, trial/subscription selection, and setup progression in `packages/domain/src/centre/onboarding-service.ts` and `apps/web/app/(centre)/onboarding/actions.ts`.
+- [x] T025 [US1] Implement centre profile and operational settings persistence in `packages/domain/src/centre/centre-settings-service.ts` and `apps/web/app/(centre)/settings/centre/page.tsx`.
+- [x] T026 [P] [US1] Implement administrator and tutor invitation screens and actions in `apps/web/app/(centre)/team/invite/page.tsx`, `apps/web/app/(centre)/team/invite/actions.ts`, and `apps/web/app/auth/invite/[token]/page.tsx`.
+- [x] T027 [US1] Implement invitation state transitions and membership persistence in `packages/domain/src/auth/invitation-service.ts` and `packages/database/migrations/004_membership_invites.sql` using membership statuses `invited`, `active`, `revoked`, and `expired`.
+- [x] T028 [US1] Add centre-scoped navigation, role guards, and generic denied responses in `apps/web/components/navigation/`, `apps/web/lib/auth/route-guards.ts`, and `apps/web/app/(centre)/layout.tsx`.
+- [x] T029 [US1] Add onboarding audit events and actionable setup errors in `packages/domain/src/centre/onboarding-audit.ts` and `apps/web/app/(centre)/onboarding/error.tsx`.
+- [x] T030 [US1] Run the independent onboarding test and document its evidence in `specs/001-teacher-helper-mvp/quickstart.md` under the Tenant Isolation scenario.
 
 **Checkpoint**: US1 provides the first usable vertical slice and can be demonstrated without later
 stories.

@@ -6,8 +6,9 @@ passwordless guardian communication, invoicing, manual payment records, and oper
 
 ## Current Status
 
-The project is currently in the specification and implementation-planning phase. Application source
-code has not been implemented yet.
+The project has completed the foundational work and User Story 1 implementation slice. Centre
+onboarding, centre settings, team invitations, tenant-scoped navigation, and invitation lifecycle
+validation are implemented. User Stories 2-5 remain planned work.
 
 Completed planning artifacts:
 
@@ -19,6 +20,13 @@ Completed planning artifacts:
 - [Quickstart validation guide](specs/001-teacher-helper-mvp/quickstart.md)
 - [Implementation tasks](specs/001-teacher-helper-mvp/tasks.md)
 - [Project constitution](.specify/memory/constitution.md)
+
+Implementation status:
+
+- Phase 1 Setup: complete
+- Phase 2 Foundational: complete
+- Phase 3 User Story 1: complete
+- Phase 4 User Story 2 and later: not started
 
 ## MVP Scope
 
@@ -55,7 +63,8 @@ security and stronger concurrent write behavior.
 1. Install and secure local PostgreSQL.
 2. Create the local `teacher_helper_dev` database and least-privilege development roles.
 3. Use synthetic data only during development.
-4. Implement the tasks in [tasks.md](specs/001-teacher-helper-mvp/tasks.md).
+4. Implement the ordered tasks in [tasks.md](specs/001-teacher-helper-mvp/tasks.md), starting with
+   the next unchecked phase.
 5. Run the local validation scenarios in [quickstart.md](specs/001-teacher-helper-mvp/quickstart.md).
 6. At deployment, install PostgreSQL and private object storage on the Oracle Cloud server.
 7. Create staging and production databases, migrate the schema, deploy the application, and run
@@ -74,8 +83,13 @@ TeacherHelperSpec.md              Original product brief
 
 ## Implementation
 
-Use the ordered tasks in [tasks.md](specs/001-teacher-helper-mvp/tasks.md). The recommended first
-milestone is the foundational database and tenant-isolation work followed by User Story 1 onboarding.
+The current demonstrable vertical slice is User Story 1: an owner can create a trial or subscription
+centre, configure centre details, and invite administrators or tutors. Contract and integration
+coverage is in `tests/contract/onboarding.contract.test.ts` and
+`tests/integration/onboarding-access.test.ts`.
+
+Use the ordered tasks in [tasks.md](specs/001-teacher-helper-mvp/tasks.md) to continue with User
+Story 2.
 
 The project constitution is the governing standard for security, privacy, testing, observability,
 accessibility, deployment, and recovery decisions.

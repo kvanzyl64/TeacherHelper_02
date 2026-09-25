@@ -5,3 +5,8 @@ export * from "./audit/audit-event";
 export * from "./state/transitions";
 export * from "./validation/validation";
 export * from "./validation/rate-limit";
+export * from "./centre/centre-schema";
+export * from "./centre/onboarding-service";
+export * from "./centre/centre-settings-service";
+export * from "./centre/onboarding-audit";
+export * from "./auth/invitation-service";
