@@ -8,7 +8,7 @@ export default function PlatformAdminLayout({ children }: Readonly<{ children: R
   return (
     <section data-scope="platform-admin">
       <AdminNavigation role={identity.role} />
-      <main>{children}</main>
+      <div>{children}</div>
     </section>
   );
 }

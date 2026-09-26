@@ -35,3 +35,4 @@ export * from "./admin/billing";
 export * from "./admin/alerts";
 export * from "./admin/dashboard-summary";
 export * from "./admin/metrics";
+export * from "./admin/billing-summary";

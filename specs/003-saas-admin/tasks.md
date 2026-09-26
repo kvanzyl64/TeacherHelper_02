@@ -1,5 +1,4 @@
 ---
-
 description: "Executable implementation tasks for the Teacher Helper SaaS admin feature"
 ---
 
@@ -17,19 +16,19 @@ description: "Executable implementation tasks for the Teacher Helper SaaS admin 
 
 **Purpose**: Establish the shared admin route shell, data model, and service contracts used by every SaaS admin page.
 
-- [X] T001 [P] Define platform-admin route metadata, navigation entries, and shared admin layout contracts in `apps/web/app/(admin)/layout.tsx`, `apps/web/components/navigation/admin-navigation.tsx`, and `apps/web/lib/auth/roles.ts`.
-- [X] T002 [P] Add the platform admin domain models for portfolio, billing, and alerts in `packages/domain/src/admin/portfolio.ts`, `packages/domain/src/admin/billing.ts`, and `packages/domain/src/admin/alerts.ts` using the constraints from `specs/003-saas-admin/data-model.md`.
-- [X] T003 [P] Create admin-facing service stubs and integration boundaries in `apps/web/features/admin/`, `apps/web/lib/auth/permissions.ts`, and `packages/integrations/src/admin/` for dashboard summaries, payment status, and alert queries.
+- [x] T001 [P] Define platform-admin route metadata, navigation entries, and shared admin layout contracts in `apps/web/app/(admin)/layout.tsx`, `apps/web/components/navigation/admin-navigation.tsx`, and `apps/web/lib/auth/roles.ts`.
+- [x] T002 [P] Add the platform admin domain models for portfolio, billing, and alerts in `packages/domain/src/admin/portfolio.ts`, `packages/domain/src/admin/billing.ts`, and `packages/domain/src/admin/alerts.ts` using the constraints from `specs/003-saas-admin/data-model.md`.
+- [x] T003 [P] Create admin-facing service stubs and integration boundaries in `apps/web/features/admin/`, `apps/web/lib/auth/permissions.ts`, and `packages/integrations/src/admin/` for dashboard summaries, payment status, and alert queries.
 
 ## Phase 2: Foundational (Blocking Access and Policy Boundaries)
 
 **Purpose**: Make platform-owner and read-only support access rules available before any dashboard or centre detail work begins.
 
-- [X] T004 Add platform-admin authorization checks and route-level role enforcement in `apps/web/lib/auth/route-guards.ts` and `apps/web/app/(admin)/layout.tsx` so only approved platform roles can access the admin route family.
-- [X] T005 Add read-only support permission handling and generic forbidden states in `apps/web/lib/auth/permissions.ts` and `apps/web/app/(admin)/forbidden/page.tsx` without exposing protected tenant data.
-- [X] T006 Add shared aggregation helpers for dashboard metrics in `packages/domain/src/admin/dashboard-summary.ts` and `packages/domain/src/admin/metrics.ts`, ensuring active centres, trial centres, overdue centres, and open alerts are computed from business-safe values only.
-- [X] T007 Add admin contract coverage for route access and content boundaries in `tests/contract/platform-admin.contract.test.ts` using `specs/003-saas-admin/contracts/platform-admin-ui.md`.
-- [X] T008 Add admin browser helpers and page fixtures in `tests/e2e/admin-helpers.ts` for viewport, focus, and role-based route validation.
+- [x] T004 Add platform-admin authorization checks and route-level role enforcement in `apps/web/lib/auth/route-guards.ts` and `apps/web/app/(admin)/layout.tsx` so only approved platform roles can access the admin route family.
+- [x] T005 Add read-only support permission handling and generic forbidden states in `apps/web/lib/auth/permissions.ts` and `apps/web/app/(admin)/forbidden/page.tsx` without exposing protected tenant data.
+- [x] T006 Add shared aggregation helpers for dashboard metrics in `packages/domain/src/admin/dashboard-summary.ts` and `packages/domain/src/admin/metrics.ts`, ensuring active centres, trial centres, overdue centres, and open alerts are computed from business-safe values only.
+- [x] T007 Add admin contract coverage for route access and content boundaries in `tests/contract/platform-admin.contract.test.ts` using `specs/003-saas-admin/contracts/platform-admin-ui.md`.
+- [x] T008 Add admin browser helpers and page fixtures in `tests/e2e/admin-helpers.ts` for viewport, focus, and role-based route validation.
 
 ## Phase 3: User Story 1 - Monitor the SaaS health and customer portfolio (Priority: P1)
 
@@ -39,14 +38,14 @@ description: "Executable implementation tasks for the Teacher Helper SaaS admin 
 
 ### Tests for User Story 1
 
-- [ ] T009 [P] [US1] Add dashboard browser coverage in `tests/e2e/admin-dashboard.spec.ts` to verify active centres, trial centres, overdue counts, open alerts, and navigation to finance and alerts views.
-- [ ] T010 [P] [US1] Add portfolio contract assertions in `tests/contract/platform-admin.contract.test.ts` for totals, summary cards, and safe business-only content in the admin dashboard.
+- [x] T009 [P] [US1] Add dashboard browser coverage in `tests/e2e/admin-dashboard.spec.ts` to verify active centres, trial centres, overdue counts, open alerts, and navigation to finance and alerts views.
+- [x] T010 [P] [US1] Add portfolio contract assertions in `tests/contract/platform-admin.contract.test.ts` for totals, summary cards, and safe business-only content in the admin dashboard.
 
 ### Implementation for User Story 1
 
-- [ ] T011 [US1] Implement the platform overview route in `apps/web/app/(admin)/page.tsx` with portfolio summary cards and safe centre-level links.
-- [ ] T012 [US1] Build the reusable admin summary card and section components in `apps/web/components/admin/portfolio-summary.tsx` and `apps/web/components/admin/alert-summary.tsx`.
-- [ ] T013 [US1] Connect the route to the dashboard service output in `packages/integrations/src/admin/dashboard.ts` and `apps/web/features/admin/dashboard.ts` so summary metrics are sourced from the existing multi-tenant domain without leaking protected records.
+- [x] T011 [US1] Implement the platform overview route in `apps/web/app/(admin)/admin/page.tsx` with portfolio summary cards and safe centre-level links.
+- [x] T012 [US1] Build the reusable admin summary card and section components in `apps/web/components/admin/portfolio-summary.tsx` and `apps/web/components/admin/alert-summary.tsx`.
+- [x] T013 [US1] Connect the route to the dashboard service output in `packages/integrations/src/admin/dashboard.ts` and `apps/web/features/admin/dashboard.ts` so summary metrics are sourced from the existing multi-tenant domain without leaking protected records.
 
 ## Phase 4: User Story 2 - Track payments, subscription health, and revenue signals (Priority: P1)
 
@@ -56,14 +55,14 @@ description: "Executable implementation tasks for the Teacher Helper SaaS admin 
 
 ### Tests for User Story 2
 
-- [ ] T014 [P] [US2] Add billing overview browser tests in `tests/e2e/admin-billing.spec.ts` for overdue balances, failed payments, and plan adoption states.
-- [ ] T015 [P] [US2] Add revenue and payment summary assertions in `tests/contract/platform-admin.contract.test.ts` covering billing status, overdue count, and centre follow-up actions.
+- [x] T014 [P] [US2] Add billing overview browser tests in `tests/e2e/admin-billing.spec.ts` for overdue balances, failed payments, and plan adoption states.
+- [x] T015 [P] [US2] Add revenue and payment summary assertions in `tests/contract/platform-admin.contract.test.ts` covering billing status, overdue count, and centre follow-up actions.
 
 ### Implementation for User Story 2
 
-- [ ] T016 [US2] Implement the billing overview route in `apps/web/app/(admin)/billing/page.tsx` with subscription health, overdue centres, and action links for follow-up.
-- [ ] T017 [US2] Build the billing table and status badge components in `apps/web/components/admin/billing-overview.tsx` and `apps/web/components/admin/subscription-status.tsx`.
-- [ ] T018 [US2] Add billing aggregation logic in `packages/domain/src/admin/billing-summary.ts` and `packages/integrations/src/admin/billing.ts` so payment data remains centre-scoped and currency-aware while using business-safe summaries.
+- [x] T016 [US2] Implement the billing overview route in `apps/web/app/(admin)/admin/billing/page.tsx` with subscription health, overdue centres, and action links for follow-up.
+- [x] T017 [US2] Build the billing table and status badge components in `apps/web/components/admin/billing-overview.tsx` and `apps/web/components/admin/subscription-status.tsx`.
+- [x] T018 [US2] Add billing aggregation logic in `packages/domain/src/admin/billing-summary.ts` and `packages/integrations/src/admin/billing.ts` so payment data remains centre-scoped and currency-aware while using business-safe summaries.
 
 ## Phase 5: User Story 3 - Resolve operational escalations and protect tenant boundaries (Priority: P2)
 
