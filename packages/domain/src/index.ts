@@ -30,3 +30,8 @@ export * from "./oversight/dashboard-service";
 export * from "./oversight/export-service";
 export * from "./oversight/retention-service";
 export * from "./oversight/recovery-monitor";
+export * from "./admin/portfolio";
+export * from "./admin/billing";
+export * from "./admin/alerts";
+export * from "./admin/dashboard-summary";
+export * from "./admin/metrics";

@@ -67,7 +67,11 @@ importers:
 
   packages/domain: {}
 
-  packages/integrations: {}
+  packages/integrations:
+    dependencies:
+      '@teacher-helper/domain':
+        specifier: workspace:*
+        version: link:../domain
 
   packages/test-support: {}
 

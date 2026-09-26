@@ -7,3 +7,6 @@ export * from "./storage/protected-path";
 export * from "./messaging/verification-messages";
 export * from "./documents/invoice-document";
 export * from "./storage/exports";
+export * from "./admin/dashboard";
+export * from "./admin/billing";
+export * from "./admin/alerts";

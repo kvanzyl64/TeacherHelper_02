@@ -17,19 +17,19 @@ description: "Executable implementation tasks for the Teacher Helper SaaS admin 
 
 **Purpose**: Establish the shared admin route shell, data model, and service contracts used by every SaaS admin page.
 
-- [ ] T001 [P] Define platform-admin route metadata, navigation entries, and shared admin layout contracts in `apps/web/app/(admin)/layout.tsx`, `apps/web/components/navigation/admin-navigation.tsx`, and `apps/web/lib/auth/roles.ts`.
-- [ ] T002 [P] Add the platform admin domain models for portfolio, billing, and alerts in `packages/domain/src/admin/portfolio.ts`, `packages/domain/src/admin/billing.ts`, and `packages/domain/src/admin/alerts.ts` using the constraints from `specs/003-saas-admin/data-model.md`.
-- [ ] T003 [P] Create admin-facing service stubs and integration boundaries in `apps/web/features/admin/`, `apps/web/lib/auth/permissions.ts`, and `packages/integrations/src/admin/` for dashboard summaries, payment status, and alert queries.
+- [X] T001 [P] Define platform-admin route metadata, navigation entries, and shared admin layout contracts in `apps/web/app/(admin)/layout.tsx`, `apps/web/components/navigation/admin-navigation.tsx`, and `apps/web/lib/auth/roles.ts`.
+- [X] T002 [P] Add the platform admin domain models for portfolio, billing, and alerts in `packages/domain/src/admin/portfolio.ts`, `packages/domain/src/admin/billing.ts`, and `packages/domain/src/admin/alerts.ts` using the constraints from `specs/003-saas-admin/data-model.md`.
+- [X] T003 [P] Create admin-facing service stubs and integration boundaries in `apps/web/features/admin/`, `apps/web/lib/auth/permissions.ts`, and `packages/integrations/src/admin/` for dashboard summaries, payment status, and alert queries.
 
 ## Phase 2: Foundational (Blocking Access and Policy Boundaries)
 
 **Purpose**: Make platform-owner and read-only support access rules available before any dashboard or centre detail work begins.
 
-- [ ] T004 Add platform-admin authorization checks and route-level role enforcement in `apps/web/lib/auth/route-guards.ts` and `apps/web/app/(admin)/layout.tsx` so only approved platform roles can access the admin route family.
-- [ ] T005 Add read-only support permission handling and generic forbidden states in `apps/web/lib/auth/permissions.ts` and `apps/web/app/(admin)/forbidden/page.tsx` without exposing protected tenant data.
-- [ ] T006 Add shared aggregation helpers for dashboard metrics in `packages/domain/src/admin/dashboard-summary.ts` and `packages/domain/src/admin/metrics.ts`, ensuring active centres, trial centres, overdue centres, and open alerts are computed from business-safe values only.
-- [ ] T007 Add admin contract coverage for route access and content boundaries in `tests/contract/platform-admin.contract.test.ts` using `specs/003-saas-admin/contracts/platform-admin-ui.md`.
-- [ ] T008 Add admin browser helpers and page fixtures in `tests/e2e/admin-helpers.ts` for viewport, focus, and role-based route validation.
+- [X] T004 Add platform-admin authorization checks and route-level role enforcement in `apps/web/lib/auth/route-guards.ts` and `apps/web/app/(admin)/layout.tsx` so only approved platform roles can access the admin route family.
+- [X] T005 Add read-only support permission handling and generic forbidden states in `apps/web/lib/auth/permissions.ts` and `apps/web/app/(admin)/forbidden/page.tsx` without exposing protected tenant data.
+- [X] T006 Add shared aggregation helpers for dashboard metrics in `packages/domain/src/admin/dashboard-summary.ts` and `packages/domain/src/admin/metrics.ts`, ensuring active centres, trial centres, overdue centres, and open alerts are computed from business-safe values only.
+- [X] T007 Add admin contract coverage for route access and content boundaries in `tests/contract/platform-admin.contract.test.ts` using `specs/003-saas-admin/contracts/platform-admin-ui.md`.
+- [X] T008 Add admin browser helpers and page fixtures in `tests/e2e/admin-helpers.ts` for viewport, focus, and role-based route validation.
 
 ## Phase 3: User Story 1 - Monitor the SaaS health and customer portfolio (Priority: P1)
 
