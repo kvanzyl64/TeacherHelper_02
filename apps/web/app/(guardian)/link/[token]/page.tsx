@@ -2,8 +2,13 @@ import { PageHeader } from "../../../../components/navigation/page-header";
 import { PageState } from "../../../../components/navigation/page-state";
 import { GuardianSessionView } from "../../../../features/guardian-link/session-view";
 
-export default function GuardianLinkPage({ params }: { params: { token: string } }) {
-  const tokenState = String(params.token ?? "").toLowerCase();
+export default async function GuardianLinkPage({
+  params,
+}: {
+  params: Promise<{ token: string }>;
+}) {
+  const { token } = await params;
+  const tokenState = String(token ?? "").toLowerCase();
   const unavailableKind = tokenState.includes("expired") ? "expired" : tokenState.includes("revoked") ? "revoked" : tokenState.includes("denied") ? "denied" : tokenState.includes("failed") ? "failed" : null;
 
   const session = {

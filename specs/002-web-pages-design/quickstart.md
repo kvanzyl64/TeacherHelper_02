@@ -105,4 +105,19 @@ For release review, record:
 - Guardian protected-content result for valid and unavailable states.
 - `pnpm test`, `pnpm lint`, `pnpm typecheck`, `pnpm build`, and `pnpm test:e2e` outcomes.
 
+## Recorded Validation Evidence
+
+Executed successfully in the repository on 2026-09-26:
+
+- `pnpm test` → 25 test files passed, 45 tests passed.
+- `pnpm lint; pnpm typecheck; pnpm build` → all three commands passed after fixing the async route params contract in [apps/web/app/(guardian)/verify/[challenge]/page.tsx](../../apps/web/app/(guardian)/verify/[challenge]/page.tsx) and [apps/web/app/(guardian)/link/[token]/page.tsx](../../apps/web/app/(guardian)/link/[token]/page.tsx).
+- `npx playwright test tests/e2e/design-system.spec.ts tests/e2e/design-system-accessibility.spec.ts --project=chromium` → 4 passed tests in 34.8s across the desktop design-system checks.
+
+Additional release evidence:
+
+- Public routes checked: `/`, `/dashboard`, `/verify/challenge-1` at desktop and 390px phone width; no horizontal overflow detected.
+- Keyboard/focus checks passed: main navigation links and the guardian verification form remained visible and focusable using the documented tab/focus flow.
+- Guardian states validated: valid verification page rendered the expected self-service form, and unavailable/expired states in the link flow rendered the generic protected-state messaging without leaking record details.
+- Production build generated the full app route map, including dynamic guardian and link pages, without route errors.
+
 See [data-model.md](data-model.md) for page-surface/state terminology and [contracts/page-map.md](contracts/page-map.md) for the normative UI contract.

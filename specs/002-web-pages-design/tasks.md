@@ -121,10 +121,10 @@ description: "Executable implementation tasks for the Teacher Helper web page ma
 
 **Purpose**: Prove the page map and design system work together without changing domain behavior.
 
-- [ ] T035 [P] Run the existing Vitest suite and add regression assertions for unchanged tenant, auth, guardian-link, billing, notification, storage, and audit behavior in `tests/contract/`, `tests/integration/`, and `packages/domain/src/`.
-- [ ] T036 [P] Run lint, typecheck, and production build and record outcomes in `specs/002-web-pages-design/quickstart.md`.
-- [ ] T037 Run the complete page-map quickstart at desktop and mobile sizes and record link destinations, role navigation, state coverage, overflow, focus, reduced-motion, and guardian disclosure evidence in `specs/002-web-pages-design/quickstart.md`.
-- [ ] T038 [P] Review all changed page surfaces against constitution obligations and record accessibility, tenant/child-data, recovery, and protected-content evidence in `specs/002-web-pages-design/quickstart.md`.
+- [X] T035 [P] Run the existing Vitest suite and add regression assertions for unchanged tenant, auth, guardian-link, billing, notification, storage, and audit behavior in `tests/contract/`, `tests/integration/`, and `packages/domain/src/`.
+- [X] T036 [P] Run lint, typecheck, and production build and record outcomes in `specs/002-web-pages-design/quickstart.md`.
+- [X] T037 Run the complete page-map quickstart at desktop and mobile sizes and record link destinations, role navigation, state coverage, overflow, focus, reduced-motion, and guardian disclosure evidence in `specs/002-web-pages-design/quickstart.md`.
+- [X] T038 [P] Review all changed page surfaces against constitution obligations and record accessibility, tenant/child-data, recovery, and protected-content evidence in `specs/002-web-pages-design/quickstart.md`.
 
 ## Dependencies and Execution Order
 

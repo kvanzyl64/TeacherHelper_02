@@ -4,8 +4,13 @@ import { PageHeader } from "../../../../components/navigation/page-header";
 import { PageState } from "../../../../components/navigation/page-state";
 import { verifyGuardianCodeAction } from "./actions";
 
-export default function GuardianVerificationPage({ params }: { params: { challenge: string } }) {
-  const challengeState = String(params.challenge ?? "").toLowerCase();
+export default async function GuardianVerificationPage({
+  params,
+}: {
+  params: Promise<{ challenge: string }>;
+}) {
+  const { challenge } = await params;
+  const challengeState = String(challenge ?? "").toLowerCase();
   const challengeFailed = challengeState.includes("expired") || challengeState.includes("invalid") || challengeState.includes("revoked");
 
   return (
