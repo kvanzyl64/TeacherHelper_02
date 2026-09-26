@@ -17,10 +17,10 @@ description: "Executable implementation tasks for the Teacher Helper web page ma
 
 **Purpose**: Establish the shared page-map vocabulary, visual tokens, asset helpers, and state primitives used by every page family.
 
-- [ ] T001 [P] Define typed page-surface, navigation-link, page-state, and role-visibility fixtures in `apps/web/tests/page-map-fixtures.ts` from `specs/002-web-pages-design/data-model.md`.
-- [ ] T002 [P] Add document-level design tokens, focus-ring rules, reduced-motion behavior, and responsive reset styles in `apps/web/app/globals.css` according to `specs/001-teacher-helper-mvp/Web Design pricipals.md`.
-- [ ] T003 [P] Create the shared SVG sprite icon wrapper with accessible-name support in `apps/web/components/navigation/icon.tsx` and document decorative versus meaningful icon usage in `apps/web/components/navigation/README.md`.
-- [ ] T004 [P] Create reusable page heading, breadcrumb, and loading/empty/unavailable/error state primitives in `apps/web/components/navigation/page-header.tsx` and `apps/web/components/navigation/page-state.tsx`.
+- [X] T001 [P] Define typed page-surface, navigation-link, page-state, and role-visibility fixtures in `apps/web/tests/page-map-fixtures.ts` from `specs/002-web-pages-design/data-model.md`.
+- [X] T002 [P] Add document-level design tokens, focus-ring rules, reduced-motion behavior, and responsive reset styles in `apps/web/app/globals.css` according to `specs/001-teacher-helper-mvp/Web Design pricipals.md`.
+- [X] T003 [P] Create the shared SVG sprite icon wrapper with accessible-name support in `apps/web/components/navigation/icon.tsx` and document decorative versus meaningful icon usage in `apps/web/components/navigation/README.md`.
+- [X] T004 [P] Create reusable page heading, breadcrumb, and loading/empty/unavailable/error state primitives in `apps/web/components/navigation/page-header.tsx` and `apps/web/components/navigation/page-state.tsx`.
 
 ## Phase 2: Foundational (Blocking Navigation and Contract Boundaries)
 
@@ -113,7 +113,7 @@ description: "Executable implementation tasks for the Teacher Helper web page ma
 
 ### Implementation for User Story 5
 
-- [ ] T032 [P] [US5] Align shared navigation, page headers, state panels, buttons, links, and focus styles with the design guide in `apps/web/styles/navigation.css`, `apps/web/styles/guardian.css`, and `apps/web/app/globals.css`.
+- [ ] T032 [P] [US5] Align shared navigation, page headers, state panels, buttons, links, and focus styles with the canonical landing-page reference and design guide in `apps/web/app/page.tsx`, `apps/web/app/page.module.css`, `apps/web/styles/navigation.css`, `apps/web/styles/guardian.css`, and `apps/web/app/globals.css`.
 - [ ] T033 [P] [US5] Integrate the shared icon sprite and role-oriented character artwork into applicable navigation, onboarding, empty, success, and guidance states in `apps/web/components/`, `apps/web/app/`, and `apps/web/public/images/line-art/`, preserving accessible SVG metadata and reduced-motion behavior.
 - [ ] T034 [US5] Review page copy and terminology against `specs/002-web-pages-design/spec.md`, `specs/002-web-pages-design/contracts/page-map.md`, and `specs/001-teacher-helper-mvp/Web Design pricipals.md`; remove placeholder labels and document any intentional deviations in `specs/002-web-pages-design/quickstart.md`.
 
