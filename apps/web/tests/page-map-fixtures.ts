@@ -96,6 +96,7 @@ export const pageSurfaceFixtures = [
     family: "guardian",
     purpose: "Open an approved single-record link",
     audience: "guardian",
+    parentKey: "guardian-verification",
     primaryAction: "View linked record",
     states: ["loading", "populated", "unavailable", "expired", "revoked", "denied", "failed"],
     sensitivity: "guardian-scoped",

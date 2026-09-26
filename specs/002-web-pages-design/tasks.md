@@ -26,10 +26,10 @@ description: "Executable implementation tasks for the Teacher Helper web page ma
 
 **Purpose**: Make role-aware navigation and page-state behavior available before story-specific page work begins.
 
-- [ ] T005 Define shared authenticated navigation context and active-location behavior in `apps/web/components/navigation/centre-navigation.tsx` and `apps/web/app/(centre)/layout.tsx`; navigation visibility MUST never replace server-side authorization.
-- [ ] T006 Add a shared staff page shell with mobile stacking, parent-route links, current-area indication, and responsive content constraints in `apps/web/components/navigation/workspace-shell.tsx`, `apps/web/app/(centre)/layout.tsx`, and `apps/web/app/(tutor)/layout.tsx`.
-- [ ] T007 [P] Add UI contract tests for public destinations, role-visible navigation, nested-page parent links, and required page states in `tests/contract/page-map.contract.test.ts` using `specs/002-web-pages-design/contracts/page-map.md`.
-- [ ] T008 [P] Add browser test helpers for desktop/mobile viewport selection, horizontal-overflow detection, keyboard focus capture, and reduced-motion emulation in `tests/e2e/page-map-helpers.ts`.
+- [X] T005 Define shared authenticated navigation context and active-location behavior in `apps/web/components/navigation/centre-navigation.tsx` and `apps/web/app/(centre)/layout.tsx`; navigation visibility MUST never replace server-side authorization.
+- [X] T006 Add a shared staff page shell with mobile stacking, parent-route links, current-area indication, and responsive content constraints in `apps/web/components/navigation/workspace-shell.tsx`, `apps/web/app/(centre)/layout.tsx`, and `apps/web/app/(tutor)/layout.tsx`.
+- [X] T007 [P] Add UI contract tests for public destinations, role-visible navigation, nested-page parent links, and required page states in `tests/contract/page-map.contract.test.ts` using `specs/002-web-pages-design/contracts/page-map.md`.
+- [X] T008 [P] Add browser test helpers for desktop/mobile viewport selection, horizontal-overflow detection, keyboard focus capture, and reduced-motion emulation in `tests/e2e/page-map-helpers.ts`.
 
 ## Phase 3: User Story 1 - Discover and Enter the Product (Priority: P1)
 
