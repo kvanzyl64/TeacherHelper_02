@@ -10,18 +10,23 @@
     "typecheck": "tsc --build",
     "test": "vitest run",
     "test:contract": "vitest run tests/contract",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "db:status": "node packages/database/scripts/status.mjs",
+    "db:migrate": "node packages/database/scripts/migrate.mjs",
+    "test:db": "vitest run packages/database/src/migration-status.test.ts tests/integration/database-migrations.test.ts tests/integration/tenant-rls.test.ts tests/integration/identity-authorization.test.ts"
   },
   "devDependencies": {
     "@eslint/js": "^9.35.0",
     "@playwright/test": "^1.55.0",
     "@types/node": "^22.15.0",
+    "@types/pg": "^8.23.1",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@typescript-eslint/eslint-plugin": "^8.44.0",
     "@typescript-eslint/parser": "^8.44.0",
     "eslint": "^9.35.0",
     "eslint-config-next": "^15.5.0",
+    "pg": "^8.23.0",
     "prettier": "^3.6.2",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4"

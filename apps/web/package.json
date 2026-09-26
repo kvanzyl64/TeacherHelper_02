@@ -5,7 +5,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "create-platform-admin": "node scripts/create-platform-admin.mjs"
+    "create-platform-admin": "node scripts/create-platform-admin.mjs",
+    "provision-platform-owner": "node scripts/provision-platform-owner.mjs"
   },
   "dependencies": {
     "@next/env": "^15.5.0",

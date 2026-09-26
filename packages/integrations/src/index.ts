@@ -10,3 +10,5 @@ export * from "./storage/exports";
 export * from "./admin/dashboard";
 export * from "./admin/billing";
 export * from "./admin/alerts";
+export * from "./database/tenant-repository";
+export * from "./database/platform-admin-repository";

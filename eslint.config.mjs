@@ -16,6 +16,10 @@ export default [
       "**/*.min.js",
     ],
   },
+  {
+    files: ["**/*.mjs"],
+    languageOptions: { globals: { console: "readonly", process: "readonly", URL: "readonly" } },
+  },
   eslint.configs.recommended,
   {
     files: ["**/*.ts", "**/*.tsx"],

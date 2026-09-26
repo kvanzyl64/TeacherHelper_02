@@ -26,6 +26,28 @@ installation.
 The local database contains synthetic development data only. Supply a generated password through the
 psql `app_password` variable and keep the resulting connection string in an ignored `.env.local` file.
 
+Create the isolated test database and role as a local administrator. Supply the password at runtime;
+do not commit it or grant the role ownership, superuser, or `BYPASSRLS` privileges:
+
+```powershell
+psql -h localhost -U postgres -d postgres -v test_password="<generated-test-password>" -f infra/postgres/local/003_test_database.sql
+```
+
+The test connection URL is `postgresql://teacher_helper_test_role:<password>@127.0.0.1:5432/teacher_helper_test`.
+The URL safety guard rejects every other database for test reset operations, including
+`teacher_helper_dev`, and rejects non-local, staging, and production hosts.
+
+After the migration ledger exists, apply the runtime-role hardening as a local administrator:
+
+```powershell
+psql -h localhost -U postgres -d teacher_helper_dev -f infra/postgres/local/004_runtime_roles.sql
+psql -h localhost -U postgres -d teacher_helper_test -f infra/postgres/local/004_runtime_roles.sql
+```
+
+The script asserts that `teacher_helper_app` is not a superuser, does not have `BYPASSRLS`, and
+does not own protected `app` tables. The migration ledger remains writable only by
+`teacher_helper_migrator`.
+
 After T002 creates the database and role, initialize the local schema with:
 
 ```powershell

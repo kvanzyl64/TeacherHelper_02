@@ -9,6 +9,7 @@ coverage/
 *.tsbuildinfo
 dist/
 build/
+backups/
 *.log
 .DS_Store
 Thumbs.db

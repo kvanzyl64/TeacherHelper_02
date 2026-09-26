@@ -1,12 +1,6 @@
-import { loginPlatformAdmin } from "./actions";
+import { beginOidcSignIn } from "./actions";
 
-export default async function LoginPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ error?: string }>;
-}) {
-  const { error } = await searchParams;
-
+export default function LoginPage() {
   return (
     <main className="auth-page">
       <header className="auth-page__topbar">
@@ -31,26 +25,11 @@ export default async function LoginPage({
           </div>
         </section>
         <section className="auth-page__form-section" aria-labelledby="login-form-title">
-          <p className="auth-page__eyebrow">Staff access</p>
+          <p className="auth-page__eyebrow">Managed staff access</p>
           <h2 id="login-form-title">Welcome back</h2>
-          <p className="auth-page__form-copy">Use the email and password linked to your account.</p>
-          {error ? (
-            <p className="auth-page__error" role="alert">
-              Email or password is incorrect.
-            </p>
-          ) : null}
-          <form className="auth-page__form" action={loginPlatformAdmin}>
-            <label htmlFor="email">Email</label>
-            <input id="email" name="email" type="email" autoComplete="username" required />
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              autoComplete="current-password"
-              required
-            />
-            <button type="submit">Sign in</button>
+          <p className="auth-page__form-copy">Continue with your organization&apos;s secure sign-in provider.</p>
+          <form className="auth-page__form" action={beginOidcSignIn}>
+            <button type="submit">Continue to secure sign-in</button>
           </form>
         </section>
       </div>

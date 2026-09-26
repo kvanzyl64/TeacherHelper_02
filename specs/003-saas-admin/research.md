@@ -1,5 +1,29 @@
 # Research: Database-Backed Product Readiness
 
+## Phase 1 Provider Readiness
+
+**Selected provider**: Auth0 OIDC, isolated behind a server-only provider adapter. Development
+and test tenants are separate from production, so test identities cannot authenticate against the
+production tenant. The provider is selected for standards-based OIDC discovery and authorization
+code flow; no provider SDK is required in domain or repository code.
+
+Required environment configuration names (values remain outside source control):
+
+- `OIDC_ISSUER_URL`
+- `OIDC_CLIENT_ID`
+- `OIDC_CLIENT_SECRET`
+- `OIDC_AUDIENCE`
+- `OIDC_JWKS_URI`
+- `OIDC_AUTHORIZATION_ENDPOINT`
+- `OIDC_TOKEN_ENDPOINT`
+- `OIDC_REDIRECT_URI`
+- `OIDC_DEV_TENANT`
+- `OIDC_TEST_TENANT`
+
+The test strategy is a signed OIDC fixture or a dedicated Auth0 test tenant, selected by the test
+environment. Tests must resolve issuer/subject through the application mapping and never use
+production identities or credentials.
+
 ## Decision: Use managed OIDC for authentication
 
 **Decision**: Authenticate centre staff, guardians where applicable, and the SaaS owner through a managed OpenID Connect provider. The application stores provider `issuer` and `subject` mappings and application roles; it does not store user passwords or implement a parallel credential/session system. Keep provider configuration behind an OIDC contract so deployment configuration can select the managed provider.

@@ -17,3 +17,15 @@ Before applying a migration, create a database backup. Rollback means restoring 
 applying a documented compensating migration; destructive down scripts are not run automatically.
 Migration files are immutable after they have been applied. Seeds contain synthetic development
 data only and are never run against staging or production without an explicit release step.
+
+## Read-only schema inventory
+
+Inspect tables, RLS flags, policies, and grants without changing the database:
+
+```powershell
+node packages/database/scripts/inspect-schema.mjs
+```
+
+Set `DATABASE_URL` to select another local database or `PSQL_BIN` when PostgreSQL is not on `PATH`.
+The command prints CSV rows with `tables`, `rls`, `policy`, and `grant` sections and exits non-zero
+if `psql` cannot connect. It never executes DDL, DML, or reset operations.
