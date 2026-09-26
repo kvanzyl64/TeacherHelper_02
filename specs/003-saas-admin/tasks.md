@@ -72,24 +72,24 @@ description: "Executable implementation tasks for the Teacher Helper SaaS admin 
 
 ### Tests for User Story 3
 
-- [ ] T019 [P] [US3] Add alert and access browser coverage in `tests/e2e/admin-alerts.spec.ts` for open alerts, severity labels, read-only support visibility, and denied edits.
-- [ ] T020 [P] [US3] Add tenant isolation contract assertions in `tests/contract/platform-admin.contract.test.ts` for out-of-scope centre access and safe detail content.
+- [x] T019 [P] [US3] Add alert and access browser coverage in `tests/e2e/admin-alerts.spec.ts` for open alerts, severity labels, read-only support visibility, and denied edits.
+- [x] T020 [P] [US3] Add tenant isolation contract assertions in `tests/contract/platform-admin.contract.test.ts` for out-of-scope centre access and safe detail content.
 
 ### Implementation for User Story 3
 
-- [ ] T021 [US3] Implement the platform alerts route in `apps/web/app/(admin)/alerts/page.tsx` with severity, status, affected centre, timestamps, and follow-up summary.
-- [ ] T022 [US3] Implement the centre detail route in `apps/web/app/(admin)/centres/[centreId]/page.tsx` with safe business contact information, payment risk, and open alerts only.
-- [ ] T023 [US3] Add alert and support-case domain models and service mapping in `packages/domain/src/admin/alerts.ts`, `packages/domain/src/admin/support-cases.ts`, and `apps/web/features/admin/alerts.ts` while excluding child, guardian, and session detail from the page context.
-- [ ] T024 [US3] Record auditable admin actions and access denials in `packages/domain/src/audit/admin-events.ts` and the relevant admin action handlers so escalations and recoveries remain reviewable.
+- [x] T021 [US3] Implement the platform alerts route in `apps/web/app/(admin)/alerts/page.tsx` with severity, status, affected centre, timestamps, and follow-up summary.
+- [x] T022 [US3] Implement the centre detail route in `apps/web/app/(admin)/centres/[centreId]/page.tsx` with safe business contact information, payment risk, and open alerts only.
+- [x] T023 [US3] Add alert and support-case domain models and service mapping in `packages/domain/src/admin/alerts.ts`, `packages/domain/src/admin/support-cases.ts`, and `apps/web/features/admin/alerts.ts` while excluding child, guardian, and session detail from the page context.
+- [x] T024 [US3] Record auditable admin actions and access denials in `packages/domain/src/audit/admin-events.ts` and the relevant admin action handlers so escalations and recoveries remain reviewable.
 
 ## Phase 6: Final Polish and Cross-Cutting Validation
 
 **Purpose**: Prove the admin routes, access model, and metrics remain safe, testable, and compliant with the project constitution.
 
-- [ ] T025 [P] Run the targeted admin and contract suite across `tests/contract/`, `tests/integration/`, and `packages/domain/src/` to validate tenant isolation, billing risk, and platform summary behavior.
-- [ ] T026 [P] Run the repository lint, typecheck, and production build and record the results in `specs/003-saas-admin/quickstart.md`.
-- [ ] T027 Validate the platform-owner and read-only support quickstart scenarios in `specs/003-saas-admin/quickstart.md` for dashboard, billing, alert review, and denied access flows.
-- [ ] T028 Review the final SaaS admin implementation against the constitution in `specs/003-saas-admin/quickstart.md` and confirm least privilege, tenant isolation, privacy, and audit evidence.
+- [x] T025 [P] Run the targeted admin and contract suite across `tests/contract/`, `tests/integration/`, and `packages/domain/src/` to validate tenant isolation, billing risk, and platform summary behavior.
+- [x] T026 [P] Run the repository lint, typecheck, and production build and record the results in `specs/003-saas-admin/quickstart.md`.
+- [x] T027 Validate the platform-owner and read-only support quickstart scenarios in `specs/003-saas-admin/quickstart.md` for dashboard, billing, alert review, and denied access flows.
+- [x] T028 Review the final SaaS admin implementation against the constitution in `specs/003-saas-admin/quickstart.md` and confirm least privilege, tenant isolation, privacy, and audit evidence.
 
 ## Dependencies and Execution Order
 

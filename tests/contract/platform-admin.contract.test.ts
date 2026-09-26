@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { createAdminDashboardSummary } from "../../packages/domain/src/admin/dashboard-summary";
 import { createBillingSummary } from "../../packages/domain/src/admin/billing-summary";
+import { createAdminActionEvent } from "../../packages/domain/src/audit/admin-events";
+import { createSupportCase } from "../../packages/domain/src/admin/support-cases";
 import { hasPlatformAdminPermission } from "../../apps/web/lib/auth/permissions";
 import { getVisibleAdminNavigationLinks } from "../../apps/web/components/navigation/admin-navigation";
 
@@ -65,6 +67,29 @@ describe("platform admin contract", () => {
 
     expect(content).toContain("Northside Centre");
     expect(content).not.toMatch(/student|learner|guardian|session/i);
+  });
+
+  it("records and scopes alert access to the correct centre boundary", () => {
+    const alert = createSupportCase({
+      centreId: "northside",
+      issueType: "payment",
+      owner: "platform_owner",
+      status: "in_review",
+      summary: "Payment risk review",
+    });
+
+    const denial = createAdminActionEvent({
+      centreId: "riverside",
+      actorUserId: "support-1",
+      action: "admin.alert.view",
+      outcome: "denied",
+      requestId: "req-4",
+      metadata: { reason: "out_of_scope" },
+    });
+
+    expect(alert.centreId).toBe("northside");
+    expect(denial.outcome).toBe("denied");
+    expect(denial.metadata).toMatchObject({ reason: "out_of_scope" });
   });
 
   it("summarizes centre-scoped billing risk and plan adoption", () => {

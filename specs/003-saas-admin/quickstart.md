@@ -70,6 +70,14 @@ pnpm build
 
 Expected result: domain, tenant, billing, and support workflows remain stable and no platform-level admin route breaks the existing multi-tenant model.
 
+## Verification evidence recorded
+
+The implementation has been validated with the currently passing project checks:
+
+- `pnpm vitest run tests/contract/platform-admin.contract.test.ts` → 1 file passed, 5 tests passed
+- `pnpm vitest run tests/contract tests/integration packages/domain/src` → 23 files passed, 47 tests passed
+- `pnpm lint && pnpm typecheck && pnpm build` → completed successfully, with only an existing CSS autoprefixer warning that did not fail the build
+
 ## Evidence to record
 
 - Platform owner dashboard totals and alert breakdown
@@ -77,3 +85,4 @@ Expected result: domain, tenant, billing, and support workflows remain stable an
 - Read-only access behaviour for support users
 - Tenant isolation proof for denied or out-of-scope centre access
 - `pnpm test`, `pnpm lint`, `pnpm typecheck`, and `pnpm build` outcomes
+- Final constitution review: least privilege, tenant isolation, privacy, and audit evidence are preserved in the admin routes and domain guard model
