@@ -1,10 +1,10 @@
 import { saveCentreSettingsAction } from "./actions";
+import { PageHeader } from "../../../../components/navigation/page-header";
 
 export default function CentreSettingsPage() {
   return (
     <main>
-      <h1>Centre settings</h1>
-      <p>Configure your centre profile, timezone, and notification defaults.</p>
+      <PageHeader title="Centre settings" description="Configure your centre profile, timezone, and notification defaults." />
       <form action={saveCentreSettingsAction}>
         <label htmlFor="legalName">Legal name</label>
         <input id="legalName" name="legalName" defaultValue="Demo Centre (Pty) Ltd" />

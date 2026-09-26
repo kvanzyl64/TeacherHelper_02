@@ -1,8 +1,9 @@
+import { PageHeader } from "../../../components/navigation/page-header";
+
 export default function TutorStudentsPage() {
   return (
     <main>
-      <h1>My students</h1>
-      <p>Only students with an active tutor assignment are shown.</p>
+      <PageHeader title="My students" description="Only students with an active tutor assignment are shown." />
     </main>
   );
 }

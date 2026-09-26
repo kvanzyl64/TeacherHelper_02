@@ -10,3 +10,5 @@ export function assertCentreScope(currentCentreId: string, requestedCentreId: st
     throw new Error("The requested resource is unavailable");
   }
 }
+
+export const genericPermissionMessage = "This workspace area is unavailable for your current access.";

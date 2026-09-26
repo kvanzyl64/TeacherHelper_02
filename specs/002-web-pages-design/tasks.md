@@ -39,14 +39,14 @@ description: "Executable implementation tasks for the Teacher Helper web page ma
 
 ### Tests for User Story 1
 
-- [ ] T009 [P] [US1] Add public home-page link and anchor tests in `tests/e2e/public-home.spec.ts` covering `Log in`, `Start free`, `How it works` -> `#workflow`, and `Trust and privacy` -> `#trust`.
-- [ ] T010 [P] [US1] Add public-page contract assertions in `tests/contract/public-page.contract.test.ts` covering descriptive link names, intentional destinations, and absence of protected record content.
+- [X] T009 [P] [US1] Add public home-page link and anchor tests in `tests/e2e/public-home.spec.ts` covering `Log in`, `Start free`, `How it works` -> `#workflow`, and `Trust and privacy` -> `#trust`.
+- [X] T010 [P] [US1] Add public-page contract assertions in `tests/contract/public-page.contract.test.ts` covering descriptive link names, intentional destinations, and absence of protected record content.
 
 ### Implementation for User Story 1
 
-- [ ] T011 [US1] Refine the public home page content hierarchy, anchor sections, primary/secondary actions, and accessible region labels in `apps/web/app/page.tsx` and `apps/web/app/page.module.css` according to `specs/002-web-pages-design/contracts/page-map.md`.
-- [ ] T012 [US1] Add consistent return-home and entry-state treatment to `apps/web/app/(auth)/login/page.tsx`, `apps/web/app/auth/recover/page.tsx`, and `apps/web/app/(centre)/onboarding/page.tsx`, preserving existing authentication and onboarding behavior.
-- [ ] T013 [US1] Add branded public not-found and unavailable page states in `apps/web/app/not-found.tsx` and `apps/web/components/navigation/page-state.tsx` without revealing protected record existence.
+- [X] T011 [US1] Refine the public home page content hierarchy, anchor sections, primary/secondary actions, and accessible region labels in `apps/web/app/page.tsx` and `apps/web/app/page.module.css` according to `specs/002-web-pages-design/contracts/page-map.md`.
+- [X] T012 [US1] Add consistent return-home and entry-state treatment to `apps/web/app/(auth)/login/page.tsx`, `apps/web/app/auth/recover/page.tsx`, and `apps/web/app/(centre)/onboarding/page.tsx`, preserving existing authentication and onboarding behavior.
+- [X] T013 [US1] Add branded public not-found and unavailable page states in `apps/web/app/not-found.tsx` and `apps/web/components/navigation/page-state.tsx` without revealing protected record existence.
 
 ## Phase 4: User Story 2 - Move Through Centre Staff Workflows (Priority: P1)
 
@@ -56,15 +56,15 @@ description: "Executable implementation tasks for the Teacher Helper web page ma
 
 ### Tests for User Story 2
 
-- [ ] T014 [P] [US2] Add role-aware navigation contract coverage in `tests/contract/staff-navigation.contract.test.ts` for owner, admin, and tutor visibility, including the rule that tutor navigation does not imply owner-only billing, export, or operations access.
-- [ ] T015 [US2] Add owner/admin/tutor browser navigation journeys in `tests/e2e/staff-navigation.spec.ts` covering dashboard, people, team, settings, students, sessions, nested resources, and generic denied states.
+- [X] T014 [P] [US2] Add role-aware navigation contract coverage in `tests/contract/staff-navigation.contract.test.ts` for owner, admin, and tutor visibility, including the rule that tutor navigation does not imply owner-only billing, export, or operations access.
+- [X] T015 [US2] Add owner/admin/tutor browser navigation journeys in `tests/e2e/staff-navigation.spec.ts` covering dashboard, people, team, settings, students, sessions, nested resources, and generic denied states.
 
 ### Implementation for User Story 2
 
-- [ ] T016 [US2] Extend centre navigation with dashboard, people, sessions, billing, team, settings, exports, and operations destinations and active-location styling in `apps/web/components/navigation/centre-navigation.tsx` and `apps/web/styles/navigation.css`.
-- [ ] T017 [P] [US2] Apply the shared page shell, heading, breadcrumb, state, and responsive layout patterns to centre surfaces in `apps/web/app/(centre)/dashboard/page.tsx`, `apps/web/app/(centre)/people/`, `apps/web/app/(centre)/team/`, and `apps/web/app/(centre)/settings/`.
-- [ ] T018 [P] [US2] Apply assignment-scoped navigation, page headings, parent links, and empty/denied states to tutor surfaces in `apps/web/app/(tutor)/students/page.tsx`, `apps/web/app/(tutor)/sessions/`, and `apps/web/app/(tutor)/layout.tsx`.
-- [ ] T019 [US2] Add role-safe unavailable and permission-denied states to `apps/web/lib/auth/route-guards.ts`, `apps/web/app/(centre)/error.tsx`, and `apps/web/app/(tutor)/error.tsx`, preserving generic responses and audit behavior.
+- [X] T016 [US2] Extend centre navigation with dashboard, people, sessions, billing, team, settings, exports, and operations destinations and active-location styling in `apps/web/components/navigation/centre-navigation.tsx` and `apps/web/styles/navigation.css`.
+- [X] T017 [P] [US2] Apply the shared page shell, heading, breadcrumb, state, and responsive layout patterns to centre surfaces in `apps/web/app/(centre)/dashboard/page.tsx`, `apps/web/app/(centre)/people/`, `apps/web/app/(centre)/team/`, and `apps/web/app/(centre)/settings/`.
+- [X] T018 [P] [US2] Apply assignment-scoped navigation, page headings, parent links, and empty/denied states to tutor surfaces in `apps/web/app/(tutor)/students/page.tsx`, `apps/web/app/(tutor)/sessions/`, and `apps/web/app/(tutor)/layout.tsx`.
+- [X] T019 [US2] Add role-safe unavailable and permission-denied states to `apps/web/lib/auth/route-guards.ts`, `apps/web/app/(centre)/error.tsx`, and `apps/web/app/(tutor)/error.tsx`, preserving generic responses and audit behavior.
 
 ## Phase 5: User Story 3 - Complete Guardian and Passwordless Journeys (Priority: P1)
 

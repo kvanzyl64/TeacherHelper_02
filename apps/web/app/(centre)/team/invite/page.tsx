@@ -1,10 +1,10 @@
 import { inviteTeamMemberAction } from "./actions";
+import { PageHeader } from "../../../../components/navigation/page-header";
 
 export default function TeamInvitePage() {
   return (
     <main>
-      <h1>Invite team members</h1>
-      <p>Invite administrators and tutors to your centre workspace.</p>
+      <PageHeader title="Invite team members" description="Invite administrators and tutors to your centre workspace." />
       <form action={inviteTeamMemberAction}>
         <label htmlFor="email">Email</label>
         <input id="email" name="email" type="email" required />

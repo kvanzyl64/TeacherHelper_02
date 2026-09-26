@@ -36,7 +36,7 @@ export default function HomePage() {
           <a className={styles.quietLink} href="/auth/login">
             Log in
           </a>
-          <a className={styles.navCta} href="/auth/signup">
+          <a className={styles.navCta} href="/onboarding">
             Start free
             <Icon name="arrow-right" size={15} />
           </a>
@@ -58,7 +58,7 @@ export default function HomePage() {
           </p>
 
           <div className={styles.heroActions}>
-            <a className={styles.primaryCta} href="/auth/signup">
+            <a className={styles.primaryCta} href="/onboarding">
               Create your centre
               <Icon name="arrow-right" />
             </a>
@@ -155,6 +155,7 @@ export default function HomePage() {
 
       <section className={styles.proofStrip} id="trust" aria-label="Teacher Helper principles">
         <div className={styles.proofIntro}>
+          <h2 className={styles.trustTitle}>Trust and privacy</h2>
           <p>Built for the rhythm of a real tutoring centre, not a spreadsheet pretending to be one.</p>
         </div>
         <div className={styles.proofItem}>
@@ -217,7 +218,7 @@ export default function HomePage() {
         <h2 id="closing-title">
           Ready to make the centre feel <em>clearer?</em>
         </h2>
-        <a className={styles.primaryCta} href="/auth/signup">
+        <a className={styles.primaryCta} href="/onboarding">
           Start your workspace
           <Icon name="arrow-right" />
         </a>
@@ -227,7 +228,7 @@ export default function HomePage() {
         <p>Teacher Helper / A calmer centre, one lesson at a time.</p>
         <div className={styles.footerLinks}>
           <a href="/auth/login">Log in</a>
-          <a href="/auth/signup">Create account</a>
+          <a href="/onboarding">Create your centre</a>
         </div>
       </footer>
     </main>

@@ -500,6 +500,13 @@
   padding-left: 0;
 }
 
+.trustTitle {
+  margin: 0 0 8px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.15rem;
+  font-weight: 400;
+}
+
 .proofIntro p,
 .proofItem p {
   margin: 0;

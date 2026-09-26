@@ -1,10 +1,10 @@
 import { PeopleField } from "../../../components/people/people-form";
+import { PageHeader } from "../../../components/navigation/page-header";
 
 export default function PeoplePage() {
   return (
     <main>
-      <h1>People</h1>
-      <p>Manage students, guardians, consent, and tutor assignments.</p>
+      <PageHeader title="People" description="Manage students, guardians, consent, and tutor assignments." />
       <p>
         <a href="/people/students">Students</a> · <a href="/people/guardians">Guardians</a>
       </p>

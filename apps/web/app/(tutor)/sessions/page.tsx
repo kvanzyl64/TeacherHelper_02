@@ -1,3 +1,5 @@
+import { PageHeader } from "../../../components/navigation/page-header";
+
 const sampleSessions = [
   { subject: "Maths", reviewStatus: "approved" },
   { subject: "Science", reviewStatus: "submitted" },
@@ -7,7 +9,7 @@ const sampleSessions = [
 export default function TutorSessionsPage() {
   return (
     <main className="guardian-page">
-      <h1>Tutor sessions</h1>
+      <PageHeader title="Tutor sessions" description="Review sessions assigned to you and open their resources." />
       <ul>
         {sampleSessions.map((session) => (
           <li key={session.subject}>
