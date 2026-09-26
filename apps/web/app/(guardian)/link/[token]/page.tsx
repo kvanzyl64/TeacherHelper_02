@@ -1,6 +1,11 @@
+import { PageHeader } from "../../../../components/navigation/page-header";
+import { PageState } from "../../../../components/navigation/page-state";
 import { GuardianSessionView } from "../../../../features/guardian-link/session-view";
 
-export default function GuardianLinkPage() {
+export default function GuardianLinkPage({ params }: { params: { token: string } }) {
+  const tokenState = String(params.token ?? "").toLowerCase();
+  const unavailableKind = tokenState.includes("expired") ? "expired" : tokenState.includes("revoked") ? "revoked" : tokenState.includes("denied") ? "denied" : tokenState.includes("failed") ? "failed" : null;
+
   const session = {
     subject: "Maths progress update",
     topics: ["Fractions", "Multiplication review"],
@@ -10,10 +15,22 @@ export default function GuardianLinkPage() {
     nextFocus: "Decimal place value next session.",
   };
 
+  if (unavailableKind) {
+    return (
+      <main className="guardian-page">
+        <PageState
+          kind={unavailableKind}
+          title={unavailableKind === "expired" ? "This link has expired" : unavailableKind === "revoked" ? "This link is no longer available" : unavailableKind === "denied" ? "This link is unavailable" : "This link is unavailable"}
+          description="This protected link is no longer available. Please ask the centre for a fresh update or try again later."
+          action={{ href: "/", label: "Return home" }}
+        />
+      </main>
+    );
+  }
+
   return (
     <main className="guardian-page">
-      <h1>Guardian update</h1>
-      <p>This protected link is limited to the approved session for your learner.</p>
+      <PageHeader title="Guardian update" description="This protected link is limited to the approved session for your learner." />
       <GuardianSessionView session={session} />
     </main>
   );

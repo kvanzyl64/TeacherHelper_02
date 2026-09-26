@@ -51,6 +51,26 @@ The current reference for these principles is the public Notion homepage at
 `https://www.notion.com/`, reviewed on 2026-09-25. Teacher Helper's safeguarding, accessibility,
 and centre-specific content take precedence over any visual inspiration.
 
+### Canonical Teacher Helper Reference
+
+The implemented Teacher Helper landing page is the canonical visual reference for all subsequent
+web pages:
+
+- Source: `apps/web/app/page.tsx`, `apps/web/app/page.module.css`, and `apps/web/app/globals.css`.
+- Preserve its paper-and-ink foundation, editorial serif headings, neutral sans-serif body copy,
+  coral/cyan/green/violet accent balance, crisp rules, small radii, compact metadata, and quiet
+  ambient depth.
+- Reuse its page rhythm: compact navigation, clear title and supporting copy, one confident primary
+  action, one quieter secondary action, structured content sections, and purposeful artwork or
+  iconography.
+- Extend the language to dense operational pages by tightening spacing and adding status metadata,
+  not by switching to generic dashboard cards, unrelated colors, or a different visual theme.
+- Role-specific pages may change information density and action emphasis for safeguarding or task
+  needs, but they MUST retain the same tokens, typography hierarchy, borders, focus treatment,
+  accent semantics, responsive behavior, and reduced-motion rules.
+- A new page or shared component that intentionally departs from this reference MUST document the
+  reason and receive design review before release.
+
 ## 2. Color Palette and Surface Hierarchy
 
 ### Base Palette: Dark and Light Mode

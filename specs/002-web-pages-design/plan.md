@@ -6,7 +6,7 @@
 
 Complete the Teacher Helper page family around the clarified public entry flow and the existing MVP role boundaries. The public home page will link to in-page `How it works` and `Trust and privacy` sections, while authenticated, tutor, guardian, billing, and oversight surfaces will receive consistent navigation, page states, responsive behavior, and accessible interaction treatment. The implementation reuses the existing Next.js App Router, page routes, CSS modules, global styles, shared SVG icon sprite, and line-art characters.
 
-The design is guided by [Web Design pricipals.md](../001-teacher-helper-mvp/Web%20Design%20pricipals.md): editorial hierarchy, crisp structural rules, paper-and-ink surfaces, restrained accents, small stable controls, purposeful artwork, visible focus, and reduced motion. Existing domain authorization and data contracts remain unchanged.
+The design is guided by [Web Design pricipals.md](../001-teacher-helper-mvp/Web%20Design%20pricipals.md) and uses the implemented landing page in `apps/web/app/page.tsx`, `apps/web/app/page.module.css`, and `apps/web/app/globals.css` as the canonical visual reference: editorial hierarchy, crisp structural rules, paper-and-ink surfaces, restrained accents, small stable controls, purposeful artwork, visible focus, and reduced motion. Existing domain authorization and data contracts remain unchanged.
 
 ## Technical Context
 

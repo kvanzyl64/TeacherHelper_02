@@ -14,6 +14,12 @@ Teacher Helper needs a complete, coherent set of web pages so each role can move
 
 The experience must follow the project design guide in [Web Design pricipals.md](../001-teacher-helper-mvp/Web%20Design%20pricipals.md). The guide's content-first structure, crisp rules, restrained accents, human line-art, accessible icon treatment, responsive layout, focus states, and reduced-motion behavior are product requirements for every page in this feature.
 
+The implemented landing page in `apps/web/app/page.tsx`, `apps/web/app/page.module.css`, and
+`apps/web/app/globals.css` is the canonical Teacher Helper visual reference. Other pages may become
+denser for operational work or quieter for safeguarding and recovery, but they must retain the
+landing page's paper-and-ink palette, editorial typography hierarchy, crisp rules, compact metadata,
+accent semantics, purposeful artwork, focus treatment, responsive behavior, and reduced-motion rules.
+
 ## Clarifications
 
 ### Session 2026-09-25
@@ -121,7 +127,7 @@ A user moves between public, authenticated, tutor, and guardian pages and experi
 
 ### Design System Application
 
-- **FR-008**: Every page and shared component in this feature MUST follow [Web Design pricipals.md](../001-teacher-helper-mvp/Web%20Design%20pricipals.md), including its visual hierarchy, typography, color restraint, spacing, borders, surfaces, interaction states, motion, focus treatment, and information density.
+- **FR-008**: Every page and shared component in this feature MUST follow [Web Design pricipals.md](../001-teacher-helper-mvp/Web%20Design%20pricipals.md) and the implemented landing page reference in `apps/web/app/page.tsx`, `apps/web/app/page.module.css`, and `apps/web/app/globals.css`, including its visual hierarchy, typography, color restraint, spacing, borders, surfaces, interaction states, motion, focus treatment, and information density.
 - **FR-009**: Public and authenticated pages MUST use a clear editorial hierarchy with concise headings, readable supporting copy, aligned layout structure, and visible section boundaries; decorative treatment MUST NOT compete with the primary task.
 - **FR-010**: The page family MUST use the existing Teacher Helper line-art characters and icon sprite where a visual helps explain a role, workflow, status, or next action; visual assets MUST remain secondary to text and must preserve accessible names and metadata.
 - **FR-011**: Primary actions MUST be visually distinct from secondary actions, sign-in MUST remain available without competing with the primary public-page action, and icon-only controls MUST have accessible names and tooltips when their meaning is not obvious.

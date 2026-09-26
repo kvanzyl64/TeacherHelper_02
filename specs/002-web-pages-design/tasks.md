@@ -74,14 +74,14 @@ description: "Executable implementation tasks for the Teacher Helper web page ma
 
 ### Tests for User Story 3
 
-- [ ] T020 [P] [US3] Add guardian page-map contract cases in `tests/contract/guardian-page.contract.test.ts` for verification, session/resource links, invoice/receipt links, generic unavailable responses, and no general centre navigation.
-- [ ] T021 [P] [US3] Extend mobile guardian browser coverage in `tests/e2e/people-and-verification.spec.ts`, `tests/e2e/session-guardian-link.spec.ts`, and `tests/e2e/invoice-guardian-link.spec.ts` for phone layout, rotation, focus, expiry, revocation, and protected-content absence.
+- [X] T020 [P] [US3] Add guardian page-map contract cases in `tests/contract/guardian-page.contract.test.ts` for verification, session/resource links, invoice/receipt links, generic unavailable responses, and no general centre navigation.
+- [X] T021 [P] [US3] Extend mobile guardian browser coverage in `tests/e2e/people-and-verification.spec.ts`, `tests/e2e/session-guardian-link.spec.ts`, and `tests/e2e/invoice-guardian-link.spec.ts` for phone layout, rotation, focus, expiry, revocation, and protected-content absence.
 
 ### Implementation for User Story 3
 
-- [ ] T022 [US3] Apply the shared page header, state, focus, and responsive patterns to guardian verification in `apps/web/app/(guardian)/verify/[challenge]/page.tsx`, `apps/web/components/guardian/verification-form.tsx`, and `apps/web/styles/guardian.css`.
-- [ ] T023 [US3] Apply the single-record guardian page contract to session/resource and invoice/receipt link surfaces in `apps/web/app/(guardian)/link/[token]/page.tsx`, `apps/web/features/guardian-link/`, and `apps/web/components/guardian/session-view.tsx`.
-- [ ] T024 [US3] Verify generic expiry, revocation, denial, and failure rendering through `apps/web/lib/errors/responses.ts`, `apps/web/app/(guardian)/link/[token]/page.tsx`, and `apps/web/app/(guardian)/verify/[challenge]/page.tsx` without changing access-link or consent policy decisions.
+- [X] T022 [US3] Apply the shared page header, state, focus, and responsive patterns to guardian verification in `apps/web/app/(guardian)/verify/[challenge]/page.tsx`, `apps/web/components/guardian/verification-form.tsx`, and `apps/web/styles/guardian.css`.
+- [X] T023 [US3] Apply the single-record guardian page contract to session/resource and invoice/receipt link surfaces in `apps/web/app/(guardian)/link/[token]/page.tsx`, `apps/web/features/guardian-link/`, and `apps/web/components/guardian/session-view.tsx`.
+- [X] T024 [US3] Verify generic expiry, revocation, denial, and failure rendering through `apps/web/lib/errors/responses.ts`, `apps/web/app/(guardian)/link/[token]/page.tsx`, and `apps/web/app/(guardian)/verify/[challenge]/page.tsx` without changing access-link or consent policy decisions.
 
 ## Phase 6: User Story 4 - Understand Billing and Oversight Areas (Priority: P2)
 
@@ -91,14 +91,14 @@ description: "Executable implementation tasks for the Teacher Helper web page ma
 
 ### Tests for User Story 4
 
-- [ ] T025 [P] [US4] Add billing and oversight page contract cases in `tests/contract/billing-oversight-page.contract.test.ts` for headings, related-record links, status text, centre scope, and recovery actions.
-- [ ] T026 [P] [US4] Extend billing and oversight browser journeys in `tests/e2e/invoice-guardian-link.spec.ts` and `tests/e2e/oversight.spec.ts` for empty, populated, processing, failed, ready, expired, and deleted states.
+- [X] T025 [P] [US4] Add billing and oversight page contract cases in `tests/contract/billing-oversight-page.contract.test.ts` for headings, related-record links, status text, centre scope, and recovery actions.
+- [X] T026 [P] [US4] Extend billing and oversight browser journeys in `tests/e2e/invoice-guardian-link.spec.ts` and `tests/e2e/oversight.spec.ts` for empty, populated, processing, failed, ready, expired, and deleted states.
 
 ### Implementation for User Story 4
 
-- [ ] T027 [US4] Add or refine invoice, payment, and receipt page surfaces with shared headings, related-record navigation, status summaries, and safe recovery actions in `apps/web/app/(centre)/billing/` and `apps/web/components/people/`.
-- [ ] T028 [US4] Apply the shared page shell and state patterns to dashboard summaries and unresolved events in `apps/web/app/(centre)/dashboard/page.tsx` and `apps/web/app/(centre)/operations/alerts/page.tsx`.
-- [ ] T029 [US4] Apply centre-scoped export request, processing, ready, failed, expired, and deleted states to `apps/web/app/(centre)/exports/page.tsx`, `apps/web/components/navigation/page-state.tsx`, and `packages/domain/src/oversight/export-service.ts` without weakening export authorization.
+- [X] T027 [US4] Add or refine invoice, payment, and receipt page surfaces with shared headings, related-record navigation, status summaries, and safe recovery actions in `apps/web/app/(centre)/billing/` and `apps/web/components/people/`.
+- [X] T028 [US4] Apply the shared page shell and state patterns to dashboard summaries and unresolved events in `apps/web/app/(centre)/dashboard/page.tsx` and `apps/web/app/(centre)/operations/alerts/page.tsx`.
+- [X] T029 [US4] Apply centre-scoped export request, processing, ready, failed, expired, and deleted states to `apps/web/app/(centre)/exports/page.tsx`, `apps/web/components/navigation/page-state.tsx`, and `packages/domain/src/oversight/export-service.ts` without weakening export authorization.
 
 ## Phase 7: User Story 5 - Experience a Consistent, Accessible Product (Priority: P2)
 

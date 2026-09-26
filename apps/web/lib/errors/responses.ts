@@ -4,7 +4,10 @@ export const unauthorizedResponse = {
 } as const;
 
 export function classifyError(error: unknown): "validation" | "unauthorized" | "internal" {
-  if (error instanceof Error && error.name === "ValidationError") return "validation";
-  if (error instanceof Error && error.message.includes("authorized")) return "unauthorized";
+  if (error instanceof Error) {
+    const message = `${error.name} ${error.message}`.toLowerCase();
+    if (message.includes("validationerror") || message.includes("invalid")) return "validation";
+    if (message.includes("authorized") || message.includes("permission") || message.includes("unavailable")) return "unauthorized";
+  }
   return "internal";
 }
