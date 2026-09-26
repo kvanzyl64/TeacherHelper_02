@@ -108,14 +108,14 @@ description: "Executable implementation tasks for the Teacher Helper web page ma
 
 ### Tests for User Story 5
 
-- [ ] T030 [P] [US5] Add cross-page responsive and overflow checks in `tests/e2e/design-system.spec.ts` for desktop, tablet, and approximately 360-390 CSS pixel viewports.
-- [ ] T031 [P] [US5] Add keyboard-focus, accessible-name, and reduced-motion checks in `tests/e2e/design-system-accessibility.spec.ts` for navigation, forms, page actions, icons, characters, and state panels.
+- [X] T030 [P] [US5] Add cross-page responsive and overflow checks in `tests/e2e/design-system.spec.ts` for desktop, tablet, and approximately 360-390 CSS pixel viewports.
+- [X] T031 [P] [US5] Add keyboard-focus, accessible-name, and reduced-motion checks in `tests/e2e/design-system-accessibility.spec.ts` for navigation, forms, page actions, icons, characters, and state panels.
 
 ### Implementation for User Story 5
 
-- [ ] T032 [P] [US5] Align shared navigation, page headers, state panels, buttons, links, and focus styles with the canonical landing-page reference and design guide in `apps/web/app/page.tsx`, `apps/web/app/page.module.css`, `apps/web/styles/navigation.css`, `apps/web/styles/guardian.css`, and `apps/web/app/globals.css`.
-- [ ] T033 [P] [US5] Integrate the shared icon sprite and role-oriented character artwork into applicable navigation, onboarding, empty, success, and guidance states in `apps/web/components/`, `apps/web/app/`, and `apps/web/public/images/line-art/`, preserving accessible SVG metadata and reduced-motion behavior.
-- [ ] T034 [US5] Review page copy and terminology against `specs/002-web-pages-design/spec.md`, `specs/002-web-pages-design/contracts/page-map.md`, and `specs/001-teacher-helper-mvp/Web Design pricipals.md`; remove placeholder labels and document any intentional deviations in `specs/002-web-pages-design/quickstart.md`.
+- [X] T032 [P] [US5] Align shared navigation, page headers, state panels, buttons, links, and focus styles with the canonical landing-page reference and design guide in `apps/web/app/page.tsx`, `apps/web/app/page.module.css`, `apps/web/styles/navigation.css`, `apps/web/styles/guardian.css`, and `apps/web/app/globals.css`.
+- [X] T033 [P] [US5] Integrate the shared icon sprite and role-oriented character artwork into applicable navigation, onboarding, empty, success, and guidance states in `apps/web/components/`, `apps/web/app/`, and `apps/web/public/images/line-art/`, preserving accessible SVG metadata and reduced-motion behavior.
+- [X] T034 [US5] Review page copy and terminology against `specs/002-web-pages-design/spec.md`, `specs/002-web-pages-design/contracts/page-map.md`, and `specs/001-teacher-helper-mvp/Web Design pricipals.md`; remove placeholder labels and document any intentional deviations in `specs/002-web-pages-design/quickstart.md`.
 
 ## Phase 8: Polish and Cross-Cutting Validation
 
