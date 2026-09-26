@@ -1,7 +1,14 @@
 import { expect, test } from "@playwright/test";
-import { adminRoutes, assertAdminViewport, expectAdminNavigation } from "./admin-helpers";
+import {
+  adminRoutes,
+  assertAdminViewport,
+  expectAdminNavigation,
+  hasAdminTestCredentials,
+} from "./admin-helpers";
 
 test.describe("platform admin billing", () => {
+  test.skip(!hasAdminTestCredentials, "Platform admin E2E credentials are not configured.");
+
   test("shows subscription health, overdue follow-up, and plan adoption", async ({ page }) => {
     await expectAdminNavigation(page, adminRoutes.billing);
     await assertAdminViewport(page);

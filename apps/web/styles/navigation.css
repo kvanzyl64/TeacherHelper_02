@@ -1,4 +1,4 @@
 .centre-navigation__link[aria-current="page"] {
   border-bottom: 2px solid var(--color-coral);
-  font-weight: 800;
+  font-weight: 700;
 }

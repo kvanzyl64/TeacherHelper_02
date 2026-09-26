@@ -32,6 +32,25 @@ After T002 creates the database and role, initialize the local schema with:
 psql -h localhost -U postgres -d teacher_helper_dev -f infra/postgres/local/init.sql
 ```
 
+Apply database migrations in numeric order. Platform admin accounts use their own role and session
+tables, separate from centre users and memberships:
+
+```powershell
+psql -h 127.0.0.1 -U postgres -d teacher_helper_dev -v ON_ERROR_STOP=1 -f packages/database/migrations/013_platform_admin_auth.sql
+```
+
+Set `DATABASE_URL` in `apps/web/.env.local` to the `teacher_helper_app` connection before starting
+the web app. Provision a platform owner from an interactive terminal; the command prompts for the
+email, display name, role, and a hidden password. Re-running it for the same email updates that
+account's password, role, and active status:
+
+```powershell
+pnpm --filter @teacher-helper/web run create-platform-admin
+```
+
+Keep `.env.local` out of source control and use synthetic development credentials only. Never run
+the local provisioning command against staging or production.
+
 Create or rotate the application role without storing its password in source control:
 
 ```powershell

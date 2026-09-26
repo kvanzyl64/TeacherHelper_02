@@ -1,88 +1,66 @@
-# Quickstart: SaaS Admin
+# Quickstart: Database-Backed Product and SaaS Admin
 
-This guide validates the platform-owner admin flow for portfolio health, billing risk, and operational escalation without exposing child or tenant data beyond the authorised scope.
+This is the target validation runbook for the implementation plan. The current repository does not yet provide all commands or end-to-end DB-backed flows below; do not record them as passing until implemented and run against PostgreSQL.
 
 ## Prerequisites
 
-- Node.js supported by the repository
-- pnpm 10.x
-- Repository dependencies installed with `pnpm install`
-- Local app configuration available for the existing Teacher Helper web app
-- Platform owner or read-only admin user fixtures available for testing
+- Supported local PostgreSQL service on loopback, `teacher_helper_dev`, and least-privilege runtime roles.
+- A separate `teacher_helper_test` database with the test runtime role; no staging/production URLs.
+- `apps/web/.env.local` with `DATABASE_URL` for the application runtime role, plus managed OIDC issuer/client configuration. Keep secrets outside source control.
+- Managed OIDC development tenant/issuer and a provisioned owner identity. No application password hash or seeded provider password.
+- Dependencies installed with `pnpm install`.
 
-## Start the app
+## Reconcile and migrate the local database
 
-From the repository root:
+1. Take a local backup before schema changes. Inspect current tables, grants, RLS, and migration ledger; this installation is known to contain a partial migration state.
+2. Run the planned `pnpm db:status` command. It must report the verified baseline and every pending migration without changing data; its ledger is separate from application/test data and writable only by the migration role.
+3. Review the reconciliation report. Do not replay migration 013 or edit an applied migration. Resolve mismatches with a forward-only migration after backup.
+4. Run the planned `pnpm db:migrate` command. It must apply pending migrations in dependency order and update the ledger transactionally.
+5. Run the planned `pnpm db:verify` command. It must prove required tables, grants, indexes, RLS policies, and non-owner/non-`BYPASSRLS` application roles are present.
+6. Run the planned `pnpm db:seed:dev` command to insert deterministic synthetic centres, staff memberships, students, sessions, invoices, notifications, and SaaS subscription records. Never use production data.
 
-```powershell
-pnpm dev
-```
+Expected result: migration status is clean, synthetic rows are visible only within their intended tenant, and the SaaS-level subscription rows remain distinct from centre invoices/payments.
 
-Open the app in a browser and sign in as a platform owner or a read-only support user where the feature is configured.
+## Configure and verify the SaaS owner
 
-## Platform admin validation scenarios
+1. Create/invite the designated owner in the managed OIDC provider using its administrative console or protected management API.
+2. Run the planned audited `pnpm --filter @teacher-helper/web run provision-platform-owner` command with the OIDC issuer/subject. It creates or activates the platform role mapping only; it does not accept/store a password.
+3. Sign in through the provider and open `/admin`. Verify that missing, disabled, or non-owner identities are denied and audited.
 
-### 1. Admin dashboard overview
+Expected result: the master SaaS account is a provider-authenticated identity with an explicit active `platform_owner` mapping; no default credentials exist in the database or repository.
 
-1. Open `/admin` or the platform admin landing route.
-2. Confirm the dashboard shows totals for active centres, trials, overdue centres, open alerts, and high-risk accounts.
-3. Confirm the dashboard is business-safe and does not display child or guardian-level detail.
-4. Confirm the page contains obvious links to the billing overview and alert list.
+## Validate database-bound page workflows
 
-Expected result: the SaaS owner sees a clear portfolio summary and can identify immediate action items.
+For every route in [page-data-map.md](contracts/page-data-map.md):
 
-### 2. Billing and subscription health
+1. Create synthetic records through an authorized workflow or test fixture.
+2. Load the route and confirm its server-side repository returns those records after authorization.
+3. Change or remove the record and reload; confirm the page reflects the database rather than process memory or bundled fixtures.
+4. Attempt a second-centre, wrong-role, expired-link, and missing-record request as applicable; verify generic denial and no cross-tenant data.
+5. Verify all state-changing actions persist and create the required audit/notification/export record.
 
-1. Open the billing overview for the admin workspace.
-2. Review centre payment status, overdue items, and plan adoption summaries.
-3. Confirm the status is grouped by centre and uses business-safe summaries rather than raw family or student details.
-4. Confirm payment risk and overdue states are clearly distinguished from healthy subscriptions.
+Expected result: every data-bearing screen maps to documented tables and is covered by an integration or E2E assertion. Static landing, generic error, and not-found pages are explicitly exempt.
 
-Expected result: the SaaS owner can identify revenue risk and who needs follow-up without seeing protected data.
+## Test gates
 
-### 3. Operational alerts and support escalation
-
-1. Open the admin alerts area for current platform issues.
-2. Confirm failed exports, backup issues, retention risks, and payment issues are clearly labelled with severity and centre context.
-3. Open a centre-level alert or support case and verify the summary is limited to the relevant business context.
-4. Confirm a read-only support user can view these summaries but cannot edit billing or tenant data.
-
-Expected result: operational action paths are clear, safe, and auditable.
-
-### 4. Security and tenant isolation
-
-1. Attempt to open a centre record or billing detail that is outside the current role scope.
-2. Confirm the system denies access and records the attempt in the audit trail.
-3. Verify platform dashboards and alert summaries remain centre-safe and do not expose unrelated child or family records.
-
-Expected result: tenant boundaries remain intact and read-only support users cannot exceed their permissions.
-
-## Run project checks
-
-Use the repository’s standard validation flow:
+Run unit/contract checks and real PostgreSQL integration tests separately:
 
 ```powershell
 pnpm test
+pnpm test:db
+pnpm test:e2e
 pnpm lint
 pnpm typecheck
 pnpm build
 ```
 
-Expected result: domain, tenant, billing, and support workflows remain stable and no platform-level admin route breaks the existing multi-tenant model.
-
-## Verification evidence recorded
-
-The implementation has been validated with the currently passing project checks:
-
-- `pnpm vitest run tests/contract/platform-admin.contract.test.ts` → 1 file passed, 5 tests passed
-- `pnpm vitest run tests/contract tests/integration packages/domain/src` → 23 files passed, 47 tests passed
-- `pnpm lint && pnpm typecheck && pnpm build` → completed successfully, with only an existing CSS autoprefixer warning that did not fail the build
+`pnpm test:db` must refuse an unset, non-local, staging, or production test URL and must use only `teacher_helper_test`. Its suite must execute the migrations and verify RLS isolation with two synthetic centres. E2E must authenticate using the managed provider's test environment or a test-only signed OIDC fixture, never production credentials.
 
 ## Evidence to record
 
-- Platform owner dashboard totals and alert breakdown
-- Billing and subscription risk summary for overdue or at-risk centres
-- Read-only access behaviour for support users
-- Tenant isolation proof for denied or out-of-scope centre access
-- `pnpm test`, `pnpm lint`, `pnpm typecheck`, and `pnpm build` outcomes
-- Final constitution review: least privilege, tenant isolation, privacy, and audit evidence are preserved in the admin routes and domain guard model
+- Migration baseline, ordered migration status, and schema/RLS verification output.
+- App connection check through the least-privilege runtime role.
+- OIDC owner login and denied-role evidence; no secrets in logs.
+- Per-route data mapping and at least one live DB read/write assertion for every data-bearing workflow.
+- Cross-tenant denial, role denial, guardian-link expiry/relationship checks, and platform audit evidence.
+- Synthetic seed provenance, backup/restore result, and actual `pnpm test:db`, E2E, lint, typecheck, and build outputs.

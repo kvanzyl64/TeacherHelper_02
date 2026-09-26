@@ -1,7 +1,14 @@
 import { expect, test } from "@playwright/test";
-import { adminRoutes, assertAdminViewport, expectAdminNavigation } from "./admin-helpers";
+import {
+  adminRoutes,
+  assertAdminViewport,
+  expectAdminNavigation,
+  hasAdminTestCredentials,
+} from "./admin-helpers";
 
 test.describe("platform admin dashboard", () => {
+  test.skip(!hasAdminTestCredentials, "Platform admin E2E credentials are not configured.");
+
   test("shows portfolio health and safe navigation", async ({ page }) => {
     await expectAdminNavigation(page, adminRoutes.overview);
     await assertAdminViewport(page);

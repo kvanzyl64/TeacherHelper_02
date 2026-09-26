@@ -44,7 +44,11 @@ export function AuthenticatedNavigationProvider({
   centreLabel = "Current centre",
   children,
 }: Omit<NavigationContextValue, "centreLabel"> & { centreLabel?: string; children: ReactNode }) {
-  return <NavigationContext.Provider value={{ role, centreLabel }}>{children}</NavigationContext.Provider>;
+  return (
+    <NavigationContext.Provider value={{ role, centreLabel }}>
+      {children}
+    </NavigationContext.Provider>
+  );
 }
 
 export function useAuthenticatedNavigation() {
@@ -66,13 +70,28 @@ export function CentreNavigation({ role }: { role?: MembershipRole }) {
 
   return (
     <nav className="centre-navigation" aria-label={`${activeRole} workspace navigation`}>
-      <p className="centre-navigation__scope">{centreLabel}</p>
+      <div className="centre-navigation__top">
+        <a className="centre-navigation__brand" href="/" aria-label="Teacher Helper home">
+          <span className="centre-navigation__brand-mark" aria-hidden="true">
+            TH
+          </span>
+          <span>Teacher Helper</span>
+        </a>
+        <p className="centre-navigation__scope">
+          <span>Workspace</span>
+          <strong>{centreLabel}</strong>
+        </p>
+      </div>
       <ul className="centre-navigation__list">
         {links.map((link) => {
           const current = isCurrentLocation(pathname, link.href);
           return (
             <li key={link.href}>
-              <a className="centre-navigation__link" href={link.href} aria-current={current ? "page" : undefined}>
+              <a
+                className="centre-navigation__link"
+                href={link.href}
+                aria-current={current ? "page" : undefined}
+              >
                 <Icon name={link.icon} size={17} />
                 <span>{link.label}</span>
               </a>

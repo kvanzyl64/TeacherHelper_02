@@ -8,9 +8,10 @@ This contract defines the user-facing platform admin surfaces and the permission
 
 **Purpose**: Platform portfolio overview.
 
-**Access**: Platform owner and assigned read-only support roles.
+**Access**: Active platform owner for release one. Support roles are deferred.
 
 **Required content**:
+
 - active centre count
 - trial centre count
 - overdue centre count
@@ -19,6 +20,7 @@ This contract defines the user-facing platform admin surfaces and the permission
 - links to finance and alert drill-down pages
 
 **Must not include**:
+
 - learner or guardian details
 - raw centre child records
 - protected billing detail beyond authorised centre context
@@ -27,9 +29,10 @@ This contract defines the user-facing platform admin surfaces and the permission
 
 **Purpose**: SaaS billing and subscription health overview.
 
-**Access**: Platform owner; read-only support may view summary data if explicitly assigned.
+**Access**: Active platform owner for release one. Support roles are deferred.
 
 **Required content**:
+
 - subscription health by centre
 - missed payment count and overdue centres
 - last successful payment or billing status summary
@@ -39,9 +42,10 @@ This contract defines the user-facing platform admin surfaces and the permission
 
 **Purpose**: Operational alert review and classification.
 
-**Access**: Platform owner and designated read-only support roles.
+**Access**: Active platform owner for release one. Support roles are deferred.
 
 **Required content**:
+
 - alert type and severity
 - affected centre reference
 - status and timestamps
@@ -51,15 +55,17 @@ This contract defines the user-facing platform admin surfaces and the permission
 
 **Purpose**: A single centre detail for platform follow-up.
 
-**Access**: Platform owner only, or a restricted read-only support user if explicitly permitted.
+**Access**: Active platform owner for release one. Support roles are deferred.
 
 **Required content**:
+
 - centre status and subscription health
 - payment risk summary
 - open alerts and recent support activity
 - safe business contact information only
 
 **Must not include**:
+
 - student or guardian details
 - sensitive session, resource, or consent records
 - unrelated centre data
@@ -71,3 +77,6 @@ This contract defines the user-facing platform admin surfaces and the permission
 - State labels must identify payment risk, service risk, and support follow-up clearly.
 - Every alert or billing issue must have a follow-up path or explicit resolution state.
 - Audit events must record state changes, escalations, or recovery actions.
+- All page data must come from a server-only repository after managed identity and platform-role checks.
+- Cross-centre reads must use the separate business-safe platform-admin data path; no centre role or wildcard RLS context grants global access.
+- Empty, loading, and database-failure states must be distinguishable from zero-valued business metrics.

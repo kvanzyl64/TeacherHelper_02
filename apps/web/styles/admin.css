@@ -12,15 +12,31 @@
 }
 
 .admin-summary__card {
-  min-height: 9rem;
-  padding: 1rem;
-  border: 1px solid var(--color-rule);
-  background: var(--color-surface);
+  min-height: 7rem;
+  padding: 0.85rem 0.8rem 0.75rem;
+  border-top: 2px solid var(--color-rule);
+  background: rgba(255, 255, 255, 0.48);
 }
 
 .admin-summary__card--accent {
-  border-color: var(--color-coral);
-  background: #fff7ed;
+  border-top-color: var(--color-coral);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.admin-summary__card:nth-child(2) {
+  border-top-color: var(--color-cyan);
+}
+
+.admin-summary__card:nth-child(3) {
+  border-top-color: var(--color-amber);
+}
+
+.admin-summary__card:nth-child(4) {
+  border-top-color: var(--color-green);
+}
+
+.admin-summary__card:nth-child(5) {
+  border-top-color: var(--color-violet);
 }
 
 .admin-summary__card p,
@@ -32,14 +48,17 @@
   color: var(--color-muted);
   font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
 .admin-summary__card strong {
   display: block;
-  margin: 0.6rem 0 0.25rem;
-  font-size: 2rem;
+  margin: 0.45rem 0 0.1rem;
+  font-family: var(--font-editorial);
+  font-size: 2.25rem;
+  font-weight: 400;
+  line-height: 1;
 }
 
 .admin-summary__card span {
@@ -64,7 +83,9 @@
 
 .admin-section h2 {
   margin: 0.35rem 0;
+  font-family: var(--font-editorial);
   font-size: 1.35rem;
+  font-weight: 400;
 }
 
 .admin-section__copy {
@@ -144,7 +165,7 @@
   width: 100%;
   border-collapse: collapse;
   margin-top: 1rem;
-  background: var(--color-surface);
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .admin-table th,
@@ -155,10 +176,15 @@
   white-space: nowrap;
 }
 
+.admin-table thead {
+  border-top: 1px solid var(--color-ink);
+  border-bottom: 1px solid var(--color-rule);
+}
+
 .admin-table thead th {
   color: var(--color-muted);
   font-size: 0.75rem;
-  letter-spacing: 0.06em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
