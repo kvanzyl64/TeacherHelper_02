@@ -10,7 +10,9 @@ const publicLinks = [
 
 describe("public page contract", () => {
   it("uses descriptive names and intentional destinations for public links", () => {
-    expect(publicLinks.every((link) => link.label.trim().length > 0 && link.href.trim().length > 0)).toBe(true);
+    expect(
+      publicLinks.every((link) => link.label.trim().length > 0 && link.href.trim().length > 0),
+    ).toBe(true);
     expect(publicLinks.map((link) => link.href)).not.toContain("#");
   });
 

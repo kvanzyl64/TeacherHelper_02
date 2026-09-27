@@ -8,12 +8,12 @@ import {
 
 describe("page map contract", () => {
   it("keeps the public home destinations intentional", () => {
-    expect([
+    expect(["/auth/login", "/auth/signup", "#workflow", "#trust"]).toEqual([
       "/auth/login",
       "/auth/signup",
       "#workflow",
       "#trust",
-    ]).toEqual(["/auth/login", "/auth/signup", "#workflow", "#trust"]);
+    ]);
   });
 
   it("keeps role-visible navigation within the declared role boundaries", () => {

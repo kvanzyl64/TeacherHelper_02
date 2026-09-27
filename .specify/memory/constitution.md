@@ -1,8 +1,8 @@
 <!--
 Sync Impact Report
-- Version change: 1.0.0 -> 2.0.0
-- Modified principles: Security and Operational Constraints (managed database requirement broadened
-	to permit self-hosted PostgreSQL-compatible storage with equivalent controls)
+- Version change: 2.0.0 -> 3.0.0
+- Modified principles: Security and Operational Constraints (authentication corrected to
+  application-owned email/password accounts with secure session controls)
 - Added sections: none
 - Removed sections: none
 - Follow-up TODOs: original ratification date is unknown and remains marked below
@@ -56,9 +56,15 @@ procedures.
 
 ## Security and Operational Constraints
 
-The initial architecture MUST use managed authentication and either a managed or self-hosted
-PostgreSQL-compatible database with tenant-aware row-level access controls, protected object
-storage, secrets management, monitoring, and daily incremental backups. A self-hosted database
+The initial architecture MUST use application-owned email/password authentication for centre
+staff and platform administrators. Passwords MUST never be stored in plaintext or reversible
+form; authentication MUST use a modern one-way password verifier, protected server-side
+sessions, secure cookie settings, rate limiting, generic credential errors, and expiring
+password-recovery tokens. Guardian link access remains passwordless and relationship-scoped.
+The system MUST NOT require Auth0, OIDC, or another external identity provider for the primary
+login flow. The application MUST use either a managed or self-hosted PostgreSQL-compatible
+database with tenant-aware row-level access controls, protected object storage, secrets
+management, monitoring, and daily incremental backups. A self-hosted database
 MUST run on a supported version, use least-privilege roles, private network binding, firewall
 restrictions, encrypted connections where supported, security patching, monitored capacity, and
 documented backup and restore procedures. Tenant exports, retention, deletion, point-in-time
@@ -92,4 +98,4 @@ non-semantic corrections. Compliance MUST be reviewed during planning, code revi
 readiness, and incident follow-up. The constitution MUST be revisited at least once per release
 cycle and after any material security, privacy, or safeguarding incident.
 
-**Version**: 2.0.0 | **Ratified**: TODO(RATIFICATION_DATE): original adoption date is unknown | **Last Amended**: 2026-09-25
+**Version**: 3.0.0 | **Ratified**: TODO(RATIFICATION_DATE): original adoption date is unknown | **Last Amended**: 2026-09-27

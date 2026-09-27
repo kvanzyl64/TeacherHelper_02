@@ -46,17 +46,17 @@ description: "Executable task list for first-party email/password authentication
 
 ### Tests for User Story 1
 
-- [ ] T015 [P] [US1] Add login contract assertions for `GET /auth/login` and `POST /auth/login` in `tests/contract/auth-login.contract.test.ts`, covering email/password fields, no external redirect, generic invalid-credential responses, and protected session-cookie behavior.
-- [ ] T016 [P] [US1] Add PostgreSQL sign-in integration tests in `tests/integration/email-password-login.test.ts` for active centre membership, active platform owner, unknown email, wrong password, pending/revoked user, suspended/disabled admin, and rate-limited attempts.
-- [ ] T017 [P] [US1] Update the authenticated browser flow in `tests/e2e/admin-auth.spec.ts` and `tests/e2e/admin-helpers.ts` to submit synthetic email/password credentials and assert the platform admin navigation without OIDC cookies or provider redirects.
+- [x] T015 [P] [US1] Add login contract assertions for `GET /auth/login` and `POST /auth/login` in `tests/contract/auth-login.contract.test.ts`, covering email/password fields, no external redirect, generic invalid-credential responses, and protected session-cookie behavior.
+- [x] T016 [P] [US1] Add PostgreSQL sign-in integration tests in `tests/integration/email-password-login.test.ts` for active centre membership, active platform owner, unknown email, wrong password, pending/revoked user, suspended/disabled admin, and rate-limited attempts.
+- [x] T017 [P] [US1] Update the authenticated browser flow in `tests/e2e/admin-auth.spec.ts` and `tests/e2e/admin-helpers.ts` to submit synthetic email/password credentials and assert the platform admin navigation without OIDC cookies or provider redirects.
 
 ### Implementation for User Story 1
 
-- [ ] T018 [US1] Replace the OIDC form in `apps/web/app/auth/login/page.tsx` with accessible email and password fields, a sign-in action, a recovery link to `/auth/recover`, generic error rendering, and no intermediate external-provider page.
-- [ ] T019 [US1] Replace the OIDC server action in `apps/web/app/auth/login/actions.ts` with credential normalization, account lookup, password verification, rate-limit enforcement, security-event recording, session creation, and role-aware redirect to the centre destination or `/admin`.
-- [ ] T020 [US1] Update `apps/web/app/auth/login/page.module.css` or the owning auth stylesheet to keep labels, errors, focus states, and the primary action usable on mobile and desktop without exposing authentication details.
-- [ ] T021 [US1] Update `apps/web/app/page.tsx`, `apps/web/app/auth/login/start/route.ts`, and `tests/e2e/public-home.spec.ts` so every public Login link points directly to `/auth/login` and no longer invokes the obsolete OIDC-start route.
-- [ ] T022 [US1] Run the focused login contract, integration, and browser tests and record the passing command/results in `specs/004-email-password-auth/quickstart.md` without recording test passwords or session values.
+- [x] T018 [US1] Replace the OIDC form in `apps/web/app/auth/login/page.tsx` with accessible email and password fields, a sign-in action, a recovery link to `/auth/recover`, generic error rendering, and no intermediate external-provider page.
+- [x] T019 [US1] Replace the OIDC server action in `apps/web/app/auth/login/actions.ts` with credential normalization, account lookup, password verification, rate-limit enforcement, security-event recording, session creation, and role-aware redirect to the centre destination or `/admin`.
+- [x] T020 [US1] Update `apps/web/app/auth/login/page.module.css` or the owning auth stylesheet to keep labels, errors, focus states, and the primary action usable on mobile and desktop without exposing authentication details.
+- [x] T021 [US1] Update `apps/web/app/page.tsx`, `apps/web/app/auth/login/start/route.ts`, and `tests/e2e/public-home.spec.ts` so every public Login link points directly to `/auth/login` and no longer invokes the obsolete OIDC-start route.
+- [x] T022 [US1] Run the focused login contract, integration, and browser tests and record the passing command/results in `specs/004-email-password-auth/quickstart.md` without recording test passwords or session values.
 
 **Checkpoint**: US1 is independently usable: a staff member can open `/auth/login`, authenticate with email/password, reach the correct protected area, and receive generic errors for all failed cases.
 

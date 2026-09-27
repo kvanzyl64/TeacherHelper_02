@@ -1,6 +1,12 @@
-import { beginOidcSignIn } from "./actions";
+import { signInWithEmailPassword } from "./actions";
 
-export default function LoginPage() {
+type LoginPageProps = {
+  searchParams: Promise<{ error?: string }>;
+};
+
+export default async function LoginPage({ searchParams }: LoginPageProps) {
+  const { error } = await searchParams;
+
   return (
     <main className="auth-page">
       <header className="auth-page__topbar">
@@ -25,12 +31,45 @@ export default function LoginPage() {
           </div>
         </section>
         <section className="auth-page__form-section" aria-labelledby="login-form-title">
-          <p className="auth-page__eyebrow">Managed staff access</p>
+          <p className="auth-page__eyebrow">Staff account access</p>
           <h2 id="login-form-title">Welcome back</h2>
-          <p className="auth-page__form-copy">Continue with your organization&apos;s secure sign-in provider.</p>
-          <form className="auth-page__form" action={beginOidcSignIn}>
-            <button type="submit">Continue to secure sign-in</button>
+          <p className="auth-page__form-copy">
+            Sign in with your Teacher Helper email and password.
+          </p>
+          {error === "retry" ? (
+            <p className="auth-page__error" role="alert" aria-live="polite">
+              Too many attempts. Please try again later.
+            </p>
+          ) : error ? (
+            <p className="auth-page__error" role="alert" aria-live="polite">
+              Email or password is incorrect.
+            </p>
+          ) : null}
+          <form className="auth-page__form" action={signInWithEmailPassword}>
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="username"
+              inputMode="email"
+              maxLength={254}
+              required
+            />
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              autoComplete="current-password"
+              maxLength={1024}
+              required
+            />
+            <button type="submit">Sign in</button>
           </form>
+          <a className="auth-page__form-recovery" href="/auth/recover">
+            Forgot password?
+          </a>
         </section>
       </div>
     </main>

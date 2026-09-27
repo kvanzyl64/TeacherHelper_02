@@ -1,7 +1,10 @@
 import type { PoolClient } from "pg";
 import type { MembershipRole } from "@teacher-helper/domain/src/auth/tenant-context";
-import { normalizeEmail } from "./auth-policy";
+import { MAX_PASSWORD_LENGTH, normalizeEmail } from "./auth-policy";
+import { verifyPassword } from "./platform-admin-credentials";
 import type { PlatformAdminRole } from "./roles";
+
+const dummyPasswordHash = `scrypt$${"0".repeat(32)}$${"0".repeat(128)}`;
 
 export type AuthMembership = {
   centreId: string;
@@ -95,4 +98,23 @@ export async function lookupAccountByEmail(
   }
 
   return null;
+}
+
+export async function authenticateAccountByEmail(
+  client: Pick<PoolClient, "query">,
+  email: string,
+  password: string,
+): Promise<AuthAccount | null> {
+  const passwordWithinLimit = Array.from(password).length <= MAX_PASSWORD_LENGTH;
+  let account: AuthAccount | null = null;
+  try {
+    const normalizedEmail = normalizeEmail(email);
+    if (passwordWithinLimit) account = await lookupAccountByEmail(client, normalizedEmail);
+  } catch (error) {
+    if (!(error instanceof Error) || error.message !== "Invalid email address") throw error;
+  }
+
+  const passwordHash = account?.passwordHash ?? dummyPasswordHash;
+  const passwordMatches = await verifyPassword(passwordWithinLimit ? password : "", passwordHash);
+  return account && passwordWithinLimit && passwordMatches ? account : null;
 }

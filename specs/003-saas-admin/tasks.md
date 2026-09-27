@@ -12,38 +12,38 @@ description: "Executable implementation tasks for the Teacher Helper SaaS admin 
 
 **Organization**: Shared migration/auth/DAL foundations block all stories. User stories are ordered by the spec's priorities; US4 supplies the first persistent centre workflow, then platform portfolio, SaaS billing, and operations.
 
-## Phase 1: Setup (Database and Provider Readiness)
+## Phase 1: Setup (Database and Account Readiness)
 
 **Purpose**: Establish safe, inspectable local and test environments without destroying existing data.
 
-- [X] T001 [P] Select and record the managed OIDC provider, issuer, development tenant, and test strategy in `specs/003-saas-admin/research.md` and `specs/003-saas-admin/quickstart.md`; document required secret names without recording values.
+- [X] T001 [P] Select and record the application-owned email/password account model, development account fixtures, and test strategy in `specs/003-saas-admin/research.md` and `specs/003-saas-admin/quickstart.md`; document required secret categories without recording values.
 - [X] T002 Back up `teacher_helper_dev` and record the backup location, timestamp, restore command, and operator in `specs/003-saas-admin/quickstart.md` before any schema reconciliation.
 - [X] T003 [P] Add a read-only PostgreSQL schema/grant/RLS inventory command in `packages/database/scripts/inspect-schema.mjs` and document its expected output in `packages/database/README.md`.
 - [X] T004 [P] Add a database URL safety validator for local development and isolated test databases in `packages/test-support/src/database-url.ts`; reject staging/production and reject reset operations against `teacher_helper_dev`.
 - [X] T005 Create `teacher_helper_test`, its non-owner test role, and connection instructions in `infra/postgres/local/003_test_database.sql` and `infra/postgres/local/README.md`; do not grant the test or web role `BYPASSRLS`.
 
-## Phase 2: Foundational (Migration, Managed Identity, and DAL)
+## Phase 2: Foundational (Migration, Account Security, and DAL)
 
 **Purpose**: Complete these blocking prerequisites before any story binds a page to database data.
 
 - [X] T006 Add a protected migration ledger outside resettable `app` data and a read-only status command in `packages/database/migrations/014_migration_ledger.sql` and `packages/database/scripts/status.mjs`; the ledger must be writable only by the migration role.
 - [X] T007 Reconcile existing `teacher_helper_dev` objects against migrations 001-013, record a verified baseline in the migration ledger, and document every mismatch in `specs/003-saas-admin/quickstart.md`; do not edit or replay an already-applied migration.
 - [X] T008 Add a migration runner that applies only pending numbered migrations in dependency order and stops on first error in `packages/database/scripts/migrate.mjs`; verify it against a fresh `teacher_helper_test` database.
-- [X] T009 Add a forward-only expand migration for `app.auth_identities`, OIDC issuer/subject uniqueness, profile mappings, SaaS subscription/payment tables, and `app.platform_audit_events` in `packages/database/migrations/015_managed_identity_and_saas_billing.sql`; quote model constraints from `specs/003-saas-admin/data-model.md` in migration tests.
+- [X] T009 Add a forward-only expand migration for application accounts, protected password verifiers, session/recovery state, profile mappings, SaaS subscription/payment tables, and `app.platform_audit_events` in `packages/database/migrations/015_managed_identity_and_saas_billing.sql`; quote model constraints from `specs/003-saas-admin/data-model.md` in migration tests.
 - [X] T010 Add forward-only RLS/grant/index corrections for every existing table with `centre_id`, including invoices, payments, exports, retention jobs, notifications, access links, and audit events, in `packages/database/migrations/016_tenant_rls_reconciliation.sql`.
 - [X] T011 Add migration and catalog drift tests in `packages/database/src/migration-status.test.ts` and `tests/integration/database-migrations.test.ts`; prove fresh install and verified-baseline upgrade produce the same required schema.
-- [X] T012 Implement the managed OIDC verifier/adapter and issuer-subject resolver in `apps/web/lib/auth/oidc-provider.ts` and `apps/web/lib/auth/identity.ts`; reject unknown issuer, invalid signature/audience, disabled identity, and missing role mappings.
-- [X] T013 Replace custom password login/session handling in `apps/web/app/auth/login/actions.ts`, `apps/web/app/auth/login/page.tsx`, `apps/web/lib/auth/platform-admin-session.ts`, and `apps/web/lib/auth/platform-admin-credentials.ts` with managed OIDC sign-in/sign-out; retain migration 013 unchanged and disable its password path before any later contract cleanup.
+- [X] T012 Implement application-owned email/password verification, protected session creation/revocation, generic errors, recovery, and rate limits; reject invalid, disabled, suspended, and missing-role accounts.
+- [X] T013 Replace the incomplete OIDC login path in `apps/web/app/auth/login/actions.ts` and `apps/web/app/auth/login/page.tsx` with the application-owned email/password sign-in and sign-out flow; retain migration 013 unchanged while extending its security behavior to the required account types.
 - [X] T014 Implement a server-only request DAL in `apps/web/lib/auth/dal.ts` for authenticated identity, active centre membership, tutor assignment, platform-owner permission, and generic denial behavior; do not accept hardcoded roles or request-supplied centre IDs as authority.
 - [X] T015 Implement a transaction-scoped tenant query helper in `apps/web/lib/database/tenant-transaction.ts` using one checked-out `pg` client, `BEGIN`, transaction-local `set_config` for `app.centre_id` and `app.user_id`, `COMMIT`/`ROLLBACK`, and `release` in `finally`.
 - [X] T016 Implement separate tenant and platform-admin repository interfaces in `packages/integrations/src/database/tenant-repository.ts` and `packages/integrations/src/database/platform-admin-repository.ts`; expose allowlisted DTOs only and prohibit route-level SQL.
-- [X] T017 Add a platform-owner bootstrap command in `apps/web/scripts/provision-platform-owner.mjs` that links an existing managed OIDC issuer/subject to an active `platform_owner` and writes an audit event; reject password arguments and duplicate owner bootstrap without explicit confirmation.
+- [X] T017 Add a platform-owner bootstrap command in `apps/web/scripts/provision-platform-owner.mjs` that creates or activates an application account with an active `platform_owner` role and writes an audit event; accept passwords only through hidden interactive input and reject duplicate owner bootstrap without explicit confirmation.
 - [X] T018 Add protected migration-role and runtime-role setup in `infra/postgres/local/004_runtime_roles.sql` and `infra/postgres/local/README.md`; assert `teacher_helper_app` is not a table owner, superuser, or `BYPASSRLS` role.
 - [X] T019 Add isolated PostgreSQL test lifecycle helpers, a `pnpm test:db` script, and safe synthetic fixtures in `packages/test-support/src/postgres-test-database.ts`, `packages/test-support/src/synthetic-seed.ts`, and `package.json`; test cleanup must refuse every database except `teacher_helper_test`.
 - [X] T020 Add RLS and pooled-context integration tests in `tests/integration/tenant-rls.test.ts` for same-centre allow, cross-centre denial, wrong-role denial, transaction rollback, and proving a reused pool connection does not retain prior tenant context.
 - [X] T021 Add managed identity/DAL integration tests in `tests/integration/identity-authorization.test.ts` for valid, invalid, disabled, unassigned, platform-owner, and centre-membership identities.
 
-**Checkpoint**: A fresh test DB migrates cleanly; the existing dev DB has a reviewed baseline; the application role is least-privileged; managed identity and DAL/RLS tests pass.
+**Checkpoint**: A fresh test DB migrates cleanly; the existing dev DB has a reviewed baseline; the application role is least-privileged; account security and DAL/RLS tests pass.
 
 ## Phase 3: User Story 4 - Use persistent data across product screens (Priority: P1)
 
@@ -183,7 +183,7 @@ Task: T025 authenticated persistence E2E in tests/e2e/database-backed-centre.spe
 
 ### MVP First
 
-1. Complete safe DB reconciliation, managed OIDC, DAL, tenant transaction/RLS helpers, and isolated PostgreSQL test infrastructure.
+1. Complete safe DB reconciliation, application-owned account security, DAL, tenant transaction/RLS helpers, and isolated PostgreSQL test infrastructure.
 2. Deliver US4's onboarding/settings/dashboard persistence slice and prove a record survives a fresh request under tenant RLS.
 3. Deliver US1 platform-owner portfolio against persisted centres and verify safe cross-centre aggregation.
 4. Deliver US2 SaaS subscription billing separately from family tuition billing.

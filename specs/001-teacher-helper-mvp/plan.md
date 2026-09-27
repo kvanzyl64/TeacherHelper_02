@@ -36,7 +36,7 @@ icons retain the shared stroke and restrained accent system.
 
 **Primary Dependencies**: Next.js App Router, PostgreSQL 16 or the current supported PostgreSQL
 release installed locally during development and installed on the Oracle Cloud compute server at
-deployment, with row-level security, managed authentication, protected storage, a WhatsApp Business
+deployment, with row-level security, application-owned email/password authentication, protected storage, a WhatsApp Business
 messaging provider, a PDF document service, and a structured logging/error-monitoring service. Provider
 adapters MUST isolate vendor-specific behavior from domain workflows. No Oracle Cloud managed SQL
 service is required or used.
@@ -106,7 +106,7 @@ full white-label customization, and native apps.
   expired links, provider outages, backups, recovery, and rollback are represented in workflows.
   The design guide, accessible icon sprite, character metadata, and reduced-motion behaviour provide
   consistent visual cues without making motion or artwork necessary to complete a task.
-- **Security and operational constraints**: PASS. Managed authentication, self-hosted PostgreSQL
+- **Security and operational constraints**: PASS. Application-owned email/password authentication, self-hosted PostgreSQL
   row-level policy, protected storage, secrets, monitoring, backups, rate limits, and incident
   escalation are included. Local PostgreSQL access during development and the server firewall,
   PostgreSQL network binding, roles, and database separation at deployment MUST prevent public database

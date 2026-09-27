@@ -1,40 +1,31 @@
 # Research: Database-Backed Product Readiness
 
-## Phase 1 Provider Readiness
+## Phase 1 Authentication Readiness
 
-**Selected provider**: Auth0 OIDC, isolated behind a server-only provider adapter. Development
-and test tenants are separate from production, so test identities cannot authenticate against the
-production tenant. The provider is selected for standards-based OIDC discovery and authorization
-code flow; no provider SDK is required in domain or repository code.
+**Selected model**: Application-owned email/password accounts for centre staff and the SaaS owner.
+The application owns credential verification, protected sessions, sign-out, recovery, rate limiting,
+and audit events. Guardian access remains passwordless and relationship-scoped.
 
-Required environment configuration names (values remain outside source control):
+The test strategy uses synthetic application accounts with known test-only passwords. Tests never
+use production credentials, real recovery messages, or committed secrets.
 
-- `OIDC_ISSUER_URL`
-- `OIDC_CLIENT_ID`
-- `OIDC_CLIENT_SECRET`
-- `OIDC_AUDIENCE`
-- `OIDC_JWKS_URI`
-- `OIDC_AUTHORIZATION_ENDPOINT`
-- `OIDC_TOKEN_ENDPOINT`
-- `OIDC_REDIRECT_URI`
-- `OIDC_DEV_TENANT`
-- `OIDC_TEST_TENANT`
+## Decision: Use application-owned email/password authentication
 
-The test strategy is a signed OIDC fixture or a dedicated Auth0 test tenant, selected by the test
-environment. Tests must resolve issuer/subject through the application mapping and never use
-production identities or credentials.
+**Decision**: Authenticate centre staff and the SaaS owner through application-owned accounts with
+protected password verifiers and revocable server-side sessions. The application stores role and
+centre membership separately from credentials and never exposes passwords or bearer secrets.
 
-## Decision: Use managed OIDC for authentication
-
-**Decision**: Authenticate centre staff, guardians where applicable, and the SaaS owner through a managed OpenID Connect provider. The application stores provider `issuer` and `subject` mappings and application roles; it does not store user passwords or implement a parallel credential/session system. Keep provider configuration behind an OIDC contract so deployment configuration can select the managed provider.
-
-**Rationale**: The project constitution requires managed authentication. The current platform-admin password hash and database-session design is a custom authentication system and therefore cannot be treated as the target architecture. The Next.js authentication guide recommends using an authentication library/provider and placing authorization in a server-side data access layer close to data access.
+**Rationale**: The product requirement is for users to sign in on the Teacher Helper login page
+with an email address and password. An external Auth0/OIDC redirect creates a different user
+experience and adds an unavailable provider dependency. The existing password hashing and session
+building blocks are a better starting point, provided they are expanded to all required account
+types and covered by security tests.
 
 **Alternatives considered**:
 
-- Keep the custom password and session tables: rejected because it conflicts with the constitution's managed-authentication requirement and duplicates identity/session responsibilities.
-- Couple identity directly to a database email field: rejected because email may change; use the provider's stable issuer/subject pair for identity mapping.
-- Select a provider-specific SDK in domain code: rejected because the provider is deployment configuration; isolate it behind a server-side OIDC adapter.
+- Require Auth0/OIDC: rejected because it adds an external dependency and does not match the requested email/password login experience.
+- Store plaintext or reversible passwords: rejected because a database compromise would expose user credentials.
+- Use email alone as authentication: rejected because a password and revocable session are required to prove and maintain access.
 
 ## Decision: Centralize authorization and database reads in a server-only DAL
 

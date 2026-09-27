@@ -6,13 +6,12 @@ This is the target validation runbook for the implementation plan. The current r
 
 - Supported local PostgreSQL service on loopback, `teacher_helper_dev`, and least-privilege runtime roles.
 - A separate `teacher_helper_test` database with the test runtime role; no staging/production URLs.
-- `apps/web/.env.local` with `DATABASE_URL` for the application runtime role, plus Auth0 OIDC issuer/client configuration. Keep secrets outside source control.
-- Auth0 development and test tenants with separate issuer URLs and a provisioned owner identity. No application password hash or seeded provider password.
+- `apps/web/.env.local` with `DATABASE_URL` for the application runtime role and the configured application session/secrets settings. Keep secrets outside source control.
+- A synthetic development and test account strategy with a provisioned owner account. Never commit passwords, session secrets, or recovery tokens.
 - Dependencies installed with `pnpm install`.
 
-Required OIDC configuration names are `OIDC_ISSUER_URL`, `OIDC_CLIENT_ID`, `OIDC_CLIENT_SECRET`,
-`OIDC_AUDIENCE`, `OIDC_JWKS_URI`, `OIDC_AUTHORIZATION_ENDPOINT`, `OIDC_TOKEN_ENDPOINT`,
-`OIDC_REDIRECT_URI`, `OIDC_DEV_TENANT`, and `OIDC_TEST_TENANT`. Never record their values here.
+The primary login flow does not require Auth0/OIDC settings. Required account, session, recovery,
+and email-delivery settings are environment-specific and must never be recorded here.
 
 ## Phase 1 backup evidence
 
@@ -85,11 +84,10 @@ migration 013 was not edited or replayed.
 
 ## Configure and verify the SaaS owner
 
-1. Create/invite the designated owner in the managed OIDC provider using its administrative console or protected management API.
-2. Run the planned audited `pnpm --filter @teacher-helper/web run provision-platform-owner` command with the OIDC issuer/subject. It creates or activates the platform role mapping only; it does not accept/store a password.
-3. Sign in through the provider and open `/admin`. Verify that missing, disabled, or non-owner identities are denied and audited.
+1. Run the audited owner-account bootstrap workflow with a secure password entered interactively; never pass a password as a command-line argument or commit it.
+2. Sign in through `/auth/login` using the owner email and password, then open `/admin`. Verify that missing, disabled, or non-owner accounts are denied and audited.
 
-Expected result: the master SaaS account is a provider-authenticated identity with an explicit active `platform_owner` mapping; no default credentials exist in the database or repository.
+Expected result: the master SaaS account is an application-owned account with an explicit active `platform_owner` mapping; no default credentials exist in the database or repository.
 
 ## Validate database-bound page workflows
 
@@ -116,13 +114,13 @@ pnpm typecheck
 pnpm build
 ```
 
-`pnpm test:db` must refuse an unset, non-local, staging, or production test URL and must use only `teacher_helper_test`. Its suite must execute the migrations and verify RLS isolation with two synthetic centres. E2E must authenticate using the managed provider's test environment or a test-only signed OIDC fixture, never production credentials.
+`pnpm test:db` must refuse an unset, non-local, staging, or production test URL and must use only `teacher_helper_test`. Its suite must execute the migrations and verify RLS isolation with two synthetic centres. E2E must authenticate using synthetic application accounts and test-only passwords, never production credentials.
 
 ## Evidence to record
 
 - Migration baseline, ordered migration status, and schema/RLS verification output.
 - App connection check through the least-privilege runtime role.
-- OIDC owner login and denied-role evidence; no secrets in logs.
+- Application-account owner login, recovery, session revocation, and denied-role evidence; no secrets in logs.
 - Per-route data mapping and at least one live DB read/write assertion for every data-bearing workflow.
 - Cross-tenant denial, role denial, guardian-link expiry/relationship checks, and platform audit evidence.
 - Synthetic seed provenance, backup/restore result, and actual `pnpm test:db`, E2E, lint, typecheck, and build outputs.

@@ -1,14 +1,7 @@
 import styles from "./page.module.css";
 
 type IconName =
-  | "arrow-right"
-  | "check"
-  | "dashboard"
-  | "lock"
-  | "message"
-  | "people"
-  | "plus"
-  | "sessions";
+  "arrow-right" | "check" | "dashboard" | "lock" | "message" | "people" | "plus" | "sessions";
 
 function Icon({ name, size = 18 }: { name: IconName; size?: number }) {
   return (
@@ -156,7 +149,9 @@ export default function HomePage() {
       <section className={styles.proofStrip} id="trust" aria-label="Teacher Helper principles">
         <div className={styles.proofIntro}>
           <h2 className={styles.trustTitle}>Trust and privacy</h2>
-          <p>Built for the rhythm of a real tutoring centre, not a spreadsheet pretending to be one.</p>
+          <p>
+            Built for the rhythm of a real tutoring centre, not a spreadsheet pretending to be one.
+          </p>
         </div>
         <div className={styles.proofItem}>
           <Icon name="people" size={24} />
@@ -195,21 +190,30 @@ export default function HomePage() {
               <Icon name="dashboard" size={22} />
             </div>
             <h3>Know what is happening.</h3>
-            <p>See your people, sessions, outstanding invoices, and follow-ups without hunting through tabs.</p>
+            <p>
+              See your people, sessions, outstanding invoices, and follow-ups without hunting
+              through tabs.
+            </p>
           </article>
           <article className={styles.featureCard}>
             <div className={`${styles.featureIcon} ${styles.cyanFeature}`}>
               <Icon name="sessions" size={22} />
             </div>
             <h3>Share the right detail.</h3>
-            <p>Approve a session update, send one secure link, and keep guardians close to the learning.</p>
+            <p>
+              Approve a session update, send one secure link, and keep guardians close to the
+              learning.
+            </p>
           </article>
           <article className={styles.featureCard}>
             <div className={`${styles.featureIcon} ${styles.greenFeature}`}>
               <Icon name="plus" size={22} />
             </div>
             <h3>Make admin feel lighter.</h3>
-            <p>Record payments, follow delivery, and give your team a dependable place to pick things up.</p>
+            <p>
+              Record payments, follow delivery, and give your team a dependable place to pick things
+              up.
+            </p>
           </article>
         </div>
       </section>

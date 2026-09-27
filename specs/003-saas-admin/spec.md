@@ -100,12 +100,12 @@ Centre owners, administrators, tutors, guardians, and the platform owner need ev
 - **FR-011**: The system MUST allow the owner to identify customer health trends over time, including signups, churn risk, and subscription stability, using business-safe summary metrics.
 - **FR-012**: The system MUST surface platform and customer-impact summaries in a format that supports quick decision-making without exposing unnecessary detail.
 - **FR-013**: The system MUST flag unresolved issues in a way that differentiates between operational risk, financial risk, and customer support risk.
-- **FR-014**: Human account authentication for centre staff and platform administrators MUST use managed OIDC. The application MUST NOT store human account passwords or use the custom platform-admin password/session mechanism as its production authentication path. Guardian link access remains passwordless and relationship-scoped as specified by the guardian workflows.
+- **FR-014**: Human account authentication for centre staff and platform administrators MUST use application-owned email/password accounts with protected sessions, generic credential errors, recovery, rate limiting, and auditable security events. The application MUST NOT require Auth0, OIDC, or another external identity provider for normal sign-in. Guardian link access remains passwordless and relationship-scoped as specified by the guardian workflows.
 - **FR-015**: Every data-bearing web route and Server Action MUST read or mutate its authoritative PostgreSQL records through a server-side repository/DAL. Runtime pages MUST NOT use demo fixture arrays or in-memory repositories as substitutes for persistence. Static marketing and generic error pages are exempt.
 - **FR-016**: Every tenant-owned query and mutation MUST verify authenticated identity, active centre membership or assignment, role permission, and centre scope; establish tenant context transaction-locally; and rely on PostgreSQL RLS enforced under a non-owner, non-`BYPASSRLS` runtime role.
 - **FR-017**: Platform-owner cross-centre queries MUST use a separately authorized platform-admin data path and return only business-safe DTOs. Platform access and denials MUST be audited; platform access MUST NOT be represented by a fabricated centre context.
 - **FR-018**: The system MUST track ordered database migrations and detect schema drift. Existing databases MUST be backed up and reconciled before missing migrations or forward-only repairs are applied. Migration history MUST NOT be erased by test-data reset.
-- **FR-019**: The system MUST provide a documented, audited bootstrap process that links one explicitly designated managed OIDC identity to the initial active `platform_owner` account. The bootstrap process MUST NOT create default passwords or credentials in source control.
+- **FR-019**: The system MUST provide a documented, audited bootstrap process that creates or activates one explicitly designated `platform_owner` account with an email/password credential. The bootstrap process MUST NOT place default passwords or credentials in source control and MUST require secure password setup.
 - **FR-020**: Automated PostgreSQL integration tests MUST execute migrations against an isolated synthetic-data test database and verify persistence, identity, RLS allow/deny behavior, and repository workflows. Tests MUST refuse staging and production URLs and MUST NOT truncate the shared development database.
 - **FR-021**: The SaaS subscription and payment model MUST be distinct from centre family tuition invoices and payments so platform revenue summaries cannot mix the two billing domains.
 
@@ -130,7 +130,7 @@ Centre owners, administrators, tutors, guardians, and the platform owner need ev
 - **SC-006**: All escalated operational and billing actions are recorded in an auditable trail suitable for review or support follow-up.
 - **SC-007**: 100% of data-bearing routes in the page-data contract identify their PostgreSQL source, authorization boundary, and automated integration/workflow test before release approval.
 - **SC-008**: The PostgreSQL integration suite can create, read, update, and isolate synthetic tenant data on a fresh migrated test database, and proves that a second tenant and unauthorized role cannot read or mutate the first tenant's protected records.
-- **SC-009**: A platform owner can authenticate through the configured managed OIDC provider and reach SaaS admin only after an explicit active platform-owner mapping is provisioned; centre roles and unassigned identities are denied.
+- **SC-009**: A platform owner can authenticate with an application-owned email/password account and reach SaaS admin only after an explicit active `platform_owner` account is provisioned; centre roles and disabled accounts are denied.
 
 ## Assumptions
 
@@ -139,7 +139,7 @@ Centre owners, administrators, tutors, guardians, and the platform owner need ev
 - The feature applies to multiple centres and requires tenant-aware access rules, not a single-centre dashboard.
 - Existing commercial and billing data will be used for plan and payment summaries rather than creating a new billing system from scratch.
 - Centre family tuition invoices and payments are not SaaS subscription revenue. If the current schema does not contain SaaS subscription records, add them through forward-only migrations before implementing platform revenue summaries.
-- A managed OIDC provider and its development/test configuration must be selected and provisioned as an environment prerequisite; provider secrets are never committed.
+- Application-owned email/password authentication and its development/test account fixtures must be provisioned as a product prerequisite; passwords and session secrets are never committed.
 - Data-bearing pages require PostgreSQL-backed repositories from their first implementation, not a later fixture-to-database retrofit.
 - The service will prioritize operational clarity and low-risk oversight over broad data browsing.
 - Access to sensitive child, guardian, and student records remains restricted to the centre and required authorised roles, even within the platform administration workflow.

@@ -67,6 +67,14 @@ Expected browser flow:
 4. Sign out and confirm the previous session cannot open a protected route.
 5. Open recovery, request a link, complete it once, and confirm the old password and old sessions no longer work.
 
+## Verified Sign-In Results
+
+Validated on 2026-09-27 against the local `teacher_helper_test` database:
+
+- `pnpm exec vitest run tests/contract/auth-login.contract.test.ts tests/contract/page-map.contract.test.ts tests/contract/public-page.contract.test.ts`: 8 tests passed.
+- `pnpm exec vitest run tests/integration/email-password-login.test.ts` with `TEST_DATABASE_URL` targeting `teacher_helper_test`: 1 test passed.
+- `pnpm exec playwright test tests/e2e/admin-auth.spec.ts`: anonymous redirect and login-form checks passed on desktop and mobile; the two active-owner sign-in tests were skipped because `E2E_ADMIN_EMAIL` and `E2E_ADMIN_PASSWORD` were not configured.
+
 ## Release checks
 
 Run the repository quality gates:

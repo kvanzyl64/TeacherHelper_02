@@ -1,6 +1,8 @@
+import { randomBytes } from "node:crypto";
 import type { PoolClient } from "pg";
 import { describe, expect, it, vi } from "vitest";
-import { lookupAccountByEmail } from "./account";
+import { authenticateAccountByEmail, lookupAccountByEmail } from "./account";
+import { hashPassword } from "./platform-admin-credentials";
 
 function createClient(rows: unknown[]) {
   return {
@@ -96,6 +98,36 @@ describe("application account lookup", () => {
       lookupAccountByEmail(
         createClient([{ ...centre, password_hash: null }]),
         "person@example.test",
+      ),
+    ).resolves.toBeNull();
+  });
+
+  it("returns the account only for a matching password and uses the same null result for unknown email", async () => {
+    const password = randomBytes(32).toString("base64url");
+    const passwordHash = await hashPassword(password);
+    const activeAccount = {
+      principal_type: "centre",
+      principal_id: "user-id",
+      password_hash: passwordHash,
+      account_status: "active",
+      memberships: [{ centreId: "centre-id", role: "owner" }],
+    };
+
+    await expect(
+      authenticateAccountByEmail(createClient([activeAccount]), "owner@example.test", password),
+    ).resolves.toMatchObject({ kind: "centre", id: "user-id" });
+    await expect(
+      authenticateAccountByEmail(
+        createClient([activeAccount]),
+        "owner@example.test",
+        randomBytes(32).toString("base64url"),
+      ),
+    ).resolves.toBeNull();
+    await expect(
+      authenticateAccountByEmail(
+        createClient([]),
+        "unknown@example.test",
+        randomBytes(32).toString("base64url"),
       ),
     ).resolves.toBeNull();
   });

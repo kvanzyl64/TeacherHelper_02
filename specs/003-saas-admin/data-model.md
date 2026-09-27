@@ -2,19 +2,21 @@
 
 This feature adds a platform-level administration model rather than changing the centre model. Existing centre, membership, billing, and audit entities remain authoritative for detailed tenant records.
 
-## Managed OIDC Identity
+## Application Account
 
-Identity is authenticated by a managed OIDC provider. PostgreSQL stores only the stable identity mapping, never provider credentials, access tokens, refresh tokens, or passwords.
+Identity is authenticated by an application-owned email/password account. PostgreSQL stores only
+a protected, non-reversible password verifier and account metadata; plaintext passwords, active
+session secrets, and recovery tokens are never stored or returned.
 
 | Field        | Description              | Rules                                                        |
 | ------------ | ------------------------ | ------------------------------------------------------------ |
-| `id`         | Internal identity ID     | UUID primary key                                             |
-| `issuer`     | OIDC issuer URL          | Required and normalized                                      |
-| `subject`    | Stable OIDC subject      | Required; unique with `issuer`; email is not an identity key |
-| `status`     | Application access state | Active or disabled; checked on each DAL request              |
-| `created_at` | Mapping creation time    | Database timestamp                                           |
+| `id`                | Internal account ID       | UUID primary key                                          |
+| `email`             | Login and contact address | Normalized; unique among active accounts                 |
+| `password_verifier` | Protected password value  | Non-reversible; never exposed to clients or logs         |
+| `status`            | Application access state  | Active, suspended, or disabled; checked on each request  |
+| `created_at`        | Account creation time     | Database timestamp                                        |
 
-One managed identity may map to a centre user and, if explicitly provisioned, a platform administrator. The provider remains the authority for authentication; application tables remain the authority for tenant membership and product roles.
+One application account may map to a centre user and, if explicitly provisioned, a platform administrator. Application accounts are the authority for authentication; application tables remain the authority for tenant membership and product roles.
 
 ## Centre User Identity Mapping
 
@@ -22,7 +24,7 @@ The existing `app.users` profile is linked to exactly one active `auth_identitie
 
 ### Existing Schema Transition
 
-Migration 013 is already present and includes `password_hash` and `platform_admin_sessions`. Do not modify or replay that migration. An expand migration adds the OIDC identity mapping while the owner account is created through the managed provider. After OIDC login and role resolution are verified, disable the custom password path; remove unused password/session columns and tables only in a later contract migration with tested recovery.
+Migration 013 is already present and includes `password_hash` and `platform_admin_sessions`. Do not modify or replay that migration. A forward-only migration must extend the account/session model for centre staff and platform administrators, preserve protected password verifiers, and add recovery and revocation state. Existing password fields may be reused only after their scope and security behavior are verified.
 
 ## Platform Admin User
 
@@ -31,18 +33,21 @@ A user with platform-level business or operational oversight responsibilities.
 | Field                      | Description                          | Rules                                                         |
 | -------------------------- | ------------------------------------ | ------------------------------------------------------------- |
 | `id`                       | Platform admin identity              | Unique within the SaaS                                        |
-| `identity_id`              | Managed OIDC identity                | Required FK; provisioned separately from the provider         |
+| `account_id`               | Application account                 | Required FK; provisioned through an approved account workflow |
 | `email`                    | Contact/display address              | Not an authentication key                                     |
 | `display_name`             | Name shown for operational context   | Required; not used for authorization                          |
 | `role`                     | `platform_owner`                     | Only this role is enabled in release one; support is deferred |
 | `status`                   | `active`, `suspended`, or `disabled` | Controls access to admin routes                               |
 | `created_at`, `updated_at` | Account lifecycle timestamps         | Set by the database/application                               |
 
-Permissions are derived from `role` in application code; they are not stored as a mutable account field. The first SaaS owner is explicitly provisioned by linking an existing managed-provider identity to this row and recording the bootstrap action.
+Permissions are derived from `role` in application code; they are not stored as a mutable account field. The first SaaS owner is explicitly provisioned through a secure account bootstrap workflow and the action is audited.
 
-## Managed Session
+## Application Session
 
-The managed identity provider owns session creation, renewal, expiry, and logout. The application validates the provider session/token on the server and resolves it to an active `auth_identities` row. Do not create another application password or session store. Any provider-specific session metadata retained locally must be justified, minimized, and must not contain bearer tokens.
+The application owns session creation, expiry, revocation, and logout. Sessions are server-side,
+short-lived or renewable under explicit policy, and represented to the browser only by protected
+cookie data. Password recovery requests are single-use and expiring; password changes revoke all
+existing sessions for the account.
 
 ### Relationships
 

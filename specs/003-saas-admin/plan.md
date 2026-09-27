@@ -6,17 +6,17 @@
 
 ## Summary
 
-Complete the database-backed product foundation that the existing SaaS admin and centre pages assume: reconcile and migrate the local PostgreSQL schema, replace custom application credentials with managed OIDC identity, enforce centre scope at the data-access boundary, and map every data-bearing route to a tested repository. Then populate the SaaS-owner portfolio, subscription, billing, and operational views from restricted business-safe database queries. The initial admin release is platform-owner-only; support access is deferred until separately specified.
+Complete the database-backed product foundation that the existing SaaS admin and centre pages assume: reconcile and migrate the local PostgreSQL schema, establish application-owned email/password accounts and protected sessions, enforce centre scope at the data-access boundary, and map every data-bearing route to a tested repository. Then populate the SaaS-owner portfolio, subscription, billing, and operational views from restricted business-safe database queries. The initial admin release is platform-owner-only; support access is deferred until separately specified.
 
 ## Technical Context
 
 **Language/Version**: TypeScript 5.x with React and Next.js App Router 15.x
 
-**Primary Dependencies**: Existing Next.js App Router 15, React 19, TypeScript 5, node-postgres (`pg`), existing SQL migrations/domain packages, and a managed OIDC provider behind a server-only adapter
+**Primary Dependencies**: Existing Next.js App Router 15, React 19, TypeScript 5, node-postgres (`pg`), existing SQL migrations/domain packages, and the application account/session model
 
 **Storage**: Local PostgreSQL 18 `teacher_helper_dev` for synthetic development data and isolated `teacher_helper_test` for DB integration tests. The current dev schema is partial and has no migration ledger; no current application-wide `DATABASE_URL` is configured.
 
-**Authentication**: Managed OIDC; persist issuer/subject-to-application-role mappings only. Do not store application passwords or implement a parallel login/session system.
+**Authentication**: Application-owned email/password accounts with protected password verifiers, revocable server-side sessions, recovery, rate limiting, and audit events. Guardian links remain passwordless.
 
 **Testing**: Vitest for pure domain rules; PostgreSQL integration tests for migrations, DAL authorization, RLS, repositories, and writes; Playwright for authenticated end-to-end routes using synthetic DB fixtures; lint, typecheck, build, and migration drift checks
 
@@ -26,7 +26,7 @@ Complete the database-backed product foundation that the existing SaaS admin and
 
 **Performance Goals**: Use bounded/indexed server-side queries and paginated lists. Record query and route baselines against synthetic test data before setting a production SLO; do not claim an existing responsiveness target because none is specified in the repository.
 
-**Constraints**: Constitution is authoritative. Use managed auth; resolve actual identity and role on every data request/action; set RLS context transaction-locally; runtime DB roles cannot own or bypass protected tables; business-safe platform summaries cannot expose child/guardian/session records; migrations are forward-only with backup and recovery evidence; test data must be synthetic.
+**Constraints**: Constitution is authoritative. Use application-owned auth; resolve actual identity and role on every data request/action; set RLS context transaction-locally; runtime DB roles cannot own or bypass protected tables; business-safe platform summaries cannot expose child/guardian/session records; migrations are forward-only with backup and recovery evidence; test data must be synthetic.
 
 **Scale/Scope**: Establish DB binding for every data-bearing route listed in `contracts/page-data-map.md`, including centre, tutor, guardian, billing, exports, operations, and platform-admin routes. Public marketing and generic error pages remain static. This cross-cutting scope is supplied by the project owner in the planning input and must be added to the feature spec before task generation.
 
@@ -39,7 +39,7 @@ _GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
 - **Current implementation status: FAIL / release blocked.** Centre pages use hardcoded roles; most data pages use fixtures or in-memory services; managed authentication is absent; multiple tenant tables lack verified RLS; DB integration tests are absent; the local DB is partially migrated and has no application accounts.
 - **Tenant isolation and least privilege: TARGET GATE.** Every page, Server Action, Route Handler, repository, export, and webhook must resolve an authenticated principal and centre membership before tenant reads/writes. Centre runtime role cannot bypass RLS. Cross-centre admin access uses a separately authorized, business-safe data path and is audited.
 - **Privacy and safeguarding: TARGET GATE.** Page DTOs return only fields needed for the role/workflow. Guardian access remains link/relationship scoped. Export, retention, deletion, and audit access remain explicit.
-- **Managed authentication: TARGET GATE.** Use managed OIDC. Existing custom platform password hashes and sessions cannot remain the production auth path.
+- **Application authentication: TARGET GATE.** Use protected application-owned email/password accounts, revocable sessions, recovery, rate limiting, generic credential responses, and security audit events.
 - **Testable and observable delivery: TARGET GATE.** Require live PostgreSQL migration, RLS, identity, repository, billing, and notification tests, plus structured audit/operational events and authenticated E2E coverage.
 - **Accessible and reliable workflows: TARGET GATE.** Preserve responsive and accessible page behavior while data states are populated, empty, loading, denied, failed, and expired.
 - **Security and operations: TARGET GATE.** Back up before schema work, reconcile existing migration state, preserve forward-only migrations, and document tested restore/recovery steps.
@@ -109,7 +109,7 @@ tests/
 
 ## Phase 0: Research Decisions
 
-- Use managed OIDC, with issuer/subject mapping to centre-user and platform-owner records; no custom password/session system.
+- Use application-owned email/password accounts with protected sessions and role/membership mapping for centre users and platform owners.
 - Use a server-only DAL and transaction-scoped PostgreSQL context for every tenant query.
 - Keep platform-owner reporting separate from tenant role access; expose only reviewed business-safe aggregates and audit platform actions.
 - Defer `support_readonly` until its release scope and operational need are explicitly approved; first release is owner-only.
@@ -129,15 +129,15 @@ tests/
 
 - Back up `teacher_helper_dev`; inspect tables, constraints, indexes, policies, grants, and role attributes.
 - Keep migration history in a protected metadata schema outside the `app` test-data reset; the web runtime role cannot change migration state.
-- Reconcile the existing platform-admin password/session migration through expand-contract; do not modify migration 013 or keep its custom password login active in the final flow.
+- Reconcile the existing platform-admin password/session migration through expand-contract; do not modify migration 013, and extend its protected account/session behavior to all required staff account types.
 - Create a migration ledger and verified baseline for already-present migrations. Do not replay or edit applied migration 013.
 - Apply missing migrations in dependency order only after schema parity checks; add forward-only corrections for missing RLS, subscription, identity mapping, and platform audit structures.
 - Configure a least-privilege application URL and separate test DB; prove `teacher_helper_app` cannot bypass RLS.
-- Configure the managed OIDC provider contract and safe test identity strategy before removing custom login.
+- Configure synthetic application accounts and safe test password strategy before authenticated workflow validation.
 
 ### Phase 1: Shared database/auth foundation
 
-- Implement managed OIDC validation and identity mapping by issuer/subject.
+- Implement application account verification, protected sessions, recovery, rate limits, and identity/role resolution.
 - Implement server-only DAL functions for identity, centre membership, platform-owner permission, and narrow DTOs.
 - Implement transaction helper that applies `SET LOCAL` tenant/user context and always commits/rolls back/releases its checked-out client.
 - Add tenant and platform-admin repository interfaces, migration ledger/status command, synthetic seed tooling, and test DB safety guard.
@@ -146,7 +146,7 @@ tests/
 ### Phase 2: Centre onboarding and workspace vertical slice
 
 - Wire onboarding, centre settings, and the centre dashboard end-to-end to PostgreSQL.
-- Provision the owner membership from the verified managed identity; remove hardcoded `owner` and `centre-demo` authorization.
+- Provision the owner membership from the verified application account; remove hardcoded `owner` and `centre-demo` authorization.
 - Replace dashboard placeholders only with query results; empty metrics remain explicit when no records exist.
 - Add authenticated E2E flow that creates a synthetic centre and verifies persisted data after navigation/reload.
 
@@ -166,7 +166,7 @@ tests/
 
 - Replace demo portfolio/billing/alert/centre-detail fixtures with platform-admin repositories and business-safe aggregate views.
 - Add/verify SaaS subscription data model; do not treat centre invoices as SaaS subscription revenue.
-- Provision exactly one initial platform owner by linking a managed OIDC identity to an active platform-owner record through an audited bootstrap operation. No local password seed.
+- Provision exactly one initial platform owner through an audited application-account bootstrap operation with secure password setup; no default password in source control.
 - Keep cross-centre admin data behind separate authorization/DB capability; test admin reads, denials, and audit events.
 
 ### Phase 6: Release proof
@@ -182,7 +182,7 @@ tests/
 - Database/app wiring does not begin against a `postgres` superuser URL. A least-privilege application URL and isolated test URL are prerequisites.
 - No route is considered DB-backed until an E2E test observes a synthetic record created through the DB after a fresh request.
 - No tenant repository is accepted without an RLS integration test that proves both allowed and cross-tenant denied behavior.
-- Managed OIDC provider configuration and initial platform-owner identity must exist before authenticated E2E/release validation.
+- Synthetic application accounts and initial platform-owner credentials must exist through a secure local/test setup before authenticated E2E/release validation.
 - Task generation must replace the currently all-checked implementation checklist with executable, dependency-ordered work derived from this plan and the expanded product-wide data requirement.
 
 ## Complexity Tracking
@@ -191,4 +191,4 @@ tests/
 | ---------------------------------------------- | -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
 | Separate tenant and platform-admin data access | Cross-centre admin reads cannot use arbitrary tenant context without weakening RLS     | Narrow server-only platform capability; safe views/DTOs; audit reads/actions; no child-level fields |
 | Migration baseline and ledger                  | Local DB has early and late migrations applied without a ledger                        | Backup, inspect catalog, verify baseline, forward-only repair migrations, dedicated test DB         |
-| Managed OIDC identity mapping                  | Constitution mandates managed authentication; current custom password flow violates it | Keep provider adapter small; store only issuer/subject and app authorization state                  |
+| Application account and session model           | Email/password authentication must serve both centre and platform roles without weakening tenant boundaries | Keep credential verification, session lifecycle, role resolution, and audit behavior centralized and tested |
