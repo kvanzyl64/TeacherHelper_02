@@ -53,25 +53,25 @@ description: "Executable implementation tasks for the Teacher Helper SaaS admin 
 
 ### Tests for User Story 4
 
-- [ ] T022 [P] [US4] Add centre onboarding persistence and atomic rollback tests in `tests/integration/onboarding-postgres.test.ts` for centre, owner membership, trial subscription, and audit rows.
-- [ ] T023 [P] [US4] Add people, consent, guardian relationship, and tutor assignment RLS tests in `tests/integration/people-postgres.test.ts`.
-- [ ] T024 [P] [US4] Add session, resource, invoice, payment, notification, and guardian-link persistence/scope tests in `tests/integration/centre-workflows-postgres.test.ts`.
-- [ ] T025 [P] [US4] Add authenticated E2E coverage in `tests/e2e/database-backed-centre.spec.ts` proving a created centre/student survives navigation and reload and another centre cannot see it.
+- [X] T022 [P] [US4] Add centre onboarding persistence and atomic rollback tests in `tests/integration/onboarding-postgres.test.ts` for centre, owner membership, trial subscription, and audit rows.
+- [X] T023 [P] [US4] Add people, consent, guardian relationship, and tutor assignment RLS tests in `tests/integration/people-postgres.test.ts`.
+- [X] T024 [P] [US4] Add session, resource, invoice, payment, notification, and guardian-link persistence/scope tests in `tests/integration/centre-workflows-postgres.test.ts`.
+- [X] T025 [P] [US4] Add authenticated E2E coverage in `tests/e2e/database-backed-centre.spec.ts` proving a created centre/student survives navigation and reload and another centre cannot see it.
 
 ### Implementation for User Story 4
 
-- [ ] T026 [US4] Implement transactional centre creation and owner membership persistence in `packages/integrations/src/centres/postgres-onboarding-repository.ts` and `apps/web/app/(centre)/onboarding/actions.ts`; remove `createInMemoryOnboardingRepository` and `owner-demo`.
-- [ ] T027 [US4] Implement current-centre settings reads/writes and audit persistence in `packages/integrations/src/centres/postgres-settings-repository.ts` and `apps/web/app/(centre)/settings/centre/actions.ts`; remove `createInMemoryCentreSettingsRepository` and `centre-demo`.
-- [ ] T028 [US4] Bind `/dashboard` metrics and recent activity to centre-scoped repository DTOs in `packages/integrations/src/centres/dashboard.ts` and `apps/web/app/(centre)/dashboard/page.tsx`; distinguish a true zero from DB unavailable.
-- [ ] T029 [US4] Bind people/student list and creation pages to `students`, `guardians`, `guardian_students`, `consent_records`, and `tutor_assignments` through repositories in `packages/integrations/src/people/` and `apps/web/app/(centre)/people/`.
-- [ ] T030 [US4] Bind guardian directory and staff verification pages to scoped guardian/consent/challenge repositories in `packages/integrations/src/guardians/` and `apps/web/app/(centre)/people/guardians/page.tsx` and `apps/web/app/(centre)/people/verification/page.tsx`.
-- [ ] T031 [US4] Bind `/team/invite` and `/auth/invite/[token]` to persisted invite/user/membership repositories in `packages/integrations/src/auth/membership-invitations.ts` and `apps/web/app/(centre)/team/invite/actions.ts`; hash tokens and enforce expiry/status/centre scope.
-- [ ] T032 [US4] Bind centre and tutor session lists, approvals, student assignments, and resource access to repositories in `packages/integrations/src/sessions/` and `apps/web/app/(centre)/centre/sessions/` and `apps/web/app/(tutor)/sessions/`; remove `sampleSessions`.
-- [ ] T033 [US4] Bind public guardian verification and single-record link pages to challenge/access-link repositories in `packages/integrations/src/guardian-links/` and `apps/web/app/(guardian)/verify/[challenge]/` and `apps/web/app/(guardian)/link/[token]/`; validate token digest, relationship, consent, status, attempts, and expiry before fetching protected records.
-- [ ] T034 [US4] Bind centre invoices, payments, and receipts to tenant-scoped repositories in `packages/integrations/src/billing/` and `apps/web/app/(centre)/billing/`; keep family tuition records separate from SaaS subscription billing.
-- [ ] T035 [US4] Bind exports and operations pages to export, retention, alert, and audit repositories in `packages/integrations/src/oversight/` and `apps/web/app/(centre)/exports/` and `apps/web/app/(centre)/operations/alerts/`; require owner permission and safe states.
-- [ ] T036 [US4] Add real DB health/readiness checks and actionable unavailable states in `apps/web/app/api/health/route.ts`, `apps/web/lib/database.ts`, and `apps/web/app/(centre)/error.tsx`; do not silently fall back to fixtures when `DATABASE_URL` or PostgreSQL is unavailable.
-- [ ] T037 [US4] Complete the route-to-table mapping in `specs/003-saas-admin/contracts/page-data-map.md` against all actual App Router routes and verify every row has a repository and test path.
+- [X] T026 [US4] Implement transactional centre creation and owner membership persistence in `packages/integrations/src/centres/postgres-onboarding-repository.ts` and `apps/web/app/(centre)/onboarding/actions.ts`; remove `createInMemoryOnboardingRepository` and `owner-demo`.
+- [X] T027 [US4] Implement current-centre settings reads/writes and audit persistence in `packages/integrations/src/centres/postgres-settings-repository.ts` and `apps/web/app/(centre)/settings/centre/actions.ts`; remove `createInMemoryCentreSettingsRepository` and `centre-demo`.
+- [X] T028 [US4] Bind `/dashboard` metrics and recent activity to centre-scoped repository DTOs in `packages/integrations/src/centres/dashboard.ts` and `apps/web/app/(centre)/dashboard/page.tsx`; distinguish a true zero from DB unavailable.
+- [X] T029 [US4] Bind people/student list and creation pages to `students`, `guardians`, `guardian_students`, `consent_records`, and `tutor_assignments` through repositories in `packages/integrations/src/people/` and `apps/web/app/(centre)/people/`.
+- [X] T030 [US4] Bind guardian directory and staff verification pages to scoped guardian/consent/challenge repositories in `packages/integrations/src/guardians/` and `apps/web/app/(centre)/people/guardians/page.tsx` and `apps/web/app/(centre)/people/verification/page.tsx`.
+- [X] T031 [US4] Bind `/team/invite` and `/auth/invite/[token]` to persisted invite/user/membership repositories in `packages/integrations/src/auth/membership-invitations.ts` and `apps/web/app/(centre)/team/invite/actions.ts`; hash tokens and enforce expiry/status/centre scope.
+- [X] T032 [US4] Bind centre and tutor session lists, approvals, student assignments, and resource access to repositories in `packages/integrations/src/sessions/` and `apps/web/app/(centre)/centre/sessions/` and `apps/web/app/(tutor)/sessions/`; remove `sampleSessions`.
+- [X] T033 [US4] Bind public guardian verification and single-record link pages to challenge/access-link repositories in `packages/integrations/src/guardian-links/` and `apps/web/app/(guardian)/verify/[challenge]/` and `apps/web/app/(guardian)/link/[token]/`; validate token digest, relationship, consent, status, attempts, and expiry before fetching protected records.
+- [X] T034 [US4] Bind centre invoices, payments, and receipts to tenant-scoped repositories in `packages/integrations/src/billing/` and `apps/web/app/(centre)/billing/`; keep family tuition records separate from SaaS subscription billing.
+- [X] T035 [US4] Bind exports and operations pages to export, retention, alert, and audit repositories in `packages/integrations/src/oversight/` and `apps/web/app/(centre)/exports/` and `apps/web/app/(centre)/operations/alerts/`; require owner permission and safe states.
+- [X] T036 [US4] Add real DB health/readiness checks and actionable unavailable states in `apps/web/app/api/health/route.ts`, `apps/web/lib/database.ts`, and `apps/web/app/(centre)/error.tsx`; do not silently fall back to fixtures when `DATABASE_URL` or PostgreSQL is unavailable.
+- [X] T037 [US4] Complete the route-to-table mapping in `specs/003-saas-admin/contracts/page-data-map.md` against all actual App Router routes and verify every row has a repository and test path.
 
 **Checkpoint**: The centre onboarding-to-workspace flow persists and re-reads synthetic records; every data-bearing centre/tutor/guardian route has repository and authorization coverage.
 

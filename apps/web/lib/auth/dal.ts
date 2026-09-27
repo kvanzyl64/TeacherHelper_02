@@ -2,6 +2,9 @@ import type { PoolClient } from "pg";
 import type { MembershipRole } from "@teacher-helper/domain/src/auth/tenant-context";
 import { resolveIdentity, type ResolvedIdentity } from "./identity";
 import type { PlatformAdminPermission, PlatformAdminIdentity } from "./roles";
+import { cookies } from "next/headers";
+import { getDatabasePool } from "../database";
+import { verifyOidcIdToken } from "./oidc-provider";
 
 export const genericAccessDeniedMessage = "The requested resource is unavailable";
 
@@ -44,4 +47,37 @@ export function requirePlatformOwner(identity: ResolvedIdentity, permission: Pla
   const permissions: readonly PlatformAdminPermission[] = ["admin:read", "admin:billing:read", "admin:alerts:read", "admin:centre:read", "admin:billing:manage", "admin:alerts:manage"];
   if (!permissions.includes(permission)) throw new AuthorizationError();
   return { id: identity.platformAdminId, role: "platform_owner", status: "active", permissions };
+}
+
+export async function getCurrentIdentity(): Promise<ResolvedIdentity> {
+  const token = (await cookies()).get("teacher_helper_oidc_id_token")?.value;
+  if (!token) throw new AuthorizationError();
+  const client = await getDatabasePool().connect();
+  try {
+    return await resolveIdentity(client, await verifyOidcIdToken(token));
+  } finally {
+    client.release();
+  }
+}
+
+export async function getCurrentCentreMembership(identity: ResolvedIdentity) {
+  if (!identity.userId) throw new AuthorizationError();
+  const client = await getDatabasePool().connect();
+  try {
+    await client.query("BEGIN");
+    await client.query("SELECT set_config($1, $2, true)", ["app.user_id", identity.userId]);
+    const result = await client.query<{ centre_id: string; user_id: string; role: MembershipRole }>(
+      "SELECT centre_id, user_id, role FROM app.centre_memberships WHERE user_id = $1 AND status = 'active' ORDER BY accepted_at NULLS LAST, centre_id LIMIT 1",
+      [identity.userId],
+    );
+    const membership = result.rows[0];
+    if (!membership) throw new AuthorizationError();
+    await client.query("COMMIT");
+    return { centreId: membership.centre_id, userId: membership.user_id, role: membership.role };
+  } catch (error) {
+    await client.query("ROLLBACK");
+    throw error;
+  } finally {
+    client.release();
+  }
 }

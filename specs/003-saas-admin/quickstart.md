@@ -36,6 +36,19 @@ operator has confirmed the target is local development data.
 5. Run the planned `pnpm db:verify` command. It must prove required tables, grants, indexes, RLS policies, and non-owner/non-`BYPASSRLS` application roles are present.
 6. Run the planned `pnpm db:seed:dev` command to insert deterministic synthetic centres, staff memberships, students, sessions, invoices, notifications, and SaaS subscription records. Never use production data.
 
+For the phase-3 workflow fixture, use the isolated test database only:
+
+```powershell
+$env:TEST_DATABASE_URL = "postgresql://postgres@127.0.0.1:5432/teacher_helper_test"
+pnpm db:seed:test
+```
+
+This rerunnable seed creates two synthetic centres (`BrightPath Learning Centre` and `Harbour
+View Tutors`) with owner/admin/tutor identities, students, guardians, consent, tutor assignment,
+verification challenge, sessions/resources, invoices/payments, guardian access link,
+notifications, membership invite, export/retention records, SaaS subscriptions/payment events,
+and a platform-owner audit record. It refuses `teacher_helper_dev`, staging, and production URLs.
+
 Expected result: migration status is clean, synthetic rows are visible only within their intended tenant, and the SaaS-level subscription rows remain distinct from centre invoices/payments.
 
 ### Phase 2 validation evidence
@@ -47,6 +60,19 @@ Expected result: migration status is clean, synthetic rows are visible only with
 - `pnpm typecheck` passed. Runtime roles were verified as non-superuser, non-owner, and
 	non-`BYPASSRLS`; the ledger is owned by `teacher_helper_migrator`.
 
+	### Phase 3 validation evidence
+
+	- `pnpm test:db` passed 5 files and 8 tests, including atomic onboarding persistence and rollback,
+		centre RLS, migration drift, and managed identity authorization.
+	- Centre onboarding, settings, dashboard metrics/activity, membership discovery, student
+		creation/listing, and `/api/health` now use PostgreSQL-backed paths with explicit unavailable
+		handling.
+	- `pnpm lint` and `pnpm typecheck` passed after the phase-3 slice.
+	- Consent/tutor RLS and session/resource/invoice/payment/notification/access-link scope tests now
+		pass against the seeded two-centre dataset.
+	- Centre invoice, payment, and receipt pages now read tenant-scoped family tuition records and do
+		not use SaaS subscription billing rows.
+
 ### Verified development baseline
 
 The 2026-09-26 catalog review found these objects in `teacher_helper_dev`: core tables from
@@ -54,7 +80,7 @@ migrations 001-003 and platform-admin tables from 013. Migrations 004-012 were n
 `app.audit_events` matches the 002 shape, while 011 contains a conflicting historical definition
 and must not be replayed. The ledger was created after the backup and records baseline entries for
 `001_centre_access`, `002_audit_events`, `003_tenant_policies`, and
-`013_platform_admin_auth`. Migrations 004-012 and 014-017 are now applied through forward-only
+`013_platform_admin_auth`. Migrations 004-012 and 014-019 are now applied through forward-only
 reconciliation;
 migration 013 was not edited or replayed.
 

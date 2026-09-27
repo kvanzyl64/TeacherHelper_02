@@ -25,7 +25,7 @@ export default async function GuardianVerificationPage({
       ) : (
         <>
           <PageHeader title="Verify your WhatsApp number" description="Enter the one-time code sent to your confirmed guardian number." />
-          <GuardianVerificationForm action={verifyGuardianCodeAction} />
+          <GuardianVerificationForm action={verifyGuardianCodeAction.bind(null, challengeState)} />
         </>
       )}
     </main>

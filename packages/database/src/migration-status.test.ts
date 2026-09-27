@@ -7,7 +7,7 @@ describe("migration catalog", () => {
   it("contains immutable, sequentially named migrations", () => {
     const directory = join(process.cwd(), "packages/database/migrations");
     const migrations = readdirSync(directory).filter((name) => /^\d{3}_[a-z0-9_]+\.sql$/.test(name)).sort();
-    expect(migrations.length).toBeGreaterThanOrEqual(17);
+    expect(migrations.length).toBeGreaterThanOrEqual(19);
     expect(migrations.map((name) => Number(name.slice(0, 3)))).toEqual(migrations.map((_, index) => index + 1));
   });
 

@@ -1,6 +1,9 @@
 import { PageHeader } from "../../../../components/navigation/page-header";
 import { PageState } from "../../../../components/navigation/page-state";
 import { GuardianSessionView } from "../../../../features/guardian-link/session-view";
+import { createPostgresAccessLinkRepository, type GuardianLinkView } from "@teacher-helper/integrations";
+import { hashOpaqueToken } from "@teacher-helper/domain";
+import { getDatabasePool } from "../../../../lib/database";
 
 export default async function GuardianLinkPage({
   params,
@@ -8,24 +11,31 @@ export default async function GuardianLinkPage({
   params: Promise<{ token: string }>;
 }) {
   const { token } = await params;
-  const tokenState = String(token ?? "").toLowerCase();
-  const unavailableKind = tokenState.includes("expired") ? "expired" : tokenState.includes("revoked") ? "revoked" : tokenState.includes("denied") ? "denied" : tokenState.includes("failed") ? "failed" : null;
+  const digest = hashOpaqueToken(String(token ?? ""));
 
-  const session = {
-    subject: "Maths progress update",
-    topics: ["Fractions", "Multiplication review"],
-    attendance: "present",
-    notes: "Strong effort this week. Keep revising the conversion practice sheet.",
-    homework: "Complete worksheet 3 before Friday.",
-    nextFocus: "Decimal place value next session.",
-  };
+  let view: GuardianLinkView | null = null;
+  try {
+    const client = await getDatabasePool().connect();
+    try {
+      await client.query("BEGIN");
+      view = await createPostgresAccessLinkRepository(client).openLink(digest);
+      await client.query("COMMIT");
+    } catch (error) {
+      await client.query("ROLLBACK");
+      throw error;
+    } finally {
+      client.release();
+    }
+  } catch {
+    view = null;
+  }
 
-  if (unavailableKind) {
+  if (!view || !view.session) {
     return (
       <main className="guardian-page">
         <PageState
-          kind={unavailableKind}
-          title={unavailableKind === "expired" ? "This link has expired" : unavailableKind === "revoked" ? "This link is no longer available" : unavailableKind === "denied" ? "This link is unavailable" : "This link is unavailable"}
+          kind="expired"
+          title="This link is unavailable"
           description="This protected link is no longer available. Please ask the centre for a fresh update or try again later."
           action={{ href: "/", label: "Return home" }}
         />
@@ -36,7 +46,7 @@ export default async function GuardianLinkPage({
   return (
     <main className="guardian-page">
       <PageHeader title="Guardian update" description="This protected link is limited to the approved session for your learner." />
-      <GuardianSessionView session={session} />
+      <GuardianSessionView session={view.session} />
     </main>
   );
 }

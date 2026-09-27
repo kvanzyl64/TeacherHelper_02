@@ -1,4 +1,8 @@
 import { Icon } from "../../../components/navigation/icon";
+import { createPostgresCentreDashboardRepository, type CentreDashboardData } from "@teacher-helper/integrations";
+import { getCurrentCentreMembership, getCurrentIdentity } from "../../../lib/auth/dal";
+import { getDatabasePool } from "../../../lib/database";
+import { withTenantTransaction } from "../../../lib/database/tenant-transaction";
 
 const metrics = [
   { label: "active students", icon: "people" },
@@ -6,7 +10,21 @@ const metrics = [
   { label: "updates delivered", icon: "whatsapp" },
 ] as const;
 
-export default function CentreDashboardPage() {
+export default async function CentreDashboardPage() {
+  let dashboard: CentreDashboardData | undefined;
+  let unavailable = false;
+  try {
+    const identity = await getCurrentIdentity();
+    const membership = await getCurrentCentreMembership(identity);
+    dashboard = await withTenantTransaction({
+      pool: getDatabasePool(),
+      centreId: membership.centreId,
+      userId: membership.userId,
+      run: (client) => createPostgresCentreDashboardRepository(client).getData(),
+    });
+  } catch {
+    unavailable = true;
+  }
   const date = new Intl.DateTimeFormat("en-ZA", {
     weekday: "long",
     day: "numeric",
@@ -33,25 +51,25 @@ export default function CentreDashboardPage() {
             {metrics.map((metric) => (
               <article className="centre-overview__metric" key={metric.label}>
                 <Icon name={metric.icon} size={17} />
-                <strong aria-label={`${metric.label}: unavailable`}>—</strong>
+                <strong aria-label={`${metric.label}: ${unavailable ? "unavailable" : "0"}`}>
+                  {unavailable ? "—" : metric.label === "active students" ? dashboard?.summary.activeStudents : metric.label === "sessions this week" ? dashboard?.summary.weeklySessions : dashboard?.updatesDelivered}
+                </strong>
                 <span>{metric.label}</span>
               </article>
             ))}
           </div>
-          <p className="centre-overview__data-note">
-            Live figures will appear when this workspace is connected to centre data.
-          </p>
+          <p className="centre-overview__data-note">{unavailable ? "Centre data is temporarily unavailable." : "Live figures from this centre."}</p>
 
           <section className="centre-overview__activity" aria-labelledby="recent-activity-title">
             <div className="centre-overview__activity-heading">
               <h2 id="recent-activity-title">Recent activity</h2>
-              <span>No activity yet</span>
+              <span>{unavailable ? "Data unavailable" : dashboard?.activity.length ? `${dashboard.activity.length} recent events` : "No activity yet"}</span>
             </div>
             <div className="centre-overview__empty-activity">
               <span className="centre-overview__empty-icon" aria-hidden="true">
                 <Icon name="calendar" size={18} />
               </span>
-              <p>New sessions, guardian updates, and payments will appear here.</p>
+              <p>{unavailable ? "Reconnect to PostgreSQL to view recent activity." : dashboard?.activity.length ? dashboard.activity.map((item) => item.eventType).join(", ") : "New sessions, guardian updates, and payments will appear here."}</p>
             </div>
           </section>
         </section>
