@@ -4,9 +4,11 @@ import { SubscriptionStatus } from "./subscription-status";
 export function BillingOverview({
   summary,
   rows,
+  paymentAction,
 }: {
   summary: AdminBillingSummary;
   rows: readonly AdminBillingRow[];
+  paymentAction?: (formData: FormData) => void | Promise<void>;
 }) {
   return (
     <>
@@ -67,7 +69,16 @@ export function BillingOverview({
                   </td>
                   <td>
                     {row.followUpRequired ? (
-                      <a href={`/admin/centres/${row.centreId}`}>Follow up</a>
+                      paymentAction && row.paymentId ? (
+                        <form action={paymentAction}>
+                          <input type="hidden" name="paymentId" value={row.paymentId} />
+                          <input type="hidden" name="status" value={row.paymentStatus ?? "pending"} />
+                          <input type="hidden" name="followUpRequired" value="false" />
+                          <button type="submit">Acknowledge</button>
+                        </form>
+                      ) : (
+                        <a href={`/admin/centres/${row.centreId}`}>Follow up</a>
+                      )
                     ) : (
                       <span>Healthy</span>
                     )}
@@ -87,12 +98,12 @@ export function BillingOverview({
           </div>
         </div>
         <ul className="admin-plan-list">
-          {Object.entries(summary.planAdoption).map(([plan, count]) => (
+          {Object.keys(summary.planAdoption).length > 0 ? Object.entries(summary.planAdoption).map(([plan, count]) => (
             <li key={plan}>
               <span>{plan}</span>
               <strong>{count} centres</strong>
             </li>
-          ))}
+          )) : <li><span>No subscriptions yet</span><strong>0 centres</strong></li>}
         </ul>
       </section>
     </>

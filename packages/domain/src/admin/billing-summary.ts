@@ -1,5 +1,6 @@
 export type AdminBillingRow = {
   centreId: string;
+  paymentId?: string;
   centreName: string;
   planName: string;
   status: "trial" | "active" | "past_due" | "cancelled" | "at_risk";

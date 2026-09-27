@@ -101,15 +101,15 @@ description: "Executable implementation tasks for the Teacher Helper SaaS admin 
 
 ### Tests for User Story 2
 
-- [ ] T044 [P] [US2] Add SaaS subscription/payment aggregate tests in `tests/integration/saas-billing-postgres.test.ts` for ZAR amounts, status transitions, duplicate events, and separation from `app.invoices`/`app.payments`.
-- [ ] T045 [P] [US2] Add owner-only live billing E2E coverage in `tests/e2e/admin-billing-live.spec.ts` for plan/status summaries, overdue follow-up, zero state, and denied non-owner access.
+- [X] T044 [P] [US2] Add SaaS subscription/payment aggregate tests in `tests/integration/saas-billing-postgres.test.ts` for ZAR amounts, status transitions, duplicate events, and separation from `app.invoices`/`app.payments`.
+- [X] T045 [P] [US2] Add owner-only live billing E2E coverage in `tests/e2e/admin-billing-live.spec.ts` for plan/status summaries, overdue follow-up, zero state, and denied non-owner access.
 
 ### Implementation for User Story 2
 
-- [ ] T046 [US2] Implement SaaS subscription and payment repository queries in `packages/integrations/src/admin/postgres-billing.ts` using the SaaS-specific tables from migration 015 and safe aggregate DTOs.
-- [ ] T047 [US2] Replace `demoAdminBillingRows` in `apps/web/features/admin/billing.ts` and bind `apps/web/app/(admin)/admin/billing/page.tsx` to the platform-admin DAL.
-- [ ] T048 [US2] Update billing summary and row components in `apps/web/components/admin/billing-overview.tsx` to distinguish subscription revenue from centre tuition billing and render loading/empty/failure states.
-- [ ] T049 [US2] Add audited SaaS payment-status/follow-up actions in `apps/web/app/(admin)/admin/billing/actions.ts` and `packages/integrations/src/admin/postgres-billing.ts`; re-check platform-owner permission within each Server Action.
+- [X] T046 [US2] Implement SaaS subscription and payment repository queries in `packages/integrations/src/admin/postgres-billing.ts` using the SaaS-specific tables from migration 015 and safe aggregate DTOs.
+- [X] T047 [US2] Replace `demoAdminBillingRows` in `apps/web/features/admin/billing.ts` and bind `apps/web/app/(admin)/admin/billing/page.tsx` to the platform-admin DAL.
+- [X] T048 [US2] Update billing summary and row components in `apps/web/components/admin/billing-overview.tsx` to distinguish subscription revenue from centre tuition billing and render loading/empty/failure states.
+- [X] T049 [US2] Add audited SaaS payment-status/follow-up actions in `apps/web/app/(admin)/admin/billing/actions.ts` and `packages/integrations/src/admin/postgres-billing.ts`; re-check platform-owner permission within each Server Action.
 
 ## Phase 6: User Story 3 - Resolve operational escalations and protect tenant boundaries (Priority: P2)
 
