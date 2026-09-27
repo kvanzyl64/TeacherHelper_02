@@ -54,24 +54,23 @@ Expected result: migration status is clean, synthetic rows are visible only with
 ### Phase 2 validation evidence
 
 - Fresh `teacher_helper_test` migration install and reconciled `teacher_helper_dev` upgrade both
-	applied migrations 001-017 in numeric order; status checks report matching SHA-256 checksums.
+  applied migrations 001-017 in numeric order; status checks report matching SHA-256 checksums.
 - `pnpm test:db` passed 4 files and 7 tests covering migration catalog drift, tenant RLS allow/deny,
-	transaction rollback and pooled-context reuse, plus managed identity and DAL authorization cases.
+  transaction rollback and pooled-context reuse, plus managed identity and DAL authorization cases.
 - `pnpm typecheck` passed. Runtime roles were verified as non-superuser, non-owner, and
-	non-`BYPASSRLS`; the ledger is owned by `teacher_helper_migrator`.
+  non-`BYPASSRLS`; the ledger is owned by `teacher_helper_migrator`.
 
-	### Phase 3 validation evidence
-
-	- `pnpm test:db` passed 5 files and 8 tests, including atomic onboarding persistence and rollback,
-		centre RLS, migration drift, and managed identity authorization.
-	- Centre onboarding, settings, dashboard metrics/activity, membership discovery, student
-		creation/listing, and `/api/health` now use PostgreSQL-backed paths with explicit unavailable
-		handling.
-	- `pnpm lint` and `pnpm typecheck` passed after the phase-3 slice.
-	- Consent/tutor RLS and session/resource/invoice/payment/notification/access-link scope tests now
-		pass against the seeded two-centre dataset.
-	- Centre invoice, payment, and receipt pages now read tenant-scoped family tuition records and do
-		not use SaaS subscription billing rows.
+  ### Phase 3 validation evidence
+  - `pnpm test:db` passed 5 files and 8 tests, including atomic onboarding persistence and rollback,
+    centre RLS, migration drift, and managed identity authorization.
+  - Centre onboarding, settings, dashboard metrics/activity, membership discovery, student
+    creation/listing, and `/api/health` now use PostgreSQL-backed paths with explicit unavailable
+    handling.
+  - `pnpm lint` and `pnpm typecheck` passed after the phase-3 slice.
+  - Consent/tutor RLS and session/resource/invoice/payment/notification/access-link scope tests now
+    pass against the seeded two-centre dataset.
+  - Centre invoice, payment, and receipt pages now read tenant-scoped family tuition records and do
+    not use SaaS subscription billing rows.
 
 ### Verified development baseline
 
@@ -127,3 +126,33 @@ pnpm build
 - Per-route data mapping and at least one live DB read/write assertion for every data-bearing workflow.
 - Cross-tenant denial, role denial, guardian-link expiry/relationship checks, and platform audit evidence.
 - Synthetic seed provenance, backup/restore result, and actual `pnpm test:db`, E2E, lint, typecheck, and build outputs.
+
+## Phase 7 release-gate evidence
+
+- `tests/contract/page-data-map.route-coverage.contract.test.ts` now enumerates every App Router
+  page and route handler and requires each route to appear in `contracts/page-data-map.md`.
+- `tests/contract/no-runtime-demo-data.contract.test.ts` now rejects demo, sample, and in-memory
+  runtime sources in production route modules. Both contract tests passed in `pnpm test`.
+- `.github/workflows/database-integration.yml` runs clean migrations, a repeat migration/status
+  drift check, and `pnpm test:db` against isolated synthetic PostgreSQL service databases. It uses
+  local CI service credentials only and has no production or repository secrets.
+- Backup archive verification passed non-destructively on 2026-09-27:
+  `pg_restore --list backups/teacher_helper_dev-20260926-194532.dump` reported a PostgreSQL custom
+  archive created 2026-09-26 19:45:32 with 60 TOC entries. A restore was not run because it would
+  replace `teacher_helper_dev`; forward-only recovery remains an operator-run procedure.
+- T060 command evidence from 2026-09-27:
+  - `pnpm test`: passed 30 files / 56 tests; 11 files / 15 DB-dependent tests skipped without
+    `TEST_DATABASE_URL`.
+  - `pnpm test:db`: passed 1 file / 2 migration tests; 11 files / 15 PostgreSQL tests skipped
+    without `TEST_DATABASE_URL`.
+  - `pnpm lint`: passed.
+  - `pnpm typecheck`: passed.
+  - `pnpm build`: passed; Next.js generated 29 static/dynamic routes.
+  - `pnpm test:e2e` on port 3100: 18 passed, 18 skipped, 14 failed. Failures require authenticated
+    centre/admin identities or database/OIDC setup; the existing invite route also logged a server
+    module error. These failures are unresolved and block release readiness.
+- T061 review: managed-auth/DAL boundaries, platform-admin repository separation, route-map/source
+  guards, loading/empty/denied states, and no-child-data DTO constraints are implemented and
+  statically validated. PostgreSQL RLS, owner bootstrap, authenticated E2E, accessibility, and
+  restore/recovery evidence remain release prerequisites until the skipped/failed environments are
+  available.

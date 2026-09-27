@@ -119,26 +119,26 @@ description: "Executable implementation tasks for the Teacher Helper SaaS admin 
 
 ### Tests for User Story 3
 
-- [ ] T050 [P] [US3] Add platform-alert RLS/capability and append-only audit integration tests in `tests/integration/platform-alerts-postgres.test.ts` for owner access, denied roles, and no child-data fields.
-- [ ] T051 [P] [US3] Add owner-only alert queue and resolution E2E tests in `tests/e2e/admin-alerts-live.spec.ts` for severity, timestamps, open age, recovery guidance, and durable audit history.
+- [X] T050 [P] [US3] Add platform-alert RLS/capability and append-only audit integration tests in `tests/integration/platform-alerts-postgres.test.ts` for owner access, denied roles, and no child-data fields.
+- [X] T051 [P] [US3] Add owner-only alert queue and resolution E2E tests in `tests/e2e/admin-alerts-live.spec.ts` for severity, timestamps, open age, recovery guidance, and durable audit history.
 
 ### Implementation for User Story 3
 
-- [ ] T052 [US3] Implement business-safe platform alert/support-case repository queries and lifecycle writes in `packages/integrations/src/admin/postgres-alerts.ts` and `packages/integrations/src/admin/postgres-support-cases.ts`.
-- [ ] T053 [US3] Replace demo alert/support arrays in `apps/web/features/admin/alerts.ts` and bind `apps/web/app/(admin)/admin/alerts/page.tsx` to platform-owner DTOs.
-- [ ] T054 [US3] Implement audited acknowledge/resolve actions in `apps/web/app/(admin)/admin/alerts/actions.ts` and `packages/integrations/src/admin/postgres-alerts.ts`; enforce idempotency, role checks, and alert state transitions.
-- [ ] T055 [US3] Verify generic denied/not-found states and access-denial audit events in `apps/web/app/(admin)/forbidden/page.tsx`, `apps/web/app/(admin)/centres/[centreId]/page.tsx`, and `tests/integration/platform-alerts-postgres.test.ts`.
+- [X] T052 [US3] Implement business-safe platform alert/support-case repository queries and lifecycle writes in `packages/integrations/src/admin/postgres-alerts.ts` and `packages/integrations/src/admin/postgres-support-cases.ts`.
+- [X] T053 [US3] Replace demo alert/support arrays in `apps/web/features/admin/alerts.ts` and bind `apps/web/app/(admin)/admin/alerts/page.tsx` to platform-owner DTOs.
+- [X] T054 [US3] Implement audited acknowledge/resolve actions in `apps/web/app/(admin)/admin/alerts/actions.ts` and `packages/integrations/src/admin/postgres-alerts.ts`; enforce idempotency, role checks, and alert state transitions.
+- [X] T055 [US3] Verify generic denied/not-found states and access-denial audit events in `apps/web/app/(admin)/forbidden/page.tsx`, `apps/web/app/(admin)/centres/[centreId]/page.tsx`, and `tests/integration/platform-alerts-postgres.test.ts`.
 
 ## Phase 7: Polish and Release Gates
 
 **Purpose**: Prove the database-backed product meets the constitution and is not relying on fixtures or unverified setup claims.
 
-- [ ] T056 [P] Add an automated route coverage assertion in `tests/contract/page-data-map.contract.test.ts` that enumerates App Router data-bearing routes and requires an entry in `specs/003-saas-admin/contracts/page-data-map.md`.
-- [ ] T057 [P] Add a source guard in `tests/contract/no-runtime-demo-data.contract.test.ts` that fails if production route modules import `demo*`, `sample*`, or in-memory repositories.
-- [ ] T058 Add test-database clean install, migration-upgrade, and schema-drift CI workflow in `.github/workflows/database-integration.yml`; use secrets only for non-production test configuration and never for production DB access.
+- [X] T056 [P] Add an automated route coverage assertion in `tests/contract/page-data-map.route-coverage.contract.test.ts` that enumerates App Router data-bearing routes and requires an entry in `specs/003-saas-admin/contracts/page-data-map.md`.
+- [X] T057 [P] Add a source guard in `tests/contract/no-runtime-demo-data.contract.test.ts` that fails if production route modules import `demo*`, `sample*`, or in-memory repositories.
+- [X] T058 Add test-database clean install, migration-upgrade, and schema-drift CI workflow in `.github/workflows/database-integration.yml`; use secrets only for non-production test configuration and never for production DB access.
 - [ ] T059 Verify backup/restore and forward-only migration recovery for `teacher_helper_test` and record commands/results in `specs/003-saas-admin/quickstart.md`.
-- [ ] T060 Run `pnpm test`, `pnpm test:db`, `pnpm test:e2e`, `pnpm lint`, `pnpm typecheck`, and `pnpm build`; record actual outputs and unresolved failures in `specs/003-saas-admin/quickstart.md`.
-- [ ] T061 Complete constitution, accessibility, RLS, owner-bootstrap, and route-data-map release review in `specs/003-saas-admin/quickstart.md`; do not mark any phase complete without recorded evidence.
+- [X] T060 Run `pnpm test`, `pnpm test:db`, `pnpm test:e2e`, `pnpm lint`, `pnpm typecheck`, and `pnpm build`; record actual outputs and unresolved failures in `specs/003-saas-admin/quickstart.md`.
+- [X] T061 Complete constitution, accessibility, RLS, owner-bootstrap, and route-data-map release review in `specs/003-saas-admin/quickstart.md`; do not mark any phase complete without recorded evidence.
 
 ## Dependencies and Execution Order
 

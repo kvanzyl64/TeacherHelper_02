@@ -23,7 +23,9 @@ suite("PostgreSQL SaaS billing", () => {
       await client.query("INSERT INTO app.saas_subscriptions (centre_id, plan_name, status, started_at, monthly_value) VALUES ($1, 'Growth', 'active', now(), 1200.00)", [centreId]);
       const providerEventId = randomUUID();
       await client.query("INSERT INTO app.saas_payment_events (subscription_id, centre_id, amount, status, occurred_at, follow_up_required, provider_event_id) SELECT id, $1, 1200.00, 'paid', now(), false, $2 FROM app.saas_subscriptions WHERE centre_id = $1", [centreId, providerEventId]);
+      await client.query("SAVEPOINT duplicate_provider_event");
       await expect(client.query("INSERT INTO app.saas_payment_events (subscription_id, centre_id, amount, status, occurred_at, provider_event_id) SELECT id, $1, 1200.00, 'paid', now(), $2 FROM app.saas_subscriptions WHERE centre_id = $1", [centreId, providerEventId])).rejects.toThrow();
+      await client.query("ROLLBACK TO SAVEPOINT duplicate_provider_event");
 
       const repository = createPostgresBillingRepository(client);
       const rows = await repository.listRows({ limit: 10 });

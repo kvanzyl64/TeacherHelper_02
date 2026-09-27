@@ -10,6 +10,8 @@ export * from "./storage/exports";
 export * from "./admin/dashboard";
 export * from "./admin/postgres-dashboard";
 export * from "./admin/postgres-billing";
+export * from "./admin/postgres-alerts";
+export * from "./admin/postgres-support-cases";
 export * from "./admin/billing";
 export * from "./admin/alerts";
 export * from "./database/tenant-repository";

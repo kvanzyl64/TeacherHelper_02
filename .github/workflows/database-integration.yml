@@ -1,0 +1,67 @@
+name: Database Integration
+
+on:
+  push:
+    paths:
+      - "packages/database/**"
+      - "packages/integrations/**"
+      - "packages/domain/**"
+      - "tests/integration/**"
+      - "infra/postgres/**"
+      - "pnpm-lock.yaml"
+      - "package.json"
+  pull_request:
+    paths:
+      - "packages/database/**"
+      - "packages/integrations/**"
+      - "packages/domain/**"
+      - "tests/integration/**"
+      - "infra/postgres/**"
+      - "pnpm-lock.yaml"
+      - "package.json"
+
+jobs:
+  postgres:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      TEST_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/teacher_helper_test
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/teacher_helper_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.15.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Create isolated test databases
+        run: |
+          PGPASSWORD=postgres psql -h 127.0.0.1 -U postgres -d postgres -v ON_ERROR_STOP=1 -c "CREATE DATABASE teacher_helper_test"
+          PGPASSWORD=postgres psql -h 127.0.0.1 -U postgres -d postgres -v ON_ERROR_STOP=1 -c "CREATE DATABASE teacher_helper_upgrade"
+      - name: Clean install migrations
+        run: pnpm db:migrate
+      - name: Migration upgrade and drift status
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/teacher_helper_upgrade
+        run: |
+          pnpm db:migrate
+          pnpm db:migrate
+          pnpm db:status
+      - name: PostgreSQL integration tests
+        run: pnpm test:db

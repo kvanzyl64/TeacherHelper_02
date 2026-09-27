@@ -1,24 +1,5 @@
 import type { OperationalAlert, SupportCase } from "@teacher-helper/domain";
 
-export const demoAdminSupportCases: readonly SupportCase[] = [
-  {
-    caseId: "case-payment-riverside",
-    centreId: "riverside",
-    issueType: "payment",
-    owner: "platform_owner",
-    status: "in_review",
-    summary: "Payment follow-up is under review.",
-  },
-  {
-    caseId: "case-export-northside",
-    centreId: "northside",
-    issueType: "operations",
-    owner: "support_readonly",
-    status: "open",
-    summary: "Failed export needs review by an owner.",
-  },
-];
-
 export function buildAdminAlertsData(
   alerts: readonly OperationalAlert[],
   supportCases: readonly SupportCase[],

@@ -1,9 +1,10 @@
 import { PageHeader } from "../../../../components/navigation/page-header";
-import { buildAdminAlertsData, demoAdminSupportCases } from "../../../../features/admin/alerts";
-import { mapPlatformAlert } from "../../../../features/admin/dashboard";
+import { buildAdminAlertsData } from "../../../../features/admin/alerts";
 import { getCurrentIdentity, requirePlatformOwner } from "../../../../lib/auth/dal";
 import { getDatabasePool } from "../../../../lib/database";
-import { createPostgresPlatformAdminRepository } from "@teacher-helper/integrations/src/admin/postgres-dashboard";
+import { createPostgresPlatformAlertRepository } from "@teacher-helper/integrations/src/admin/postgres-alerts";
+import { createPostgresSupportCaseRepository } from "@teacher-helper/integrations/src/admin/postgres-support-cases";
+import { updatePlatformAlert, updatePlatformSupportCase } from "./actions";
 
 export default async function AdminAlertsPage() {
   requirePlatformOwner(await getCurrentIdentity());
@@ -11,10 +12,11 @@ export default async function AdminAlertsPage() {
   try {
     const client = await getDatabasePool().connect();
     try {
-      const repository = createPostgresPlatformAdminRepository(client);
+      const alertRepository = createPostgresPlatformAlertRepository(client);
+      const supportCaseRepository = createPostgresSupportCaseRepository(client);
       alerts = buildAdminAlertsData(
-        (await repository.listAlerts()).map(mapPlatformAlert),
-        demoAdminSupportCases,
+        await alertRepository.listAlerts(),
+        await supportCaseRepository.listCases(),
       );
     } finally {
       client.release();
@@ -66,6 +68,13 @@ export default async function AdminAlertsPage() {
         </div>
       </section>
 
+      {alerts.alerts.length === 0 ? (
+        <section className="admin-section" aria-labelledby="alerts-empty-title">
+          <h2 id="alerts-empty-title">No operational alerts</h2>
+          <p className="admin-section__copy">The platform has no unresolved operational escalations.</p>
+        </section>
+      ) : null}
+
       <section className="admin-section" aria-labelledby="alerts-table-title">
         <div className="admin-section__heading">
           <div>
@@ -84,7 +93,19 @@ export default async function AdminAlertsPage() {
                   {alert.centreId} · {alert.type} · {alert.status}
                 </span>
               </div>
-              <a href={`/admin/centres/${alert.centreId}`}>Review centre</a>
+              {alert.status === "open" ? (
+                <form action={updatePlatformAlert}>
+                  <input type="hidden" name="alertId" value={alert.alertId} />
+                  <input type="hidden" name="status" value="acknowledged" />
+                  <button type="submit">Acknowledge</button>
+                </form>
+              ) : alert.status === "acknowledged" ? (
+                <form action={updatePlatformAlert}>
+                  <input type="hidden" name="alertId" value={alert.alertId} />
+                  <input type="hidden" name="status" value="resolved" />
+                  <button type="submit">Resolve</button>
+                </form>
+              ) : null}
             </li>
           ))}
         </ul>
@@ -108,7 +129,19 @@ export default async function AdminAlertsPage() {
                   {supportCase.centreId} · {supportCase.issueType} · {supportCase.owner}
                 </span>
               </div>
-              <a href={`/admin/centres/${supportCase.centreId}`}>Trace centre</a>
+              {supportCase.status === "open" ? (
+                <form action={updatePlatformSupportCase}>
+                  <input type="hidden" name="caseId" value={supportCase.caseId} />
+                  <input type="hidden" name="status" value="in_review" />
+                  <button type="submit">Review</button>
+                </form>
+              ) : supportCase.status === "in_review" ? (
+                <form action={updatePlatformSupportCase}>
+                  <input type="hidden" name="caseId" value={supportCase.caseId} />
+                  <input type="hidden" name="status" value="resolved" />
+                  <button type="submit">Resolve</button>
+                </form>
+              ) : null}
             </li>
           ))}
         </ul>

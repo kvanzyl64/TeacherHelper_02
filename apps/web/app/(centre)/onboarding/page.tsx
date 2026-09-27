@@ -8,7 +8,7 @@ export default function OnboardingPage() {
       <p>Set up trial or subscription access and invite your team.</p>
       <form action={createCentreAction}>
         <label htmlFor="name">Centre name</label>
-        <input id="name" name="name" defaultValue="Demo Centre" />
+        <input id="name" name="name" />
         <label htmlFor="timezone">Timezone</label>
         <input id="timezone" name="timezone" defaultValue="Africa/Johannesburg" />
         <label htmlFor="plan">Plan</label>
