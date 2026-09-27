@@ -8,7 +8,7 @@ export default defineConfig({
   fullyParallel: true,
   use: { baseURL, trace: "on-first-retry" },
   webServer: {
-    command: `pnpm --filter @teacher-helper/web dev -- --port ${port}`,
+    command: `pnpm --filter @teacher-helper/web exec next dev --port ${port}`,
     url: baseURL,
     reuseExistingServer: true,
   },

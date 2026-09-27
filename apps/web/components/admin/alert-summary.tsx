@@ -13,16 +13,25 @@ export function AlertSummary({ alerts }: { alerts: readonly OperationalAlert[] }
         <a href="/admin/alerts">View all alerts</a>
       </div>
       <ul className="admin-alert-list">
-        {openAlerts.map((alert) => (
-          <li className="admin-alert-list__item" key={alert.alertId}>
-            <span className={`admin-status admin-status--${alert.severity}`}>{alert.severity}</span>
+        {openAlerts.length > 0 ? (
+          openAlerts.map((alert) => (
+            <li className="admin-alert-list__item" key={alert.alertId}>
+              <span className={`admin-status admin-status--${alert.severity}`}>{alert.severity}</span>
+              <div>
+                <strong>{alert.summary}</strong>
+                <span>{alert.centreId}</span>
+              </div>
+              <a href={`/admin/centres/${alert.centreId}`}>Review</a>
+            </li>
+          ))
+        ) : (
+          <li className="admin-alert-list__item">
             <div>
-              <strong>{alert.summary}</strong>
-              <span>{alert.centreId}</span>
+              <strong>No open alerts</strong>
+              <span>The platform has no unresolved payment risks to review.</span>
             </div>
-            <a href={`/admin/centres/${alert.centreId}`}>Review</a>
           </li>
-        ))}
+        )}
       </ul>
     </section>
   );

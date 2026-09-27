@@ -83,15 +83,15 @@ description: "Executable implementation tasks for the Teacher Helper SaaS admin 
 
 ### Tests for User Story 1
 
-- [ ] T038 [P] [US1] Add platform-owner repository integration tests in `tests/integration/platform-portfolio-postgres.test.ts` for centre-state aggregates, alert counts, date windows, DTO field allowlists, and owner-only access.
-- [ ] T039 [P] [US1] Add authenticated portfolio and centre-detail E2E coverage in `tests/e2e/platform-portfolio-live.spec.ts` using synthetic DB seed data and verifying zero/empty and DB-failure states.
+- [X] T038 [P] [US1] Add platform-owner repository integration tests in `tests/integration/platform-portfolio-postgres.test.ts` for centre-state aggregates, alert counts, date windows, DTO field allowlists, and owner-only access.
+- [X] T039 [P] [US1] Add authenticated portfolio and centre-detail E2E coverage in `tests/e2e/platform-portfolio-live.spec.ts` using synthetic DB seed data and verifying zero/empty and DB-failure states.
 
 ### Implementation for User Story 1
 
-- [ ] T040 [US1] Implement cross-centre business-safe portfolio and alert queries in `packages/integrations/src/admin/postgres-dashboard.ts`; query approved views/columns only and use bounded/paginated results.
-- [ ] T041 [US1] Replace demo arrays and hardcoded summary copy in `apps/web/features/admin/dashboard.ts` and `apps/web/app/(admin)/admin/page.tsx` with DAL-authorized PostgreSQL DTOs.
-- [ ] T042 [US1] Bind `/centres/[centreId]` to the platform-admin repository in `apps/web/app/(admin)/centres/[centreId]/page.tsx`; validate UUID/existence, emit platform access audit, and never query child/session records.
-- [ ] T043 [US1] Add database-failure, loading, empty, denied, and stale-data states for platform portfolio pages in `apps/web/app/(admin)/admin/page.tsx` and `apps/web/components/admin/`.
+- [X] T040 [US1] Implement cross-centre business-safe portfolio and alert queries in `packages/integrations/src/admin/postgres-dashboard.ts`; query approved views/columns only and use bounded/paginated results.
+- [X] T041 [US1] Replace demo arrays and hardcoded summary copy in `apps/web/features/admin/dashboard.ts` and `apps/web/app/(admin)/admin/page.tsx` with DAL-authorized PostgreSQL DTOs.
+- [X] T042 [US1] Bind `/centres/[centreId]` to the platform-admin repository in `apps/web/app/(admin)/centres/[centreId]/page.tsx`; validate UUID/existence, emit platform access audit, and never query child/session records.
+- [X] T043 [US1] Add database-failure, loading, empty, denied, and stale-data states for platform portfolio pages in `apps/web/app/(admin)/admin/page.tsx` and `apps/web/components/admin/`.
 
 ## Phase 5: User Story 2 - Track SaaS subscription health and revenue (Priority: P1)
 

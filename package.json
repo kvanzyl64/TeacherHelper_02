@@ -14,7 +14,7 @@
     "db:status": "node packages/database/scripts/status.mjs",
     "db:migrate": "node packages/database/scripts/migrate.mjs",
     "db:seed:test": "node packages/database/scripts/seed-phase3.mjs",
-    "test:db": "vitest run packages/database/src/migration-status.test.ts tests/integration/database-migrations.test.ts tests/integration/tenant-rls.test.ts tests/integration/identity-authorization.test.ts tests/integration/onboarding-postgres.test.ts tests/integration/people-postgres.test.ts tests/integration/people-consent-postgres.test.ts tests/integration/centre-workflows-postgres.test.ts tests/integration/guardian-link-invite-postgres.test.ts"
+    "test:db": "vitest run packages/database/src/migration-status.test.ts tests/integration/database-migrations.test.ts tests/integration/tenant-rls.test.ts tests/integration/identity-authorization.test.ts tests/integration/onboarding-postgres.test.ts tests/integration/people-postgres.test.ts tests/integration/people-consent-postgres.test.ts tests/integration/centre-workflows-postgres.test.ts tests/integration/guardian-link-invite-postgres.test.ts tests/integration/platform-portfolio-postgres.test.ts"
   },
   "devDependencies": {
     "@eslint/js": "^9.35.0",

@@ -1,9 +1,35 @@
 import { PageHeader } from "../../../../components/navigation/page-header";
 import { buildAdminAlertsData, demoAdminSupportCases } from "../../../../features/admin/alerts";
-import { demoAdminAlerts } from "../../../../features/admin/dashboard";
+import { mapPlatformAlert } from "../../../../features/admin/dashboard";
+import { getCurrentIdentity, requirePlatformOwner } from "../../../../lib/auth/dal";
+import { getDatabasePool } from "../../../../lib/database";
+import { createPostgresPlatformAdminRepository } from "@teacher-helper/integrations/src/admin/postgres-dashboard";
 
-export default function AdminAlertsPage() {
-  const alerts = buildAdminAlertsData(demoAdminAlerts, demoAdminSupportCases);
+export default async function AdminAlertsPage() {
+  requirePlatformOwner(await getCurrentIdentity());
+  let alerts;
+  try {
+    const client = await getDatabasePool().connect();
+    try {
+      const repository = createPostgresPlatformAdminRepository(client);
+      alerts = buildAdminAlertsData(
+        (await repository.listAlerts()).map(mapPlatformAlert),
+        demoAdminSupportCases,
+      );
+    } finally {
+      client.release();
+    }
+  } catch {
+    return (
+      <main className="admin-page">
+        <PageHeader
+          eyebrow="Platform administration / alerts"
+          title="Alerts unavailable"
+          description="The alert queue could not be loaded. Try again when the database is available."
+        />
+      </main>
+    );
+  }
 
   return (
     <main className="admin-page">

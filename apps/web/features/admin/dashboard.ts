@@ -1,65 +1,44 @@
 import type { CentrePortfolioRecord, OperationalAlert } from "@teacher-helper/domain";
-import {
-  createAdminDashboardSummary,
-  type AdminDashboardSummary,
-} from "@teacher-helper/domain/src/admin/dashboard-summary";
+import type {
+  PlatformAlertSummary,
+  PlatformCentreSummary,
+  PlatformDashboardSummary,
+} from "@teacher-helper/integrations/src/database/platform-admin-repository";
 
 export type AdminDashboardData = {
-  summary: AdminDashboardSummary;
+  summary: PlatformDashboardSummary;
   centres: readonly CentrePortfolioRecord[];
+  alerts: readonly OperationalAlert[];
 };
 
-export function buildAdminDashboardData(
-  centres: readonly CentrePortfolioRecord[],
-  alerts: readonly OperationalAlert[],
-): AdminDashboardData {
-  return { summary: createAdminDashboardSummary(centres, alerts), centres };
+function mapCentre(centre: PlatformCentreSummary): CentrePortfolioRecord {
+  return {
+    centreId: centre.centreId,
+    name: centre.name,
+    status: centre.status === "onboarding" ? "trial" : centre.status === "archived" ? "suspended" : centre.status as CentrePortfolioRecord["status"],
+    subscriptionStatus: (centre.subscriptionStatus ?? "cancelled") as CentrePortfolioRecord["subscriptionStatus"],
+    ownerContact: centre.ownerContact ?? "Unavailable",
+    ...(centre.lastPaymentAt ? { lastPaymentAt: centre.lastPaymentAt } : {}),
+    supportFlag: centre.supportFlag,
+  };
 }
 
-export const demoAdminCentres: readonly CentrePortfolioRecord[] = [
-  {
-    centreId: "northside",
-    name: "Northside Centre",
-    status: "active",
-    subscriptionStatus: "active",
-    ownerContact: "hello@northside.example",
-    lastPaymentAt: new Date("2026-09-01"),
-    supportFlag: false,
-  },
-  {
-    centreId: "trial-centre",
-    name: "Trial Centre",
-    status: "trial",
-    subscriptionStatus: "trial",
-    ownerContact: "owner@trial.example",
-    supportFlag: true,
-  },
-  {
-    centreId: "riverside",
-    name: "Riverside Tutors",
-    status: "active",
-    subscriptionStatus: "past_due",
-    ownerContact: "accounts@riverside.example",
-    lastPaymentAt: new Date("2026-08-01"),
-    supportFlag: true,
-  },
-];
-
-export const demoAdminAlerts: readonly OperationalAlert[] = [
-  {
-    alertId: "payment-risk-riverside",
-    centreId: "riverside",
+export function mapPlatformAlert(alert: PlatformAlertSummary): OperationalAlert {
+  return {
+    alertId: alert.alertId,
+    centreId: alert.centreId,
     type: "payment_risk",
-    severity: "warning",
-    status: "open",
-    summary: "Payment follow-up is required.",
-  },
-  {
-    alertId: "export-northside",
-    centreId: "northside",
-    type: "export_failure",
-    severity: "info",
-    status: "acknowledged",
-    summary: "A centre export needs review.",
-  },
-];
+    severity: alert.severity,
+    status: alert.status,
+    summary: alert.summary,
+    ...(alert.resolvedAt ? { resolvedAt: alert.resolvedAt } : {}),
+  };
+}
+
+export function buildAdminDashboardData(
+  summary: PlatformDashboardSummary,
+  centres: readonly PlatformCentreSummary[],
+  alerts: readonly PlatformAlertSummary[],
+): AdminDashboardData {
+  return { summary, centres: centres.map(mapCentre), alerts: alerts.map(mapPlatformAlert) };
+}

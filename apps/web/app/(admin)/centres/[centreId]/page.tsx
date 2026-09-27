@@ -1,6 +1,9 @@
+import { randomUUID } from "node:crypto";
 import { notFound } from "next/navigation";
 import { PageHeader } from "../../../../components/navigation/page-header";
-import { demoAdminAlerts, demoAdminCentres } from "../../../../features/admin/dashboard";
+import { getCurrentIdentity, requirePlatformOwner } from "../../../../lib/auth/dal";
+import { getDatabasePool } from "../../../../lib/database";
+import { createPostgresPlatformAdminRepository } from "@teacher-helper/integrations/src/admin/postgres-dashboard";
 
 export default async function CentreDetailPage({
   params,
@@ -8,13 +11,35 @@ export default async function CentreDetailPage({
   params: Promise<{ centreId: string }>;
 }) {
   const { centreId } = await params;
-  const centre = demoAdminCentres.find((entry: (typeof demoAdminCentres)[number]) => entry.centreId === centreId);
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(centreId)) notFound();
 
-  if (!centre) {
-    notFound();
+  const owner = requirePlatformOwner(await getCurrentIdentity());
+  let centre;
+  try {
+    const client = await getDatabasePool().connect();
+    try {
+      centre = await createPostgresPlatformAdminRepository(client).getCentre(
+        centreId,
+        owner.id,
+        randomUUID(),
+      );
+    } finally {
+      client.release();
+    }
+  } catch {
+    return (
+      <main className="admin-page">
+        <PageHeader
+          eyebrow="Platform administration / centre"
+          title="Centre unavailable"
+          description="The centre overview could not be loaded. Try again when the database is available."
+        />
+      </main>
+    );
   }
 
-  const latestAlerts = demoAdminAlerts.filter((alert: (typeof demoAdminAlerts)[number]) => alert.centreId === centreId);
+  if (!centre) notFound();
+  const latestAlerts = centre.openAlerts;
 
   return (
     <main className="admin-page">
