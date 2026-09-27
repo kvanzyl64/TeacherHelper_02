@@ -9,7 +9,7 @@ describe("migration catalog", () => {
     const migrations = readdirSync(directory)
       .filter((name) => /^\d{3}_[a-z0-9_]+\.sql$/.test(name))
       .sort();
-    expect(migrations.length).toBeGreaterThanOrEqual(21);
+    expect(migrations.length).toBeGreaterThanOrEqual(22);
     expect(migrations.map((name) => Number(name.slice(0, 3)))).toEqual(
       migrations.map((_, index) => index + 1),
     );
@@ -19,6 +19,7 @@ describe("migration catalog", () => {
         "015_managed_identity_and_saas_billing.sql",
         "017_retire_legacy_password_path.sql",
         "021_email_password_auth.sql",
+        "022_application_session_clock_validation.sql",
       ]),
     );
   });

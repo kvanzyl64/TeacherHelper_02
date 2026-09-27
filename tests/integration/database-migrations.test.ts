@@ -12,13 +12,14 @@ suite("database migration catalog", () => {
         "SELECT migration_id, checksum FROM migration_meta.migration_ledger ORDER BY migration_id",
       );
       const migrationIds = result.rows.map((row) => row.migration_id);
-      expect(migrationIds).toHaveLength(21);
+      expect(migrationIds).toHaveLength(22);
       expect(migrationIds).toEqual(
         expect.arrayContaining([
           "013_platform_admin_auth",
           "015_managed_identity_and_saas_billing",
           "017_retire_legacy_password_path",
           "021_email_password_auth",
+          "022_application_session_clock_validation",
         ]),
       );
       expect(result.rows.every((row) => /^[a-f0-9]{64}$/.test(row.checksum))).toBe(true);

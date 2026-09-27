@@ -1,4 +1,4 @@
-import { randomBytes, randomUUID } from "node:crypto";
+import { createHash, randomBytes, randomUUID } from "node:crypto";
 import { Pool } from "pg";
 import { describe, expect, it } from "vitest";
 import { lookupAccountByEmail } from "../../apps/web/lib/auth/account";
@@ -165,7 +165,7 @@ suite("email and password authentication foundation", () => {
         platformStatus: "active",
       });
 
-      const expiredDigest = randomUUID().replaceAll("-", "");
+      const expiredDigest = createHash("sha256").update(randomBytes(32)).digest("hex");
       const centre = await client.query<{ id: string }>(
         "INSERT INTO app.centres (name, status) VALUES ($1, 'active') RETURNING id",
         [`Expired Session ${suffix}`],
