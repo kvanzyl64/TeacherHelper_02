@@ -1,11 +1,11 @@
 import { signInWithEmailPassword } from "./actions";
 
 type LoginPageProps = {
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ error?: string; recovered?: string }>;
 };
 
 export default async function LoginPage({ searchParams }: LoginPageProps) {
-  const { error } = await searchParams;
+  const { error, recovered } = await searchParams;
 
   return (
     <main className="auth-page">
@@ -36,6 +36,11 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
           <p className="auth-page__form-copy">
             Sign in with your Teacher Helper email and password.
           </p>
+          {recovered === "1" ? (
+            <p className="auth-page__form-copy" role="status" aria-live="polite">
+              Your password has been updated. Sign in with your new password.
+            </p>
+          ) : null}
           {error === "retry" ? (
             <p className="auth-page__error" role="alert" aria-live="polite">
               Too many attempts. Please try again later.

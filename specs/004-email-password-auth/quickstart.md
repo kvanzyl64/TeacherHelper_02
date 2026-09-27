@@ -10,6 +10,7 @@ accounts. It must not use production credentials or external Auth0/OIDC configur
 - Application environment contains the local database URL and recovery-mail delivery settings; use the `AUTH_TEST_*` names in `.env.example` for test-only account and lifetime configuration.
 - Keep actual passwords and generated secrets in ignored local environment files or protected CI secrets; never commit passwords, raw tokens, cookies, recovery URLs, or external-provider settings.
 - A synthetic active centre account and a synthetic active `platform_owner` account created through the approved bootstrap workflow.
+- Configure `AUTH_RECOVERY_DELIVERY_URL` and its optional bearer token when using a real mail webhook. The browser recovery test instead uses a temporary `AUTH_TEST_RECOVERY_CAPTURE_SECRET` and an isolated local test database.
 
 ## Test File Map
 
@@ -58,6 +59,11 @@ pnpm playwright test tests/e2e/admin-auth.spec.ts tests/e2e/design-system-access
 
 Use only test credentials supplied through protected environment variables or interactive setup.
 Never place a password in a test file, command argument, screenshot, trace, or repository fixture.
+
+To run the recovery browser flow, set `TEST_DATABASE_URL` to the local `teacher_helper_test` database,
+set `PGPASSWORD` for that database user, and provide a random `AUTH_TEST_RECOVERY_CAPTURE_SECRET`.
+The Playwright configuration starts a separate test server on port 3100, captures the test delivery
+in memory, and disables traces for this flow so the one-time link is not recorded.
 
 Expected browser flow:
 

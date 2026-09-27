@@ -3,8 +3,10 @@ import { error as logError } from "node:console";
 import { promisify } from "node:util";
 import { createInterface } from "node:readline/promises";
 import process, { stdin, stdout } from "node:process";
-import { loadEnvConfig } from "@next/env";
+import nextEnv from "@next/env";
 import { Pool } from "pg";
+
+const { loadEnvConfig } = nextEnv;
 
 const scrypt = promisify(scryptCallback);
 const input = createInterface({ input: stdin, output: stdout });
@@ -12,29 +14,41 @@ loadEnvConfig(process.cwd());
 
 async function readHidden(prompt) {
   stdout.write(prompt);
-  stdin.setRawMode(true);
-  stdin.resume();
-  let value = "";
-
-  try {
-    for await (const chunk of stdin) {
+  return new Promise((resolve, reject) => {
+    let value = "";
+    const finish = (error) => {
+      stdin.off("data", onData);
+      stdin.off("error", onError);
+      stdin.setRawMode(false);
+      if (error) reject(error);
+      else resolve(value);
+    };
+    const onError = (error) => finish(error);
+    const onData = (chunk) => {
       for (const character of chunk.toString("utf8")) {
         if (character === "\r" || character === "\n") {
           stdout.write("\n");
-          return value;
+          finish();
+          return;
         }
-        if (character === "\u0003") throw new Error("Cancelled");
+        if (character === "\u0003") {
+          stdout.write("\n");
+          finish(new Error("Cancelled"));
+          return;
+        }
         if (character === "\u0008" || character === "\u007f") {
           value = value.slice(0, -1);
         } else {
           value += character;
         }
       }
-    }
-    return value;
-  } finally {
-    stdin.setRawMode(false);
-  }
+    };
+
+    stdin.setRawMode(true);
+    stdin.on("data", onData);
+    stdin.on("error", onError);
+    stdin.resume();
+  });
 }
 
 async function main() {
@@ -51,9 +65,9 @@ async function main() {
     await input.question("Role [platform_owner/support_readonly] (platform_owner): ")
   ).trim();
   const role = roleInput || "platform_owner";
+  input.close();
   const password = await readHidden("Password (min 12 characters): ");
   const passwordConfirmation = await readHidden("Confirm password: ");
-  input.close();
 
   if (
     !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||

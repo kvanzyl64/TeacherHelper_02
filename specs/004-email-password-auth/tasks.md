@@ -68,17 +68,17 @@ description: "Executable task list for first-party email/password authentication
 
 ### Tests for User Story 2
 
-- [ ] T023 [P] [US2] Add recovery contract tests for `GET/POST /auth/recover` and `GET/POST /auth/recover/[token]` in `tests/contract/auth-recovery.contract.test.ts`, covering identical known/unknown confirmations, token error states, and no secret leakage.
-- [ ] T024 [P] [US2] Add PostgreSQL recovery integration tests in `tests/integration/email-password-recovery.test.ts` for token digest storage, 30-minute expiry, single-use consumption, revocation of outstanding requests, password replacement, and session invalidation.
-- [ ] T025 [P] [US2] Add authenticated browser coverage in `tests/e2e/auth-recovery.spec.ts` for recovery request, test delivery capture, valid completion, old-password rejection, and expired/used-token messaging.
+- [x] T023 [P] [US2] Add recovery contract tests for `GET/POST /auth/recover` and `GET/POST /auth/recover/[token]` in `tests/contract/auth-recovery.contract.test.ts`, covering identical known/unknown confirmations, token error states, and no secret leakage.
+- [x] T024 [P] [US2] Add PostgreSQL recovery integration tests in `tests/integration/email-password-recovery.test.ts` for token digest storage, 30-minute expiry, single-use consumption, revocation of outstanding requests, password replacement, and session invalidation.
+- [x] T025 [P] [US2] Add authenticated browser coverage in `tests/e2e/auth-recovery.spec.ts` for recovery request, test delivery capture, valid completion, old-password rejection, and expired/used-token messaging.
 
 ### Implementation for User Story 2
 
-- [ ] T026 [US2] Implement recovery request creation and token-digest validation in `apps/web/lib/auth/recovery.ts`, enforcing pending/used/revoked/expired states and the 30-minute expiry rule from `data-model.md`.
-- [ ] T027 [P] [US2] Implement the recovery message delivery interface and test adapter in `packages/integrations/src/auth/password-recovery-delivery.ts` and `packages/test-support/src/fake-recovery-delivery.ts`, never logging or persisting the raw token.
-- [ ] T028 [US2] Implement recovery request actions in `apps/web/app/auth/recover/actions.ts` with generic responses, rate limits, audit events, and no account-existence signal.
-- [ ] T029 [US2] Implement the recovery request page in `apps/web/app/auth/recover/page.tsx` with accessible email input, generic confirmation, error state, and link to `/auth/login`.
-- [ ] T030 [US2] Add the recovery token page and completion action in `apps/web/app/auth/recover/[token]/page.tsx` and `apps/web/app/auth/recover/[token]/actions.ts`, atomically updating the password, marking the request used, revoking sessions, and redirecting to login after success.
+- [x] T026 [US2] Implement recovery request creation and token-digest validation in `apps/web/lib/auth/recovery.ts`, enforcing pending/used/revoked/expired states and the 30-minute expiry rule from `data-model.md`.
+- [x] T027 [P] [US2] Implement the recovery message delivery interface and test adapter in `packages/integrations/src/auth/password-recovery-delivery.ts` and `packages/test-support/src/fake-recovery-delivery.ts`, never logging or persisting the raw token.
+- [x] T028 [US2] Implement recovery request actions in `apps/web/app/auth/recover/actions.ts` with generic responses, rate limits, audit events, and no account-existence signal.
+- [x] T029 [US2] Implement the recovery request page in `apps/web/app/auth/recover/page.tsx` with accessible email input, generic confirmation, error state, and link to `/auth/login`.
+- [x] T030 [US2] Add the recovery token page and completion action in `apps/web/app/auth/recover/[token]/page.tsx` and `apps/web/app/auth/recover/[token]/actions.ts`, atomically updating the password, marking the request used, revoking sessions, and redirecting to login after success.
 
 **Checkpoint**: US2 is independently usable: account holders can recover access once, while unknown accounts, invalid tokens, and repeated attempts remain indistinguishable and safe.
 

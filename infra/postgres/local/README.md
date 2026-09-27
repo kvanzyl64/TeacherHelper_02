@@ -37,6 +37,10 @@ The test connection URL is `postgresql://teacher_helper_test_role:<password>@127
 The URL safety guard rejects every other database for test reset operations, including
 `teacher_helper_dev`, and rejects non-local, staging, and production hosts.
 
+Reset the local test role password with `pnpm db:reset-test-role-password`. The script connects to
+`teacher_helper_test` as the local `postgres` administrator, prompts for the new password without
+echoing it, and changes only `teacher_helper_test_role`'s password. It does not store the password.
+
 After the migration ledger exists, apply the runtime-role hardening as a local administrator:
 
 ```powershell

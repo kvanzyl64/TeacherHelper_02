@@ -4,3 +4,4 @@ export * from "./tenant-fixtures";
 export * from "./database-url";
 export * from "./postgres-test-database";
 export * from "./synthetic-seed";
+export * from "./fake-recovery-delivery";
