@@ -7,6 +7,7 @@ import type {
   PlatformAdminRole,
   PlatformAdminStatus,
 } from "./roles";
+import type { ResolvedIdentity } from "./identity";
 
 export function requireCentrePermission(role: MembershipRole, permission: Permission): void {
   assertPermission(role, permission);
@@ -20,6 +21,13 @@ export function assertCentreScope(currentCentreId: string, requestedCentreId: st
 
 export const genericPermissionMessage =
   "This workspace area is unavailable for your current access.";
+
+export function requireSessionIdentity(identity: ResolvedIdentity | null): ResolvedIdentity {
+  if (!identity || (!identity.userId && !identity.platformAdminId)) {
+    throw new Error(genericPermissionMessage);
+  }
+  return identity;
+}
 
 export function requirePlatformAdmin(input: {
   role: PlatformAdminRole | null | undefined;

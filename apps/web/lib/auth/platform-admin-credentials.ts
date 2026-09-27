@@ -11,16 +11,13 @@ function deriveKey(password: string, salt: string): Promise<Buffer> {
   });
 }
 
-export async function hashPlatformAdminPassword(password: string): Promise<string> {
+export async function hashPassword(password: string): Promise<string> {
   const salt = randomBytes(16).toString("hex");
   const key = await deriveKey(password, salt);
   return `scrypt$${salt}$${key.toString("hex")}`;
 }
 
-export async function verifyPlatformAdminPassword(
-  password: string,
-  passwordHash: string,
-): Promise<boolean> {
+export async function verifyPassword(password: string, passwordHash: string): Promise<boolean> {
   const [algorithm, salt, expectedHex, ...extra] = passwordHash.split("$");
   if (
     algorithm !== "scrypt" ||
@@ -37,3 +34,6 @@ export async function verifyPlatformAdminPassword(
   const actual = await deriveKey(password, salt);
   return timingSafeEqual(actual, expected);
 }
+
+export const hashPlatformAdminPassword = hashPassword;
+export const verifyPlatformAdminPassword = verifyPassword;

@@ -2,9 +2,9 @@ import type { PoolClient } from "pg";
 import type { OidcClaims } from "./oidc-provider";
 
 export type ResolvedIdentity = {
-  identityId: string;
-  issuer: string;
-  subject: string;
+  identityId: string | null;
+  issuer: string | null;
+  subject: string | null;
   userId: string | null;
   platformAdminId: string | null;
   platformRole: "platform_owner" | "support_readonly" | null;
@@ -18,7 +18,10 @@ export class IdentityResolutionError extends Error {
   }
 }
 
-export async function resolveIdentity(client: Pick<PoolClient, "query">, claims: Pick<OidcClaims, "iss" | "sub">): Promise<ResolvedIdentity> {
+export async function resolveIdentity(
+  client: Pick<PoolClient, "query">,
+  claims: Pick<OidcClaims, "iss" | "sub">,
+): Promise<ResolvedIdentity> {
   const identity = await client.query<{ id: string; status: "active" | "disabled" }>(
     "SELECT id, status FROM app.auth_identities WHERE issuer = $1 AND subject = $2",
     [claims.iss, claims.sub],
@@ -26,11 +29,15 @@ export async function resolveIdentity(client: Pick<PoolClient, "query">, claims:
   const mapping = identity.rows[0];
   if (!mapping || mapping.status !== "active") throw new IdentityResolutionError();
 
-  const user = await client.query<{ id: string }>("SELECT id FROM app.users WHERE identity_id = $1 AND authentication_status = 'active'", [mapping.id]);
-  const admin = await client.query<{ id: string; role: ResolvedIdentity["platformRole"]; status: ResolvedIdentity["platformStatus"] }>(
-    "SELECT id, role, status FROM app.platform_admins WHERE identity_id = $1",
+  const user = await client.query<{ id: string }>(
+    "SELECT id FROM app.users WHERE identity_id = $1 AND authentication_status = 'active'",
     [mapping.id],
   );
+  const admin = await client.query<{
+    id: string;
+    role: ResolvedIdentity["platformRole"];
+    status: ResolvedIdentity["platformStatus"];
+  }>("SELECT id, role, status FROM app.platform_admins WHERE identity_id = $1", [mapping.id]);
   const adminRow = admin.rows[0];
   if (!user.rows[0] && !adminRow) throw new IdentityResolutionError();
   return {

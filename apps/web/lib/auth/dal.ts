@@ -1,10 +1,11 @@
 import type { PoolClient } from "pg";
 import type { MembershipRole } from "@teacher-helper/domain/src/auth/tenant-context";
-import { resolveIdentity, type ResolvedIdentity } from "./identity";
+import type { ResolvedIdentity } from "./identity";
 import type { PlatformAdminPermission, PlatformAdminIdentity } from "./roles";
 import { cookies } from "next/headers";
 import { getDatabasePool } from "../database";
-import { verifyOidcIdToken } from "./oidc-provider";
+import { sessionCookieName, resolveApplicationSession } from "./session";
+import { requireSessionIdentity } from "./route-guards";
 
 export const genericAccessDeniedMessage = "The requested resource is unavailable";
 
@@ -15,11 +16,29 @@ export class AuthorizationError extends Error {
   }
 }
 
-export async function requireAuthenticatedIdentity(client: Pick<PoolClient, "query">, claims: { iss: string; sub: string }): Promise<ResolvedIdentity> {
-  return resolveIdentity(client, claims);
+export async function requireAuthenticatedIdentity(
+  client: Pick<PoolClient, "query">,
+  token: string,
+): Promise<ResolvedIdentity> {
+  const session = await resolveApplicationSession(client, token);
+  if (!session) throw new AuthorizationError();
+  return requireSessionIdentity({
+    identityId: null,
+    issuer: null,
+    subject: null,
+    userId: session.userId,
+    platformAdminId: session.platformAdminId,
+    platformRole: session.platformRole,
+    platformStatus: session.platformStatus,
+  });
 }
 
-export async function requireCentreMembership(client: Pick<PoolClient, "query">, identity: ResolvedIdentity, centreId: string, roles?: readonly MembershipRole[]) {
+export async function requireCentreMembership(
+  client: Pick<PoolClient, "query">,
+  identity: ResolvedIdentity,
+  centreId: string,
+  roles?: readonly MembershipRole[],
+) {
   if (!identity.userId) throw new AuthorizationError();
   const result = await client.query<{ centre_id: string; user_id: string; role: MembershipRole }>(
     `SELECT centre_id, user_id, role FROM app.centre_memberships
@@ -31,7 +50,12 @@ export async function requireCentreMembership(client: Pick<PoolClient, "query">,
   return { centreId: membership.centre_id, userId: membership.user_id, role: membership.role };
 }
 
-export async function requireTutorAssignment(client: Pick<PoolClient, "query">, identity: ResolvedIdentity, centreId: string, studentId: string): Promise<void> {
+export async function requireTutorAssignment(
+  client: Pick<PoolClient, "query">,
+  identity: ResolvedIdentity,
+  centreId: string,
+  studentId: string,
+): Promise<void> {
   if (!identity.userId) throw new AuthorizationError();
   const result = await client.query(
     `SELECT 1 FROM app.tutor_assignments
@@ -42,19 +66,34 @@ export async function requireTutorAssignment(client: Pick<PoolClient, "query">, 
   if (result.rowCount !== 1) throw new AuthorizationError();
 }
 
-export function requirePlatformOwner(identity: ResolvedIdentity, permission: PlatformAdminPermission = "admin:read"): PlatformAdminIdentity {
-  if (identity.platformRole !== "platform_owner" || identity.platformStatus !== "active" || !identity.platformAdminId) throw new AuthorizationError();
-  const permissions: readonly PlatformAdminPermission[] = ["admin:read", "admin:billing:read", "admin:alerts:read", "admin:centre:read", "admin:billing:manage", "admin:alerts:manage"];
+export function requirePlatformOwner(
+  identity: ResolvedIdentity,
+  permission: PlatformAdminPermission = "admin:read",
+): PlatformAdminIdentity {
+  if (
+    identity.platformRole !== "platform_owner" ||
+    identity.platformStatus !== "active" ||
+    !identity.platformAdminId
+  )
+    throw new AuthorizationError();
+  const permissions: readonly PlatformAdminPermission[] = [
+    "admin:read",
+    "admin:billing:read",
+    "admin:alerts:read",
+    "admin:centre:read",
+    "admin:billing:manage",
+    "admin:alerts:manage",
+  ];
   if (!permissions.includes(permission)) throw new AuthorizationError();
   return { id: identity.platformAdminId, role: "platform_owner", status: "active", permissions };
 }
 
 export async function getCurrentIdentity(): Promise<ResolvedIdentity> {
-  const token = (await cookies()).get("teacher_helper_oidc_id_token")?.value;
+  const token = (await cookies()).get(sessionCookieName)?.value;
   if (!token) throw new AuthorizationError();
   const client = await getDatabasePool().connect();
   try {
-    return await resolveIdentity(client, await verifyOidcIdToken(token));
+    return await requireAuthenticatedIdentity(client, token);
   } finally {
     client.release();
   }
